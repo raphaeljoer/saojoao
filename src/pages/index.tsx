@@ -1,5 +1,8 @@
 import { NextPage } from "next";
-import VotePage from "./vote";
+import PerksPage from "./perks";
 
-const HomePage: NextPage = () => <VotePage />;
+const HomePage: NextPage = () => {
+  return <PerksPage />;
+};
+
 export default HomePage;
