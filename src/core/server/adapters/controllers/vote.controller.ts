@@ -38,22 +38,21 @@ export class VoteController implements VoteControllerInterface {
     const response = await this.addVoteUsecase.execute({ vote, token });
     
     if(response.isFailure()) {
-      console.log(response.value);
-      res.status(HttpStatusCode.BAD_REQUEST).json({ message: response.value.message });
-      throw new Error('ADD_VOTE_ERROR');
+      res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
+      throw new Error(response.value.name);
     };
     
     res.status(HttpStatusCode.CREATED).json({ message: 'Vote added' });
   }
     
   async getResult(_: NextApiRequest, res: NextApiResponse): Promise<void> {
-    const result = await this.getResultUsecase.execute();
+    const response = await this.getResultUsecase.execute();
 
-    if(result.isFailure()) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({ message: result.value.message });
-      throw new Error('GET_RESULT_ERROR');
+    if(response.isFailure()) {
+      res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
+      throw new Error(response.value.name);
     }
 
-    res.status(HttpStatusCode.OK).json({ result: result.value });
+    res.status(HttpStatusCode.OK).json({ result: response.value });
   }
 };

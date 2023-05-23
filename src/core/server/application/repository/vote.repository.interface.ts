@@ -5,7 +5,7 @@ export type CountByIdInput = {
   value: string;
 };
 export interface VoteRepositoryInterface {
-  addVote: (input: VoteDTO) => Promise<any>;
+  addVote: (input: VoteDTO) => Promise<void>;
   countVotesTotal: () => Promise<number>;
   countVotes: (input: CountByIdInput) => Promise<number>;
 }
