@@ -1,8 +1,9 @@
 import { fail, success } from "@/core/shared/errors/either";
 import { RecaptchaGatewayInterface } from "../../../adapters/gateways/recaptcha.gateway.interface";
+import { GoogleRecaptchaInvalidHostnameError } from "../../errors/recaptcha-invalid-hostname.error";
+import { GoogleRecaptchaInvalidTokenError } from "../../errors/recaptcha-invalid-token.error";
+import { UnexpectedError } from "../../errors/unexpected-error";
 import { VoteRepositoryInterface } from "../../repository/vote.repository.interface";
-import { AddVoteError } from "../errors/add-vote.error";
-import { GoogleRecaptchaError } from "../errors/recaptcha.error";
 import { AddVoteUseCaseInput, AddVoteUsecaseInterface, AddVoteUsecaseOutput } from "./add-vote-usecase.interface";
 
 type Props = {
@@ -20,16 +21,21 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
 
   async execute({ vote, token }: AddVoteUseCaseInput): Promise<AddVoteUsecaseOutput> {
     const recaptchaResult = await this.recaptchaGateway.verify(token)
+    console.log('recaptchaResult', recaptchaResult.data);
     
     if (!recaptchaResult.data.success) {
-      return fail(new GoogleRecaptchaError());
+      return fail(new GoogleRecaptchaInvalidTokenError());
+    }
+
+    if (recaptchaResult.data.hostname !== process.env.SM_HOST_NAME) {
+      return fail(new GoogleRecaptchaInvalidHostnameError());
     }
     
     try {
       const result = await this.voteRepository.addVote(vote);
       return success(result);
     } catch (e) {
-      return fail(new AddVoteError());
+      return fail(new UnexpectedError());
     }
   }
 }
