@@ -25,7 +25,7 @@ export const PerksView = () => {
         <Stack spacing={2} sx={{ mt: 4 }}>
           <Perk
             imageUrl="/assets/monitor-play.svg"
-            title="1 CD e um videoclip"
+            title="1 CD e 1 videoclipe"
             subTitle="(Produzidos e distribuídos pelo Sua Música Digital)"
           />
           <Perk
