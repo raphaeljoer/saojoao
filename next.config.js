@@ -27,7 +27,12 @@ const dates = {
   NEXT_PUBLIC_VOTING_DATE_END: process.env.NEXT_PUBLIC_VOTING_DATE_END,
 };
 
+const security = {
+  NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID: process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID,
+};
+
 const env = {
+  ...security,
   ...dates,
   ...metaTags,
   ...mongodb,

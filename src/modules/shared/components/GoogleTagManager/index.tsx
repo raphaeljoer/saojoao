@@ -6,7 +6,7 @@ type Props = {
 
 export const GoogleTagManager = ({ id }: Props) => {
   return (
-    <>
+    <div className="google-tag-manager">
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${id}`}
         strategy="afterInteractive"
@@ -20,6 +20,6 @@ export const GoogleTagManager = ({ id }: Props) => {
           gtag('config', '${id}');
         `}
       </Script>
-    </>
+    </div>
   );
 };

@@ -5,7 +5,7 @@ export function FloatingSVGComponent() {
   return (
     <Box
       sx={{
-        display: {md: 'flex', xs: 'none'},
+        display: { md: 'flex', xs: 'none' },
         position: 'fixed',
         top: 0,
         left: 0,

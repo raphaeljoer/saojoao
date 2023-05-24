@@ -39,6 +39,8 @@ const element = {
   backgroundImage: 'url(/assets/bandeira.svg)',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
+  marginTop: -4,
+  marginBottom: -4
 };
 
 const element2 = {
@@ -50,6 +52,8 @@ const element2 = {
   backgroundImage: 'url(/assets/bandeira-2.svg)',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
+  marginTop: -4,
+  marginBottom: -4
 };
 
 const element3 = {
@@ -61,6 +65,8 @@ const element3 = {
   backgroundImage: 'url(/assets/bandeira-3.svg)',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
+  marginTop: -4,
+  marginBottom: -4
 };
 
 export const confetti1 = {
@@ -160,9 +166,8 @@ export const container: SxProps<Theme> = {
   left: 0,
   right: 0,
   bottom: 0,
-  height: '100%',
-  width: '100%',
-  mt: -4,
+  height: '100vh',
+  width: '100vw',
   pointerEvents: 'none',
   zIndex: (theme) => theme.zIndex.drawer,
   ...keyframes

@@ -26,7 +26,8 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
       return fail(new GoogleRecaptchaInvalidTokenError());
     }
 
-    if (recaptchaResult.data.hostname !== process.env.SM_HOST_NAME) {
+    const hosts: string[] = JSON.parse(process.env.SM_HOST_NAME_LIST || '[]');
+    if (!hosts.includes(recaptchaResult.data.hostname)) {
       return fail(new GoogleRecaptchaInvalidHostnameError());
     }
     

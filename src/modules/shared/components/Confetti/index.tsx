@@ -3,7 +3,7 @@ import * as styles from './styles';
 
 export const Confetti = () => {
   return (
-    <Box sx={styles.container}>
+    <Box id="confetti" sx={styles.container}>
       <Box sx={styles.confetti1} />
       <Box sx={styles.confetti2} />
       <Box sx={styles.confetti3} />
