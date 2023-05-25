@@ -1,12 +1,11 @@
 import { FloatingSVGComponent } from '@/modules/2023/shared/components/FloatingSVGComponent';
 import { theme } from '@/modules/2023/theme';
-import { Fonts } from '@/modules/shared/components/Fonts';
+import { GoogleRecaptchaV3 } from '@/modules/shared/components/GoogleRecaptchaV3';
 import { GoogleTagManager } from '@/modules/shared/components/GoogleTagManager';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { AppProps } from 'next/app';
-import { Odibee_Sans } from 'next/font/google';
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -16,8 +15,6 @@ import '../app/styles/global.css';
 import '../app/styles/nprogress.css';
 import '../app/styles/toast.css';
 import { cache } from './_document';
-
-const odibeeSans = Odibee_Sans({ weight: "400", subsets: ["latin"] });
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,10 +51,9 @@ export default function App({ Component, pageProps }: AppProps) {
             theme="light"
             progressClassName="toast-progress"
           />
-            <Fonts fonts={[odibeeSans]}>
               <Component {...pageProps} />
               <GoogleTagManager id={process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID || ''} />
-            </Fonts>
+              <GoogleRecaptchaV3 siteKey={process.env.SM_RECAPTCHA_V3_SITE_KEY || ''} />
             <FloatingSVGComponent />
           <ToastContainer />
         </QueryClientProvider>

@@ -7,7 +7,8 @@ import { FakeVoteRepository } from "../../fakes/fake-vote-repository";
 
 describe("AddVoteUseCase", () => {
   test("Should add a new vote when recaptcha token is valid", async () => {
-    const validToken = "validToken";
+    const recaptchaTokenV2 = "validTokenV2";
+    const recaptchaTokenV3 = "validTokenV3";
     const vote: VoteDTO = {
       artistId: "artistId",
       votedAt: "01/01/2023",
@@ -15,7 +16,7 @@ describe("AddVoteUseCase", () => {
     };
 
     const voteRepository = new FakeVoteRepository();
-    const recaptchaGateway = new FakeRecaptchaGateway();
+    const recaptchaGateway = new FakeRecaptchaGateway('add_vote');
     const addVoteUseCase = new AddVoteUsecase({
       voteRepository,
       recaptchaGateway,
@@ -23,7 +24,8 @@ describe("AddVoteUseCase", () => {
 
     await addVoteUseCase.execute({
       vote,
-      token: validToken,
+      recaptchaTokenV2,
+      recaptchaTokenV3
     });
 
     const votes = await voteRepository.countVotes({ key: "artistId", value: vote.artistId });
@@ -31,7 +33,6 @@ describe("AddVoteUseCase", () => {
   });
 
   test("Should throw an error when recaptcha token is invalid", async () => {
-    const invalidToken = "invalidToken";
     const vote: VoteDTO = {
       artistId: "artistId",
       votedAt: "01/01/2023",
@@ -39,17 +40,20 @@ describe("AddVoteUseCase", () => {
     };
 
     const voteRepository = new FakeVoteRepository();
-    const recaptchaGateway = new FakeRecaptchaGateway();
+    const recaptchaGateway = new FakeRecaptchaGateway('add_vote');
     const addVoteUseCase = new AddVoteUsecase({ voteRepository, recaptchaGateway });
 
-    await assert.rejects(
-      async () => addVoteUseCase.execute({ vote, token: invalidToken }),
-      {
-        message: "Invalid recaptcha token",
-      }
-    );
 
-    const total = await voteRepository.countVotesTotal();
-    assert.strictEqual(total, 0);
+    const result01 = await addVoteUseCase.execute({ vote, recaptchaTokenV2: 'invalidTokenV2', recaptchaTokenV3: 'validTokenV3' })
+    assert.strictEqual(result01.isFailure(), true);
+    
+    const total01 = await voteRepository.countVotesTotal();
+    assert.strictEqual(total01, 0);
+    
+    const result02 = await addVoteUseCase.execute({ vote, recaptchaTokenV2: 'validTokenV2', recaptchaTokenV3: 'invalidTokenV3' })
+    assert.strictEqual(result02.isFailure(), true);
+
+    const total02 = await voteRepository.countVotesTotal();
+    assert.strictEqual(total02, 0);
   });
 });

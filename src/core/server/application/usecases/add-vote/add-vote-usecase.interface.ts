@@ -5,7 +5,11 @@ import { GoogleRecaptchaInvalidTokenError } from "../../errors/recaptcha-invalid
 import { UnexpectedError } from "../../errors/unexpected-error";
 import { UseCaseInterface } from "../usecase.interface";
 
-export type AddVoteUseCaseInput = { vote: VoteDTO; token: string; };
+export type AddVoteUseCaseInput = { 
+  vote: VoteDTO;
+  recaptchaTokenV2: string;
+  recaptchaTokenV3: string;
+};
 
 export type AddVoteUsecaseOutput = Either<
   GoogleRecaptchaInvalidTokenError |

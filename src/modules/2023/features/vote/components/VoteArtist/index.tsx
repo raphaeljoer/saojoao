@@ -10,15 +10,26 @@ import { toast } from "react-toastify";
 
 type Props = {
   artist: SerializedArtist;
-}
+};
 
 export const VoteArtist = ({ artist }: Props) => {
   const router = useRouter();
   const addVoteMutation = useAddVoteMutation();
   const [openRecaptchaChallenge, setOpenRecaptchaChallenge] = useState(false);
   
-  const handleRecaptcha = useCallback((token: any) => {
-    addVoteMutation.mutate({ artistId: artist.artistId, recaptchaToken: token });
+  const handleRecaptcha = useCallback(async (recaptchaTokenV2: any) => {
+    window.grecaptcha.ready(async function() {
+      const siteKey = process.env.SM_RECAPTCHA_V3_SITE_KEY || '';
+      const action = 'add_vote';
+      const recaptchaTokenV3 = await window.grecaptcha.execute(siteKey, { action });
+      
+      addVoteMutation.mutate({ 
+        artistId: artist.artistId, 
+        recaptchaTokenV2, 
+        recaptchaTokenV3
+      });
+    });
+
     setOpenRecaptchaChallenge(false);
   }, [artist.artistId, addVoteMutation]);
 

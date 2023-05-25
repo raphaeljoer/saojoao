@@ -12,8 +12,13 @@ export class GoogleRecaptchaGateway implements RecaptchaGatewayInterface {
     this.httpClient = this.props.httpClient;
   }
    
-  async verify(recaptchaToken: string) {
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SM_RECAPTCHA_V2_SECRET_KEY}&response=${recaptchaToken}`;
-    return this.httpClient.post(url);
+  async verifyTokenV2(recaptchaTokenV2: string) {
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SM_RECAPTCHA_V2_SECRET_KEY}&response=${recaptchaTokenV2}`;
+    return await this.httpClient.post(url);
+  }
+
+  async verifyTokenV3(recaptchaTokenV3: string) {
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SM_RECAPTCHA_V3_SECRET_KEY}&response=${recaptchaTokenV3}`;
+    return await this.httpClient.post(url);
   }
 }

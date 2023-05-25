@@ -23,19 +23,29 @@ export class VoteController implements VoteControllerInterface {
       res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'artistId is required' });
       throw new Error('artistId is required');
     };
-    if(!req.body?.recaptchaToken) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'recaptchaToken is required' });
-      throw new Error('recaptchaToken is required');
+    if(!req.body?.recaptchaTokenV2) {
+      res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'recaptchaTokenV2 is required' });
+      throw new Error('recaptchaTokenV2 is required');
+    };
+    if(!req.body?.recaptchaTokenV3) {
+      res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'recaptchaTokenV3 is required' });
+      throw new Error('recaptchaTokenV3 is required');
     };
 
-    const token = req.body?.recaptchaToken;
+    const recaptchaTokenV2 = req.body?.recaptchaTokenV2;
+    const recaptchaTokenV3 = req.body?.recaptchaTokenV3;
+
     const vote: VoteDTO = {
       artistId: req.body?.artistId,
       votedAt: new Date().toISOString(),
       ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress || ''
     };
     
-    const response = await this.addVoteUsecase.execute({ vote, token });
+    const response = await this.addVoteUsecase.execute({ 
+      vote, 
+      recaptchaTokenV2, 
+      recaptchaTokenV3 
+    });
     
     if(response.isFailure()) {
       res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);

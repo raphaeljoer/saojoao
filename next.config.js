@@ -11,6 +11,12 @@ const recaptchaV2 = {
   SM_RECAPTCHA_V2_SECRET_KEY: process.env.SM_RECAPTCHA_V2_SECRET_KEY
 };
 
+const recaptchaV3 = {
+  SM_RECAPTCHA_V3_SITE_KEY: process.env.SM_RECAPTCHA_V3_SITE_KEY,
+  SM_RECAPTCHA_V3_SECRET_KEY: process.env.SM_RECAPTCHA_V3_SECRET_KEY,
+  SM_RECAPTCHA_V3_MIN_SCORE: process.env.SM_RECAPTCHA_V3_MIN_SCORE
+};
+
 const tagManager = {
   SM_GOOGLE_ANALYTICS_ID: process.env.SM_GOOGLE_ANALYTICS_ID,
   SM_GOOGLE_TAG_MANAGER_ID: process.env.SM_GOOGLE_TAG_MANAGER_ID,
@@ -37,6 +43,7 @@ const env = {
   ...metaTags,
   ...mongodb,
   ...recaptchaV2,
+  ...recaptchaV3,
   ...tagManager
 };
 

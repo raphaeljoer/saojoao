@@ -1,4 +1,5 @@
 export type VoteInputType = {
   artistId: string;
-  recaptchaToken: string;
+  recaptchaTokenV2: string;
+  recaptchaTokenV3: string;
 };
