@@ -1,0 +1,28 @@
+{
+  "name": "Talento 2023",
+  "short_name": "Talento",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#eb175f",
+  "theme_color": "#eb175f",
+  "icons": [
+    {
+      "src": "/assets/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/launch-image-iphone.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "media": "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+    },
+    {
+      "src": "/assets/launch-image-ipad.png",
+      "sizes": "1536x2048",
+      "type": "image/png",
+      "media": "(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+    }
+  ]
+}
