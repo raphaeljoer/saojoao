@@ -68,8 +68,8 @@ export const RulesView = () => {
             </Typography>
             <Typography variant="body1" component="p" gutterBottom>
               {'Todos os 5 (cinco) finalistas selecionados (Kwai e Instagram) integrarão a terceira etapa do concurso com votação aberta popular. Através do link '}
-              <a href="https://www.suamusica.com.br/talentovotação">{'https://www.suamusica.com.br/talento'}</a>.
-              {' A votação iniciará no dia 05/06/2023, às 10h, e se encerrará no dia 15/06/2023, às 23h59.'}
+              <a href="https://talentosaojoao.suamusica.com.br/">{'talentosaojoao.suamusica.com.br'}</a>.
+              {' A votação iniciará no dia 05/06/2023, às 10h00, e se encerrará no dia 15/06/2023, às 23h59.'}
             </Typography>
           </span>
           <span>
@@ -159,7 +159,7 @@ export const RulesView = () => {
               </Typography>
               <Typography variant="body1" component="p" gutterBottom>
                 {'6.2 O interessado, no ato da participação deste concurso, estará automaticamente autorizando a Sua Música e Kwai, cedendo, para tanto, os direitos autorais de voz/som e imagem, de modo gratuito, definitivo e irrevogável, liberando também a utilização de seu nome e imagens/fotos publicadas nas redes sociais da Sua Música e Kwai, bem como no site de divulgação de votação popular, sob o domínio: '}
-                <a href="https://www.suamusica.com.br/talento">{'https://www.suamusica.com.br/talento'}</a>
+                <a href="https://talentosaojoao.suamusica.com.br/">{'talentosaojoao.suamusica.com.br'}</a>
               </Typography>
               <Typography variant="body1" component="p" gutterBottom>
                 {'6.3 É fundamental ter um perfil válido nas redes sociais (Instagram e Kwai) para participar do concurso. Perfis falsos, criados apenas para participar de promoções, serão automaticamente desclassificados.'}
