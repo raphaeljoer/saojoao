@@ -6,17 +6,17 @@ export class FakeRecaptchaGateway implements RecaptchaGatewayInterface {
 
   async verifyTokenV2(token: string): Promise<any> {
     if (token === "validTokenV2") {
-      return { data: { success: true, hostname: 'localhost' }};
+      return { success: true, hostname: 'localhost' };
     } else {
-      return { data: { success: false, hostname: 'localhost' }};
+      return { success: false, hostname: 'localhost' };
     }
   }
 
   async verifyTokenV3(token: string): Promise<any> {
     if (token === "validTokenV3") {
-      return { data: { success: true, hostname: 'localhost', score: 0.9, action: this.action }};
+      return { success: true, hostname: 'localhost', score: 0.9, action: this.action };
     } else {
-      return { data: { success: false, hostname: 'localhost', score: 0.9, action: this.action }};
+      return { success: false, hostname: 'localhost', score: 0.9, action: this.action };
     }
   }
 }

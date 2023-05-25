@@ -9,10 +9,10 @@ export class AxiosHttpClient implements HttpClientInterface {
   }
   
   async get<T>(url: string): Promise<T> {
-    return await this.httpClient.get(url);
+    return (await this.httpClient.get(url)).data;
   }
   
   async post<T>(url: string, body: any): Promise<T> {
-    return await this.httpClient.post(url, body);
+    return (await this.httpClient.post(url, body)).data;
   }
 };

@@ -4,7 +4,7 @@ import { Artist } from "@/modules/2023/shared/components/Artist";
 import { TremblingButton } from "@/modules/2023/shared/components/TremblingButton";
 import { Loading } from "@/modules/shared/components/Loading";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
 
@@ -23,33 +23,47 @@ export const VoteArtist = ({ artist }: Props) => {
       const action = 'add_vote';
       const recaptchaTokenV3 = await window.grecaptcha.execute(siteKey, { action });
       
-      addVoteMutation.mutate({ 
+      addVoteMutation.mutate({
         artistId: artist.artistId, 
         recaptchaTokenV2, 
         recaptchaTokenV3
       });
     });
-
-    setOpenRecaptchaChallenge(false);
   }, [artist.artistId, addVoteMutation]);
 
-  const handleClick = useCallback(() => {
+  useEffect(() => {
+    if(addVoteMutation.isLoading) {
+      toast(`Estamos verificando o seu voto`, { type: 'info' });
+      setOpenRecaptchaChallenge(false);
+    }
+  },[addVoteMutation.isLoading]);
+
+  useEffect(() => {
+    if(addVoteMutation.isSuccess) {
+      toast(`Você votou em ${artist.name}!`, { type: 'success' });
+      router.push(`/share/${artist.slug}`);
+    }
+  },[addVoteMutation.isSuccess]);
+
+  useEffect(() => {
+    if(addVoteMutation.error) {
+      const error = addVoteMutation.error as any;
+      const message = error.response?.data?.message;
+      toast(`Não foi possível registrar o seu voto${message ? `: ${message}` : ''}`, { 
+        type: 'warning', autoClose: 7000 
+      });
+      addVoteMutation.reset();
+    }
+  },[addVoteMutation.error]);
+  
+  const handleAddVote = useCallback(() => {
     setOpenRecaptchaChallenge(true);
-  }, [])
-
-  if(addVoteMutation.isSuccess) {
-    toast(`Você votou em ${artist.name}!`);
-    router.push(`/share/${artist.slug}`);
-  }
-
-  if(addVoteMutation.isError) {
-    toast(`Não foi possível registrar o seu voto`);
-  }
-
+  }, []);
+  
   return (
     <Artist artist={artist}>
       {!openRecaptchaChallenge && (
-        <TremblingButton onClick={handleClick} disabled={addVoteMutation.isLoading || addVoteMutation.isSuccess}>
+        <TremblingButton onClick={handleAddVote} disabled={addVoteMutation.isLoading || addVoteMutation.isSuccess}>
           {(addVoteMutation.isLoading || addVoteMutation.isSuccess) ? <Loading circularProgressProps={{
             color: "primary",
             size: 24,

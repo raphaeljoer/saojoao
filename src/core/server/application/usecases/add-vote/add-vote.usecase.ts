@@ -25,31 +25,31 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
     const recaptchaV2Result = await this.recaptchaGateway.verifyTokenV2(recaptchaTokenV2);
     const hosts: string[] = JSON.parse(process.env.SM_HOST_NAME_LIST || '[]');
     
-    if (!recaptchaV2Result.data.success) {
+    if (!recaptchaV2Result.success) {
       return fail(new GoogleRecaptchaInvalidTokenError());
     }
 
-    if (!hosts.includes(recaptchaV2Result.data.hostname)) {
+    if (!hosts.includes(recaptchaV2Result.hostname)) {
       return fail(new GoogleRecaptchaInvalidHostnameError());
     }
 
     const recaptchaV3Result = await this.recaptchaGateway.verifyTokenV3(recaptchaTokenV3);
 
-    if (!recaptchaV3Result.data.success) {
+    if (!recaptchaV3Result.success) {
       return fail(new GoogleRecaptchaInvalidTokenError());
     }
 
-    if (!hosts.includes(recaptchaV3Result.data.hostname)) {
+    if (!hosts.includes(recaptchaV3Result.hostname)) {
       return fail(new GoogleRecaptchaInvalidHostnameError());
     }
 
-    if (recaptchaV3Result.data.action !== 'add_vote') {
+    if (recaptchaV3Result.action !== 'add_vote') {
       return fail(new GoogleRecaptchaInvalidActionError());
     }
 
-    console.log('recaptchaV3.score', recaptchaV3Result.data.score, 'user_ip', vote.ip, 'artist_voted', vote.artistId);
+    console.log('recaptchaV3.score', recaptchaV3Result.score, 'user_ip', vote.ip, 'artist_voted', vote.artistId);
 
-    if(recaptchaV3Result.data.score <= Number(process.env.SM_RECAPTCHA_V3_MIN_SCORE || 0.8)) {
+    if(recaptchaV3Result.score <= Number(process.env.SM_RECAPTCHA_V3_MIN_SCORE || 0.6)) {
       return fail(new GoogleRecaptchaRobotAlertError());
     }
     

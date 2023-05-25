@@ -41,7 +41,7 @@ export class VoteController implements VoteControllerInterface {
       ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress || ''
     };
     
-    const response = await this.addVoteUsecase.execute({ 
+    const response = await this.addVoteUsecase.execute({
       vote, 
       recaptchaTokenV2, 
       recaptchaTokenV3 
@@ -49,7 +49,7 @@ export class VoteController implements VoteControllerInterface {
     
     if(response.isFailure()) {
       res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
-      throw new Error(response.value.name);
+      return;
     };
     
     res.status(HttpStatusCode.CREATED).json({ message: 'Vote added' });
@@ -60,7 +60,7 @@ export class VoteController implements VoteControllerInterface {
 
     if(response.isFailure()) {
       res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
-      throw new Error(response.value.name);
+      return;
     }
 
     res.status(HttpStatusCode.OK).json({ result: response.value });

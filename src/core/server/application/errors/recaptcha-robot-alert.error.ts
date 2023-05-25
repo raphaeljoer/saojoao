@@ -2,7 +2,7 @@ import { ResponseErrorInterface } from "@/core/shared/errors/response.error.inte
 
 export class GoogleRecaptchaRobotAlertError extends Error implements ResponseErrorInterface {
   constructor () {
-    super('Google Recaptcha detectou que você é um robô')
+    super('Google reCAPTCHA detectou comportamento suspeito, tente novamente em algums instantes')
     this.name = 'GoogleRecaptchaRobotAlertError'
   }
 
