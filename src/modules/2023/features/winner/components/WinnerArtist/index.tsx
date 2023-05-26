@@ -8,16 +8,15 @@ type Props = {
 };
 
 export const WinnerArtist = ({ artist }: Props) => {
-  
   const percentage = useMemo(() => {
     return artist.percentage?.toFixed(2);
-  },[artist.percentage]);
+  }, [artist.percentage]);
 
   return (
-   <Artist artist={artist}>
-    <Typography variant="body1" textAlign="center" fontSize={18}>
-      {`com ${percentage}% dos votos, ${artist.name} é o Talento de São João 2023 do Sua Música!`}
-    </Typography>
-   </Artist>
+    <Artist artist={artist}>
+      <Typography variant="body1" textAlign="center" fontSize={18}>
+        {`com ${percentage}% dos votos, ${artist.name} é o Talento de São João 2023 do Sua Música!`}
+      </Typography>
+    </Artist>
   );
 };

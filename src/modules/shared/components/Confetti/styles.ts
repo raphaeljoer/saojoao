@@ -72,91 +72,91 @@ const element3 = {
 export const confetti1 = {
   ...element,
   left: '10%',
-  animationDelay: 0,
+  animationDelay: 0
 };
 
 export const confetti2 = {
   ...element,
   left: '20%',
-  animationDelay: '-5s',
+  animationDelay: '-5s'
 };
 
 export const confetti3 = {
   ...element,
   left: '30%',
-  animationDelay: '-3s',
+  animationDelay: '-3s'
 };
 
 export const confetti4 = {
   ...element,
   left: '40%',
-  animationDelay: '-2.5s',
+  animationDelay: '-2.5s'
 };
 
 export const confetti5 = {
   ...element,
   left: '50%',
-  animationDelay: '-9.5s',
+  animationDelay: '-9.5s'
 };
 
 export const confetti6 = {
   ...element,
   left: '60%',
-  animationDelay: '-6s',
+  animationDelay: '-6s'
 };
 
 export const confetti7 = {
   ...element3,
   left: '70%',
-  animationDelay: '-1.5s',
+  animationDelay: '-1.5s'
 };
 
 export const confetti8 = {
   ...element,
   left: '80%',
-  animationDelay: '-2s',
+  animationDelay: '-2s'
 };
 
 export const confetti9 = {
   ...element,
   left: '90%',
-  animationDelay: '-3.5s',
+  animationDelay: '-3.5s'
 };
 
 export const confetti10 = {
   ...element,
   left: '100%',
-  animationDelay: '-2.5s',
+  animationDelay: '-2.5s'
 };
 
 export const confetti11 = {
   ...element2,
   left: '60%',
-  animationDelay: '-6s',
+  animationDelay: '-6s'
 };
 
 export const confetti12 = {
   ...element3,
   left: '70%',
-  animationDelay: '-1.5s',
+  animationDelay: '-1.5s'
 };
 
 export const confetti13 = {
   ...element2,
   left: '85%',
-  animationDelay: '-7s',
+  animationDelay: '-7s'
 };
 
 export const confetti14 = {
   ...element3,
   left: '90%',
-  animationDelay: '-0.5s',
+  animationDelay: '-0.5s'
 };
 
 export const confetti15 = {
   ...element,
   left: '100%',
-  animationDelay: '-4s',
+  animationDelay: '-4s'
 };
 
 export const container: SxProps<Theme> = {

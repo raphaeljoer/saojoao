@@ -9,7 +9,7 @@ type Props = {
 
 export const ProgressBar = ({ progress, percentage }: Props) => {
   const percent = numI18n({ value: percentage }).slice(0, 4);
-  
+
   return (
     <Box sx={styles.container}>
       <Box id="bar" sx={styles.progress}>

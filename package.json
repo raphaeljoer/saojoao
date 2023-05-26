@@ -7,16 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "prettier": "prettier --write .",
     "test": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
-    "@types/node": "20.1.4",
-    "@types/react": "18.2.6",
-    "@types/react-dom": "18.2.4",
-    "@types/react-google-recaptcha": "^2.1.5",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "eslint": "8.40.0",
@@ -33,6 +30,12 @@
     "vitest": "^0.31.0"
   },
   "devDependencies": {
-    "@types/nprogress": "^0.2.0"
+    "@types/node": "20.1.4",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "18.2.6",
+    "@types/react-dom": "18.2.4",
+    "@types/react-google-recaptcha": "^2.1.5",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^2.8.8"
   }
 }

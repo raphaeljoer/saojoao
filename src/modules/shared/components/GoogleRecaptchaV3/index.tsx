@@ -2,7 +2,7 @@ import Script from 'next/script';
 
 type Props = {
   siteKey: string;
-}
+};
 
 export const GoogleRecaptchaV3 = ({ siteKey }: Props) => {
   return (

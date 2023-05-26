@@ -1,9 +1,9 @@
-import { HttpStatusCode } from "@/core/shared/enum/http-status-code.enum";
-import { NextApiRequest, NextApiResponse } from "next";
-import { AddVoteUsecaseInterface } from "../../application/usecases/add-vote/add-vote-usecase.interface";
-import { GetResultUsecaseInterface } from "../../application/usecases/get-result/get-result-usecase.interface";
-import { VoteDTO } from "../../domain/dto/vote.dto.type";
-import { VoteControllerInterface } from "./vote.controller.interface";
+import { HttpStatusCode } from '@/core/shared/enum/http-status-code.enum';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { AddVoteUsecaseInterface } from '../../application/usecases/add-vote/add-vote-usecase.interface';
+import { GetResultUsecaseInterface } from '../../application/usecases/get-result/get-result-usecase.interface';
+import { VoteDTO } from '../../domain/dto/vote.dto.type';
+import { VoteControllerInterface } from './vote.controller.interface';
 
 type Props = {
   addVoteUseCase: AddVoteUsecaseInterface;
@@ -19,18 +19,24 @@ export class VoteController implements VoteControllerInterface {
   }
 
   async addVote(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    if(!req.body?.artistId) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'artistId is required' });
+    if (!req.body?.artistId) {
+      res
+        .status(HttpStatusCode.BAD_REQUEST)
+        .json({ message: 'artistId is required' });
       throw new Error('artistId is required');
-    };
-    if(!req.body?.recaptchaTokenV2) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'recaptchaTokenV2 is required' });
+    }
+    if (!req.body?.recaptchaTokenV2) {
+      res
+        .status(HttpStatusCode.BAD_REQUEST)
+        .json({ message: 'recaptchaTokenV2 is required' });
       throw new Error('recaptchaTokenV2 is required');
-    };
-    if(!req.body?.recaptchaTokenV3) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'recaptchaTokenV3 is required' });
+    }
+    if (!req.body?.recaptchaTokenV3) {
+      res
+        .status(HttpStatusCode.BAD_REQUEST)
+        .json({ message: 'recaptchaTokenV3 is required' });
       throw new Error('recaptchaTokenV3 is required');
-    };
+    }
 
     const recaptchaTokenV2 = req.body?.recaptchaTokenV2;
     const recaptchaTokenV3 = req.body?.recaptchaTokenV3;
@@ -40,29 +46,29 @@ export class VoteController implements VoteControllerInterface {
       votedAt: new Date().toISOString(),
       ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress || ''
     };
-    
+
     const response = await this.addVoteUsecase.execute({
-      vote, 
-      recaptchaTokenV2, 
-      recaptchaTokenV3 
+      vote,
+      recaptchaTokenV2,
+      recaptchaTokenV3
     });
-    
-    if(response.isFailure()) {
+
+    if (response.isFailure()) {
       res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
       return;
-    };
-    
+    }
+
     res.status(HttpStatusCode.CREATED).json({ message: 'Vote added' });
   }
-    
+
   async getResult(_: NextApiRequest, res: NextApiResponse): Promise<void> {
     const response = await this.getResultUsecase.execute();
 
-    if(response.isFailure()) {
+    if (response.isFailure()) {
       res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
       return;
     }
 
     res.status(HttpStatusCode.OK).json({ result: response.value });
   }
-};
+}

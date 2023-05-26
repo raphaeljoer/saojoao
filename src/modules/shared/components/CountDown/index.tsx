@@ -28,7 +28,11 @@ export const Countdown = ({ prefix, suffix, targetTime }: Props) => {
       const minutes = formatNumber(Math.floor((distance / (1000 * 60)) % 60));
       const seconds = formatNumber(Math.floor((distance / 1000) % 60));
 
-      setCountdown(`${prefix || ''} ${days} dias ${hours}h ${minutes}m ${seconds}s ${suffix || ''}`);
+      setCountdown(
+        `${prefix || ''} ${days} dias ${hours}h ${minutes}m ${seconds}s ${
+          suffix || ''
+        }`
+      );
     };
 
     calculateCountdown();

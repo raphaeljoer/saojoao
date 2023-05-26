@@ -1,5 +1,5 @@
-import { Artist, SerializedArtist } from "./artist";
-import { Entity } from "./entity";
+import { Artist, SerializedArtist } from './artist';
+import { Entity } from './entity';
 
 type Props = {
   id?: string;
@@ -10,7 +10,7 @@ type Props = {
 export class Result extends Entity<SerializedArtist[]> {
   private readonly artists: Artist[];
   private readonly totalVotesCount: number;
-  
+
   constructor(props: Props) {
     super(props.id);
     this.artists = props.artists;
@@ -19,17 +19,20 @@ export class Result extends Entity<SerializedArtist[]> {
     this.setPositions();
     this.setPercentages();
     this.setProgress();
-  };
+  }
 
   sort(): void {
     this.artists.sort((a, b) => {
-      if(typeof a.votesCount !== 'number' || typeof b.votesCount !== 'number') {
+      if (
+        typeof a.votesCount !== 'number' ||
+        typeof b.votesCount !== 'number'
+      ) {
         throw new Error('votesCount is not defined');
       }
       return b.votesCount - a.votesCount;
     });
   }
-  
+
   setPositions(): void {
     this.artists.forEach((artist, index) => {
       artist.setPosition(index + 1);
@@ -38,7 +41,7 @@ export class Result extends Entity<SerializedArtist[]> {
 
   setPercentages(): void {
     this.artists.forEach((artist) => {
-      if(typeof artist.votesCount !== 'number') {
+      if (typeof artist.votesCount !== 'number') {
         throw new Error('Votes count is not defined');
       }
       artist.setPercentage((artist.votesCount / this.totalVotesCount) * 100);
@@ -47,7 +50,7 @@ export class Result extends Entity<SerializedArtist[]> {
 
   setProgress(): void {
     this.artists.forEach((artist) => {
-      if(typeof artist.votesCount !== 'number') {
+      if (typeof artist.votesCount !== 'number') {
         throw new Error('Votes count is not defined');
       }
       const winnerVotesCount = this.artists[0]?.votesCount ?? 0;

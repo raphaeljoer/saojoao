@@ -1,4 +1,6 @@
+import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { FloatingSVGComponent } from '@/modules/2023/shared/components/FloatingSVGComponent';
+import { FooterOrnament } from '@/modules/2023/shared/components/FooterOrnament';
 import { theme } from '@/modules/2023/theme';
 import { GoogleRecaptchaV3 } from '@/modules/shared/components/GoogleRecaptchaV3';
 import { GoogleTagManager } from '@/modules/shared/components/GoogleTagManager';
@@ -10,7 +12,7 @@ import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 import '../app/styles/global.css';
 import '../app/styles/nprogress.css';
 import '../app/styles/toast.css';
@@ -51,10 +53,16 @@ export default function App({ Component, pageProps }: AppProps) {
             theme="light"
             progressClassName="toast-progress"
           />
-              <Component {...pageProps} />
-              <GoogleTagManager id={process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID || ''} />
-              <GoogleRecaptchaV3 siteKey={process.env.SM_RECAPTCHA_V3_SITE_KEY || ''} />
-            <FloatingSVGComponent />
+          <Component {...pageProps} />
+          <GoogleTagManager
+            id={process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID || ''}
+          />
+          <GoogleRecaptchaV3
+            siteKey={process.env.SM_RECAPTCHA_V3_SITE_KEY || ''}
+          />
+          <FloatingSVGComponent />
+          <FooterOrnament />
+          <Balloons />
           <ToastContainer />
         </QueryClientProvider>
       </ThemeProvider>

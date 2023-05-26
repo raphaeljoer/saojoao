@@ -1,15 +1,15 @@
-import { Db } from "mongodb";
-import { ConnectionInterface } from "./connection.interface";
+import { Db } from 'mongodb';
+import { ConnectionInterface } from './connection.interface';
 
 type InsertOneInput = {
   collectionName: string;
   document: any;
-}
+};
 
 type CountDocumentInput = {
-  collectionName: string,
-  key: string,
-  value: string
+  collectionName: string;
+  key: string;
+  value: string;
 };
 
 export interface MongoDbConnectionInterface extends ConnectionInterface<Db> {

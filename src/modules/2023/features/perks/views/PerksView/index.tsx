@@ -38,15 +38,21 @@ export const PerksView = () => {
             title="R$ 20 mil"
             subTitle="(em mídia no Kwai)"
           />
-          <Perk
-            imageUrl="/assets/trophy.svg"
-            title="Troféu personalizado"
-          />
+          <Perk imageUrl="/assets/trophy.svg" title="Troféu personalizado" />
         </Stack>
         <Typography variant="h5" textAlign="center">
-          <Countdown prefix="Em:" targetTime={new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || '')} suffix="começa a votação"/>
+          <Countdown
+            prefix="Em:"
+            targetTime={
+              new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || '')
+            }
+            suffix="começa a votação"
+          />
         </Typography>
-        <CustomButton sx={{ maxWidth: 420 }} onClick={() => router.push('/rules')}>
+        <CustomButton
+          sx={{ maxWidth: 420 }}
+          onClick={() => router.push('/rules')}
+        >
           {'Consulte o regulamento'}
         </CustomButton>
       </Stack>

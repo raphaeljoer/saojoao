@@ -3,4 +3,4 @@ export interface ResponseErrorInterface {
     name: string;
     message: string;
   };
-};
+}

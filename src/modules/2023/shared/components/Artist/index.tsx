@@ -8,24 +8,17 @@ import * as styles from './styles';
 type Props = {
   artist: SerializedArtist;
   children: ReactNode;
-}
+};
 
 export const Artist = ({ artist, children }: Props) => {
   return (
     <Grid item sx={styles.container}>
-      <Cover 
-        cover={artist.picture} 
-        title={artist.name} 
-      />
-      <Stack sx={{ width: '100%', flexGrow: 1  }}>
+      <Cover cover={artist.picture} title={artist.name} />
+      <Stack sx={{ width: '100%', flexGrow: 1 }}>
         <Spacer />
-          <Typography
-            variant="h2"
-            align="center"
-            sx={styles.title}
-            >
-            {artist.name}
-          </Typography>
+        <Typography variant="h2" align="center" sx={styles.title}>
+          {artist.name}
+        </Typography>
         <Spacer />
         {children}
       </Stack>

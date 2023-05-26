@@ -8,7 +8,7 @@ export const container: SxProps<Theme> = {
   bottom: 0,
   left: 0,
   right: 0,
-  zIndex: (theme) => theme.zIndex.snackbar,
+  zIndex: (theme) => theme.zIndex.snackbar
 };
 
 export const logoContainer: SxProps<Theme> = {
@@ -25,5 +25,5 @@ export const logoContainer: SxProps<Theme> = {
   backdropFilter: 'blur(16px)',
   WebkitBackdropFilter: 'blur(16px)',
   MozBackdropFilter: 'blur(16px)',
-  boxShadow: '0px -4px 16px rgba(0, 0, 0, 0.1)',
+  boxShadow: '0px -4px 16px rgba(0, 0, 0, 0.1)'
 };

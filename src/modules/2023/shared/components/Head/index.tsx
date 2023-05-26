@@ -7,9 +7,9 @@ type Props = {
 
 export const MetaTags = (props: Props) => {
   const title = `${process.env.SM_META_TAG_TITLE} | ${props.pageName}`;
-  const url = process.env.SM_META_TAG_URL || "https://suamusica.com.br/";
+  const url = process.env.SM_META_TAG_URL || 'https://suamusica.com.br/';
   const description = props?.description || process.env.SM_META_TAG_DESCRIPTION;
-  const image = "/assets/cover-thumb.png";
+  const image = '/assets/cover-thumb.png';
 
   return (
     <Head>
@@ -37,5 +37,5 @@ export const MetaTags = (props: Props) => {
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
     </Head>
-  )
+  );
 };

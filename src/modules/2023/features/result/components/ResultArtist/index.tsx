@@ -7,7 +7,7 @@ import * as styles from './styles';
 
 type Props = {
   artist: SerializedArtist;
-}
+};
 
 export const ResultArtist = ({ artist }: Props) => {
   return (
@@ -20,9 +20,9 @@ export const ResultArtist = ({ artist }: Props) => {
         <Typography variant="h2" sx={styles.artist}>
           {artist.name}
         </Typography>
-        <ProgressBar 
-          progress={artist.progress || 0} 
-          percentage={artist.percentage || 0} 
+        <ProgressBar
+          progress={artist.progress || 0}
+          percentage={artist.percentage || 0}
         />
       </Stack>
     </Box>
