@@ -1,15 +1,15 @@
-import { ResponseErrorInterface } from "@/core/shared/errors/response.error.interface";
+import { ResponseErrorInterface } from '@/core/shared/errors/response.error.interface';
 
 export class UnexpectedError extends Error implements ResponseErrorInterface {
-  constructor (message?: string) {
-    super(`Error inesperado${message ? `: ${message}` : ''}`)
+  constructor(message?: string) {
+    super(`Error inesperado${message ? `: ${message}` : ''}`);
     this.name = 'UnexpectedError';
   }
 
-  get error () {
+  get error() {
     return {
       name: this.name,
       message: this.message
-    }
+    };
   }
 }

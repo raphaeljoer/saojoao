@@ -1,20 +1,20 @@
 import { Db, Document, InsertOneResult, MongoClient } from 'mongodb';
-import { ConnectionInterface } from "./connection.interface";
+import { ConnectionInterface } from './connection.interface';
 
 type Props = {
-  connectionUrl: string,
-  dbName: string
+  connectionUrl: string;
+  dbName: string;
 };
 
 type InsertOneInput = {
-  collectionName: string,
-  document: any
+  collectionName: string;
+  document: any;
 };
 
 type CountDocumentInput = {
-  collectionName: string,
-  key: string,
-  value: string
+  collectionName: string;
+  key: string;
+  value: string;
 };
 
 export class MongoDbConnection implements ConnectionInterface<Db> {
@@ -35,12 +35,12 @@ export class MongoDbConnection implements ConnectionInterface<Db> {
     const collection = db.collection(input.collectionName);
     return await collection.insertOne(input.document);
   }
-  
+
   async countDocuments(input: CountDocumentInput): Promise<number> {
     const db = await this.connect();
     const collection = db.collection(input.collectionName);
     return collection.countDocuments({ [input.key]: input.value });
-  } 
+  }
 
   async estimatedDocumentCount(collectionName: string): Promise<number> {
     const db = await this.connect();
@@ -54,7 +54,7 @@ export class MongoDbConnection implements ConnectionInterface<Db> {
     this.db = this.client.db(this.dbName);
     return this.db;
   }
-  
+
   async disconnect(): Promise<void> {
     if (this.client) {
       await this.client.close();

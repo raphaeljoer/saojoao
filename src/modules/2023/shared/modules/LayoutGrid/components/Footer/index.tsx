@@ -11,7 +11,7 @@ export function Footer() {
           width={193}
           height={32}
           alt="Kwai"
-        />      
+        />
       </Box>
     </Box>
   );

@@ -1,0 +1,8 @@
+build
+coverage
+.next
+.vscode
+node_modules
+.ideia
+public
+yarn.lock

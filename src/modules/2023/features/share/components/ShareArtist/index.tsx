@@ -9,23 +9,23 @@ import * as styles from './styles';
 
 type Props = {
   artist: SerializedArtist;
-}
+};
 
 export const ShareArtist = ({ artist }: Props) => {
   const router = useRouter();
-  
+
   const handleVoteAgain = useCallback(() => {
     router.push('/vote');
-  },[router]);
+  }, [router]);
 
   const handlePartialResult = useCallback(() => {
     router.push('/result');
-  },[router]);
+  }, [router]);
 
   return (
     <Box sx={styles.container}>
       <Cover cover={artist.picture} title={artist.name} />
-      <Stack spacing={2} sx={{ width: '100%'}}>
+      <Stack spacing={2} sx={{ width: '100%' }}>
         <Spacer />
         <Typography
           variant="h2"

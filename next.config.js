@@ -19,7 +19,7 @@ const recaptchaV3 = {
 
 const tagManager = {
   SM_GOOGLE_ANALYTICS_ID: process.env.SM_GOOGLE_ANALYTICS_ID,
-  SM_GOOGLE_TAG_MANAGER_ID: process.env.SM_GOOGLE_TAG_MANAGER_ID,
+  SM_GOOGLE_TAG_MANAGER_ID: process.env.SM_GOOGLE_TAG_MANAGER_ID
 };
 
 const metaTags = {
@@ -30,11 +30,12 @@ const metaTags = {
 
 const dates = {
   NEXT_PUBLIC_VOTING_DATE_START: process.env.NEXT_PUBLIC_VOTING_DATE_START,
-  NEXT_PUBLIC_VOTING_DATE_END: process.env.NEXT_PUBLIC_VOTING_DATE_END,
+  NEXT_PUBLIC_VOTING_DATE_END: process.env.NEXT_PUBLIC_VOTING_DATE_END
 };
 
 const security = {
-  NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID: process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID,
+  NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID:
+    process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID
 };
 
 const env = {
@@ -58,6 +59,6 @@ const images = {
 const nextConfig = {
   env,
   images
-}
+};
 
 module.exports = nextConfig;

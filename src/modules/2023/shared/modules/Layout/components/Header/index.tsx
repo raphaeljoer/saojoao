@@ -8,12 +8,12 @@ export function Header() {
       <Box sx={styles.logoContainer}>
         <Box sx={styles.logo}>
           <Image
-          src="/assets/logo-saojoao.svg"
-          width={195}
-          height={160}
-          alt="logo"
-          priority
-        />
+            src="/assets/logo-saojoao.svg"
+            width={195}
+            height={160}
+            alt="logo"
+            priority
+          />
         </Box>
       </Box>
     </Box>

@@ -1,8 +1,8 @@
-import { VoteView } from "@/modules/2023";
-import { NextPage } from "next";
+import { VoteView } from '@/modules/2023';
+import { NextPage } from 'next';
 
 const VotePage: NextPage = () => {
-  return <VoteView />
+  return <VoteView />;
 };
 
 export default VotePage;

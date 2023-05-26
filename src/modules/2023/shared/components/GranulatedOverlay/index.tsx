@@ -2,7 +2,8 @@ import { Box } from '@mui/material';
 
 export const GranulatedOverlay = () => {
   return (
-    <Box sx={{
+    <Box
+      sx={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -11,7 +12,7 @@ export const GranulatedOverlay = () => {
         background: `radial-gradient(circle, rgba(0,0,0,0.01) 1%, transparent 100%), radial-gradient(circle, rgba(0,0,0,0.01) 1%, black 100%)`,
         backgroundSize: '4px 4px',
         opacity: 0.6,
-        zIndex: (theme) => theme.zIndex.tooltip + 1, 
+        zIndex: (theme) => theme.zIndex.tooltip + 1,
         pointerEvents: 'none'
       }}
     />

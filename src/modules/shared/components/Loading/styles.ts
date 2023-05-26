@@ -1,4 +1,4 @@
-import { StylesProps } from "../../types/styles-props";
+import { StylesProps } from '../../types/styles-props';
 
 export const container: StylesProps = {
   display: 'flex',

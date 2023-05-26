@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const artists = await coreClient.api.getArtists();
   const artist = artists.find((artist) => artist.slug === context.params?.slug);
 
-  if(!artist) {
+  if (!artist) {
     return {
       notFound: true
     };

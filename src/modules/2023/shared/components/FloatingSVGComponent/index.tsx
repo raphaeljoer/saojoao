@@ -20,16 +20,33 @@ export function FloatingSVGComponent() {
         zIndex: -1
       }}
     >
-      <Box className="floating-item" sx={{ position: 'absolute', top: 80, left: 80 }}>
+      <Box
+        className="floating-item"
+        sx={{ position: 'absolute', top: 80, left: 80 }}
+      >
         <Image src="/assets/balao.svg" alt="Balão" width={160} height={160} />
       </Box>
-      <Box className="floating-item" sx={{ position: 'absolute', bottom: 80, right: 60 }}>
+      <Box
+        className="floating-item"
+        sx={{ position: 'absolute', bottom: 80, right: 60 }}
+      >
         <Image src="/assets/chapeu.svg" alt="Chapéu" width={80} height={80} />
       </Box>
-      <Box className="floating-item-2" sx={{ position: 'absolute', top: 80, right: 120 }}>
-        <Image src="/assets/bandeira.svg" alt="Bandeira" width={180} height={180} />
+      <Box
+        className="floating-item-2"
+        sx={{ position: 'absolute', top: 80, right: 120 }}
+      >
+        <Image
+          src="/assets/bandeira.svg"
+          alt="Bandeira"
+          width={180}
+          height={180}
+        />
       </Box>
-      <Box className="floating-item-2" sx={{ position: 'absolute', bottom: 120, left: 88 }}>
+      <Box
+        className="floating-item-2"
+        sx={{ position: 'absolute', bottom: 120, left: 88 }}
+      >
         <Image src="/assets/lua.svg" alt="Bandeira" width={80} height={80} />
       </Box>
     </Box>

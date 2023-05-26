@@ -20,7 +20,7 @@ export const palette: ThemeOptions = {
       color: '#eb175f',
       colorHover: '#E30267',
       background: '#FFC014',
-      backgroundHover: '#E5A800',
+      backgroundHover: '#E5A800'
     },
     secondary: {
       light: '#E30267',

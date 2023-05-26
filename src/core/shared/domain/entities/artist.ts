@@ -33,7 +33,7 @@ export class Artist {
     this.artistId = props.artistId;
     this.picture = props.picture;
     this.name = props.name;
-  };
+  }
 
   get slug() {
     return this.artistId.replace(/_/g, '-');
@@ -44,11 +44,11 @@ export class Artist {
   }
 
   get share() {
-    const path = `/assets/artists`
+    const path = `/assets/artists`;
     return {
       feed: `${path}/${this.slug}-feed.jpeg`,
       stories: `${path}/${this.slug}-stories.jpeg`
-    }
+    };
   }
 
   setVotesCount(votesCount: number) {

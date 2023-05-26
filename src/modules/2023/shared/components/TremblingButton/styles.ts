@@ -1,40 +1,40 @@
-import { StylesProps } from "@/modules/shared/types/styles-props";
+import { StylesProps } from '@/modules/shared/types/styles-props';
 
 const tremor = {
   '@keyframes tremor': {
     '0%': {
-      transform: 'translateX(0)',
+      transform: 'translateX(0)'
     },
     '10%': {
-      transform: 'translateX(-1px) rotate(-0.5deg)',
+      transform: 'translateX(-1px) rotate(-0.5deg)'
     },
     '20%': {
-      transform: 'translateX(1px) rotate(0.5deg)',
+      transform: 'translateX(1px) rotate(0.5deg)'
     },
     '30%': {
-      transform: 'translateX(-1px) rotate(-0.5deg)',
+      transform: 'translateX(-1px) rotate(-0.5deg)'
     },
     '40%': {
-      transform: 'translateX(1px) rotate(0.5deg)',
+      transform: 'translateX(1px) rotate(0.5deg)'
     },
     '50%': {
-      transform: 'translateX(-1px) rotate(-0.5deg)',
+      transform: 'translateX(-1px) rotate(-0.5deg)'
     },
     '60%': {
-      transform: 'translateX(1px) rotate(0.5deg)',
+      transform: 'translateX(1px) rotate(0.5deg)'
     },
     '70%': {
-      transform: 'translateX(-1px) rotate(-0.5deg)',
+      transform: 'translateX(-1px) rotate(-0.5deg)'
     },
     '80%': {
-      transform: 'translateX(1px) rotate(0.5deg)',
+      transform: 'translateX(1px) rotate(0.5deg)'
     },
     '90%': {
-      transform: 'translateX(-1px) rotate(-0.5deg)',
+      transform: 'translateX(-1px) rotate(-0.5deg)'
     },
     '100%': {
-      transform: 'translateX(0)',
-    },
+      transform: 'translateX(0)'
+    }
   }
 };
 
@@ -71,7 +71,7 @@ export const button: StylesProps = {
   '&.Mui-disabled': {
     color: 'primary.main',
     backgroundImage: 'none',
-    opacity: 0.9,
+    opacity: 0.9
   },
   ...tremor
 };

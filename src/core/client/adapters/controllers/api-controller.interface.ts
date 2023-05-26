@@ -1,5 +1,5 @@
-import { SerializedArtist } from "../../../shared/domain/entities/artist";
-import { VoteInputType } from "../types/api-gateway.type";
+import { SerializedArtist } from '../../../shared/domain/entities/artist';
+import { VoteInputType } from '../types/api-gateway.type';
 
 export interface ApiControllerInterface {
   addVote(input: VoteInputType): Promise<void>;

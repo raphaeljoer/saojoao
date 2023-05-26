@@ -1,8 +1,8 @@
-import { ApiControllerInterface } from "./client/adapters/controllers/api-controller.interface";
+import { ApiControllerInterface } from './client/adapters/controllers/api-controller.interface';
 
 type Props = {
-  apiController: ApiControllerInterface
-}
+  apiController: ApiControllerInterface;
+};
 
 export class Core {
   public readonly api: ApiControllerInterface;

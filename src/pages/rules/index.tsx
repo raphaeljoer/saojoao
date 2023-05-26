@@ -1,5 +1,5 @@
-import { RulesView } from "@/modules/2023/features/rules";
-import { NextPage } from "next";
+import { RulesView } from '@/modules/2023/features/rules';
+import { NextPage } from 'next';
 
 const RulesPage: NextPage = () => {
   return <RulesView />;

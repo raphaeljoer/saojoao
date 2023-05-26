@@ -1,4 +1,4 @@
-import { VoteDTO } from "../../domain/dto/vote.dto.type";
+import { VoteDTO } from '../../domain/dto/vote.dto.type';
 
 export type CountByIdInput = {
   key: keyof VoteDTO;

@@ -1,4 +1,4 @@
-import { StylesProps } from "@/modules/shared/types/styles-props";
+import { StylesProps } from '@/modules/shared/types/styles-props';
 
 export const button: StylesProps = {
   width: '100%',
@@ -22,7 +22,7 @@ export const button: StylesProps = {
     backgroundPositionY: -40,
     transform: 'scale(0.98)',
     transition: 'all 1s ease-in-out',
-    boxShadow: '0px 0px 8px 4px rgba(255, 170, 0, 0.5)',
+    boxShadow: '0px 0px 8px 4px rgba(255, 170, 0, 0.5)'
   },
   ':not(:hover):after': {
     fontSize: 18,
@@ -33,6 +33,6 @@ export const button: StylesProps = {
   '&.Mui-disabled': {
     color: 'primary.main',
     backgroundImage: 'none',
-    opacity: 0.9,
-  },
+    opacity: 0.9
+  }
 };
