@@ -1,4 +1,4 @@
-import { ApiControllerInterface } from './client/adapters/controllers/api-controller.interface';
+import { ApiControllerInterface } from './adapters/controllers/api-controller.interface';
 
 type Props = {
   apiController: ApiControllerInterface;

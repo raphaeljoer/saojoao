@@ -1,4 +1,4 @@
-import { VoteControllerInterface } from './server/adapters/controllers/vote.controller.interface';
+import { VoteControllerInterface } from './adapters/controllers/vote.controller.interface';
 
 type Props = {
   voteController: VoteControllerInterface;

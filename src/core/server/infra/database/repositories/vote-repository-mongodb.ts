@@ -1,9 +1,12 @@
+import { VoteDto } from '@/core/shared/domain/dto/vote.dto.type';
+import { fail, success } from '@/core/shared/errors/either';
 import {
-  CountByIdInput,
+  AddVoteRepositoryOutput,
+  CountByIdRepositoryInput,
   VoteRepositoryInterface
 } from '../../../application/repository/vote.repository.interface';
-import { VoteDTO } from '../../../domain/dto/vote.dto.type';
 import { MongoDbConnectionInterface } from '../connection/mongodb-connection.interface';
+import { AddVoteRepositoryError } from './errors/AddVoteRepositoryError';
 
 type Props = {
   connection: MongoDbConnectionInterface;
@@ -17,18 +20,24 @@ export class VoteRepositoryMongodb implements VoteRepositoryInterface {
     this.collectionName = 'votes';
   }
 
-  async addVote(vote: VoteDTO): Promise<void> {
-    await this.connection.insertOne({
-      collectionName: this.collectionName,
-      document: vote
-    });
+  async addVote(vote: VoteDto): Promise<AddVoteRepositoryOutput> {
+    try {
+      await this.connection.insertOne({
+        collectionName: this.collectionName,
+        document: vote
+      });
+
+      return success(vote);
+    } catch (error) {
+      return fail(new AddVoteRepositoryError());
+    }
   }
 
   async countVotesTotal(): Promise<number> {
     return this.connection.estimatedDocumentCount(this.collectionName);
   }
 
-  async countVotes({ key, value }: CountByIdInput): Promise<number> {
+  async countVotes({ key, value }: CountByIdRepositoryInput): Promise<number> {
     return await this.connection.countDocuments({
       collectionName: this.collectionName,
       key,

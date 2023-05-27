@@ -1,3 +1,4 @@
+import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { MetaTags } from '@/modules/2023/shared/components/Head';
 import { LayoutGrid } from '@/modules/2023/shared/modules/LayoutGrid';
@@ -11,6 +12,7 @@ export const RulesView = () => {
   return (
     <LayoutGrid>
       <MetaTags pageName="Regulamento" />
+      <Balloons />
       <Stack spacing={3} sx={styles.container}>
         <Typography variant="h1" gutterBottom sx={styles.title}>
           {'REGULAMENTO CONCURSO CULTURAL - TALENTO SÃO JOÃO 2023'}

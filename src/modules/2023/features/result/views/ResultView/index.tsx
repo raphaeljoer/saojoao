@@ -1,4 +1,5 @@
 import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { MetaTags } from '@/modules/2023/shared/components/Head';
 import { LayoutGrid } from '@/modules/2023/shared/modules/LayoutGrid';
@@ -17,6 +18,7 @@ export const ResultView = ({ result }: Props) => {
   return (
     <LayoutGrid>
       <MetaTags pageName="Resultado Parcial" />
+      <Balloons />
       <Stack spacing={3} sx={styles.container}>
         <Typography variant="h1" align="center" fontSize={56} fontWeight={400}>
           {'Resultado Parcial'}

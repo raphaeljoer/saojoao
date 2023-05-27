@@ -1,3 +1,4 @@
+import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { MetaTags } from '@/modules/2023/shared/components/Head';
 import { LayoutGrid } from '@/modules/2023/shared/modules/LayoutGrid';
@@ -13,6 +14,7 @@ export const PerksView = () => {
   return (
     <LayoutGrid>
       <MetaTags pageName="Premiação" />
+      <Balloons />
       <Stack spacing={4} sx={styles.container}>
         <Stack spacing={2}>
           <Typography variant="h2" sx={styles.title}>
