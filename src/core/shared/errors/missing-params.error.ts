@@ -1,8 +1,8 @@
 import { ResponseErrorInterface } from '@/core/shared/errors/response.error.interface';
-
-export class MissingParamError extends Error implements ResponseErrorInterface {
-  constructor(missingParam: string) {
-    super(`Missing param | ${missingParam} is required`);
+//prettier-ignore
+export class MissingParamsError extends Error implements ResponseErrorInterface {
+  constructor(missingParams: string) {
+    super(`Missing params: ${missingParams} is required`);
     this.name = 'MissingParamError';
   }
 

@@ -1,64 +1,51 @@
-import { HttpStatusCode } from '@/core/shared/enum/http-status-code.enum';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { HttpStatusCode } from '../../../../../src/core/shared/enum/http-status-code.enum';
+import { fail, success } from '../../../../../src/core/shared/errors/either';
+import { ParamValidation } from '../../../../../src/core/shared/validations/param.validation';
 import { AddVoteUsecaseInterface } from '../../application/usecases/add-vote/add-vote-usecase.interface';
 import { GetResultUsecaseInterface } from '../../application/usecases/get-result/get-result-usecase.interface';
-import { VoteDTO } from '../../domain/dto/vote.dto.type';
-import { VoteControllerInterface } from './vote.controller.interface';
+import { VerifyRecaptchaServiceInterface } from '../../infra/service/verify-recaptcha.service.interface';
+import {
+  AddVoteControllerInput,
+  AddVoteControllerOutPut,
+  VoteControllerInterface
+} from './vote.controller.interface';
 
 type Props = {
   addVoteUseCase: AddVoteUsecaseInterface;
   getResultUsecase: GetResultUsecaseInterface;
+  verifyRecaptchaService: VerifyRecaptchaServiceInterface;
 };
 export class VoteController implements VoteControllerInterface {
   private readonly addVoteUsecase: AddVoteUsecaseInterface;
   private readonly getResultUsecase: GetResultUsecaseInterface;
+  private readonly verifyRecaptchaService: VerifyRecaptchaServiceInterface;
 
   constructor(private readonly props: Props) {
     this.addVoteUsecase = this.props.addVoteUseCase;
     this.getResultUsecase = this.props.getResultUsecase;
+    this.verifyRecaptchaService = this.props.verifyRecaptchaService;
   }
 
-  async addVote(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    if (!req.body?.artistId) {
-      res
-        .status(HttpStatusCode.BAD_REQUEST)
-        .json({ message: 'artistId is required' });
-      throw new Error('artistId is required');
+  //prettier-ignore
+  async addVote(input: AddVoteControllerInput): Promise<AddVoteControllerOutPut> {
+    const validation = ParamValidation.validateObject(input);
+    if (validation.isFailure()) {
+      return fail(validation.value);
     }
-    if (!req.body?.recaptchaTokenV2) {
-      res
-        .status(HttpStatusCode.BAD_REQUEST)
-        .json({ message: 'recaptchaTokenV2 is required' });
-      throw new Error('recaptchaTokenV2 is required');
-    }
-    if (!req.body?.recaptchaTokenV3) {
-      res
-        .status(HttpStatusCode.BAD_REQUEST)
-        .json({ message: 'recaptchaTokenV3 is required' });
-      throw new Error('recaptchaTokenV3 is required');
-    }
-
-    const recaptchaTokenV2 = req.body?.recaptchaTokenV2;
-    const recaptchaTokenV3 = req.body?.recaptchaTokenV3;
-
-    const vote: VoteDTO = {
-      artistId: req.body?.artistId,
-      votedAt: new Date().toISOString(),
-      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress || ''
-    };
-
-    const response = await this.addVoteUsecase.execute({
-      vote,
-      recaptchaTokenV2,
-      recaptchaTokenV3
+    const isHuman = await this.verifyRecaptchaService.isHuman({
+      tokenV2: input.recaptchaTokenV2,
+      tokenV3: input.recaptchaTokenV3
     });
-
+    if (isHuman.isFailure()) {
+      return fail(isHuman.value);
+    }
+    const response = await this.addVoteUsecase.execute(input.vote);
     if (response.isFailure()) {
-      res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
-      return;
+      return fail(response.value);
     }
 
-    res.status(HttpStatusCode.CREATED).json({ message: 'Vote added' });
+    return success(response.value);
   }
 
   async getResult(_: NextApiRequest, res: NextApiResponse): Promise<void> {

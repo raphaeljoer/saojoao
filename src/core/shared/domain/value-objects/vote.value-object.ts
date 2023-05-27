@@ -1,53 +1,43 @@
 import { Either, fail, success } from '../../errors/either';
-import { MissingParamError } from '../../errors/missing-params.error';
-
-type Props = {
-  artistId: string;
-  votedAt: string;
-  ip: string | string[] | undefined;
-};
+import { MissingParamsError } from '../../errors/missing-params.error';
+import { VoteDto } from '../dto/vote.dto.type';
 
 export class Vote {
-  private readonly _artistId: string;
-  private readonly _votedAt: string;
-  private readonly _ip: string | string[] | undefined;
+  public readonly artistId: string;
+  public readonly votedAt: string;
+  public readonly ip: string | string[] | undefined;
 
-  private constructor(props: Props) {
-    this._artistId = props.artistId;
-    this._votedAt = props.votedAt;
-    this._ip = props.ip;
-    Object.freeze(this);
+  private constructor(voteDto: VoteDto) {
+    this.artistId = voteDto.artistId;
+    this.votedAt = voteDto.votedAt;
+    this.ip = voteDto.ip;
   }
 
-  static create(props: Props): Either<MissingParamError, Vote> {
-    const validade = this.validate(props);
+  static create(voteDto: VoteDto): Either<MissingParamsError, Vote> {
+    const validade = this.validate(voteDto);
     if (validade.isFailure()) return fail(validade.value);
 
     const vote = new Vote({
-      artistId: props.artistId,
-      votedAt: props.votedAt,
-      ip: props.ip
+      artistId: voteDto.artistId,
+      votedAt: voteDto.votedAt,
+      ip: voteDto.ip
     });
 
     return success(vote);
   }
 
-  static validate(props: Props): Either<MissingParamError, true> {
-    if (!props.artistId) return fail(new MissingParamError('artistId'));
-    if (!props.votedAt) return fail(new MissingParamError('votedAt'));
-    if (!props.ip) return fail(new MissingParamError('ip'));
+  static validate(voteDto: VoteDto): Either<MissingParamsError, true> {
+    if (!voteDto.artistId) return fail(new MissingParamsError('artistId'));
+    if (!voteDto.votedAt) return fail(new MissingParamsError('votedAt'));
+    if (!voteDto.ip) return fail(new MissingParamsError('ip'));
     return success(true);
   }
 
-  get artistId(): string {
-    return this._artistId;
-  }
-
-  get votedAt(): string {
-    return this._votedAt;
-  }
-
-  get ip(): string | string[] | undefined {
-    return this._ip;
+  toJSON(): VoteDto {
+    return {
+      artistId: this.artistId,
+      votedAt: this.votedAt,
+      ip: this.ip
+    };
   }
 }

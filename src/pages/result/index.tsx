@@ -18,6 +18,7 @@ export default ResultPage;
 export const getStaticProps: GetStaticProps = async () => {
   const { SM_MONGODB_URI, SM_MONGODB_DB_NAME, SM_REVALIDATE_RESULT } = process.env; //prettier-ignore
   if (!SM_MONGODB_URI || !SM_MONGODB_DB_NAME) return { notFound: true };
+
   const connection = new MongoDbConnection({ connectionUrl: SM_MONGODB_URI || '', dbName: SM_MONGODB_DB_NAME || '' }); //prettier-ignore
   const voteRepository = new VoteRepositoryMongodb({ connection });
   const getResultUsecase = new GetResultUsecase({ voteRepository });
