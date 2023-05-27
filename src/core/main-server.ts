@@ -1,4 +1,4 @@
-import { Core } from './core-server';
+import { Core } from './server';
 import { VoteController } from './server/adapters/controllers/vote.controller';
 import { GoogleRecaptchaGateway } from './server/adapters/gateways/google-recaptcha.gateway';
 import { AddVoteUsecase } from './server/application/usecases/add-vote/add-vote.usecase';

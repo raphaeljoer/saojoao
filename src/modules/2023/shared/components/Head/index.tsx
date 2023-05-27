@@ -20,9 +20,6 @@ export const MetaTags = (props: Props) => {
       <link rel="canonical" href={url} />
       <meta name="robots" content="index, follow" />
 
-      {/* Author */}
-      <meta name="author" content="Raphael Joer - ra.joer@gmail.com" />
-
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
