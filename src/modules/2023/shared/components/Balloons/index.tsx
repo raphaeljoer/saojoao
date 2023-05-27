@@ -16,7 +16,7 @@ export function Balloons() {
       </Box>
       <Box
         className="balloon-item"
-        sx={styles.balloon({ delay: 2.1, duration: 10.5 })}
+        sx={styles.balloon({ delay: 2, duration: 10.8 })}
       >
         <Image src="/assets/balao.svg" alt="Balão" width={40} height={40} />
       </Box>

@@ -1,4 +1,3 @@
-import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { FloatingSVGComponent } from '@/modules/2023/shared/components/FloatingSVGComponent';
 import { FooterOrnament } from '@/modules/2023/shared/components/FooterOrnament';
 import { theme } from '@/modules/2023/theme';
@@ -23,7 +22,7 @@ export const queryClient = new QueryClient({
     queries: {
       retry: 1,
       refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 60 * 1 // 12 hours
+      staleTime: 1000 * 60 * 60 * 1 // 1 hour
     }
   }
 });
@@ -62,7 +61,6 @@ export default function App({ Component, pageProps }: AppProps) {
           />
           <FloatingSVGComponent />
           <FooterOrnament />
-          <Balloons />
           <ToastContainer />
         </QueryClientProvider>
       </ThemeProvider>
