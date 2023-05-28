@@ -3,10 +3,14 @@ import { fail, success } from '@/core/shared/errors/either';
 import {
   AddVoteRepositoryOutput,
   CountByIdRepositoryInput,
+  CountTotalVotesRepositoryOutput,
+  CountVotesRepositoryOutput,
   VoteRepositoryInterface
 } from '../../../application/repository/vote.repository.interface';
 import { MongoDbConnectionInterface } from '../connection/mongodb-connection.interface';
 import { AddVoteRepositoryError } from './errors/AddVoteRepositoryError';
+import { CountTotalVotesRepositoryError } from './errors/CountTotalVotesRepositoryError';
+import { CountVotesRepositoryError } from './errors/CountVotesRepositoryError';
 
 type Props = {
   connection: MongoDbConnectionInterface;
@@ -33,15 +37,27 @@ export class VoteRepositoryMongodb implements VoteRepositoryInterface {
     }
   }
 
-  async countVotesTotal(): Promise<number> {
-    return this.connection.estimatedDocumentCount(this.collectionName);
+  async countVotesTotal(): Promise<CountTotalVotesRepositoryOutput> {
+    try {
+      const totalVotes = await this.connection.estimatedDocumentCount(this.collectionName); //prettier-ignore
+      return success(totalVotes);
+    } catch (e) {
+      return fail(new CountTotalVotesRepositoryError());
+    }
   }
 
-  async countVotes({ key, value }: CountByIdRepositoryInput): Promise<number> {
-    return await this.connection.countDocuments({
-      collectionName: this.collectionName,
-      key,
-      value
-    });
+  //prettier-ignore
+  async countVotes({ key, value }: CountByIdRepositoryInput): Promise<CountVotesRepositoryOutput> {
+    try {
+      const count = await this.connection.countDocuments({
+        collectionName: this.collectionName,
+        key,
+        value
+      });
+
+      return success(count);
+    } catch(e) {
+      return fail(new CountVotesRepositoryError());
+    }
   }
 }

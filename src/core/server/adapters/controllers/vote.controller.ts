@@ -1,5 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpStatusCode } from '../../../../../src/core/shared/enum/http-status-code.enum';
 import { fail, success } from '../../../../../src/core/shared/errors/either';
 import { ParamValidation } from '../../../../../src/core/shared/validations/param.validation';
 import { AddVoteUsecaseInterface } from '../../application/usecases/add-vote/add-vote-usecase.interface';
@@ -8,6 +6,7 @@ import { VerifyRecaptchaServiceInterface } from '../../infra/service/verify-reca
 import {
   AddVoteControllerInput,
   AddVoteControllerOutPut,
+  GetResultControllerOutPut,
   VoteControllerInterface
 } from './vote.controller.interface';
 
@@ -48,14 +47,13 @@ export class VoteController implements VoteControllerInterface {
     return success(response.value);
   }
 
-  async getResult(_: NextApiRequest, res: NextApiResponse): Promise<void> {
+  async getResult(): Promise<GetResultControllerOutPut> {
     const response = await this.getResultUsecase.execute();
 
     if (response.isFailure()) {
-      res.status(HttpStatusCode.BAD_REQUEST).json(response.value.error);
-      return;
+      return fail(response.value);
     }
 
-    res.status(HttpStatusCode.OK).json({ result: response.value });
+    return success(response.value);
   }
 }

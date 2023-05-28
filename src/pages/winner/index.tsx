@@ -1,6 +1,4 @@
-import { GetResultUsecase } from '@/core/server/application/usecases/get-result/get-result.usecase';
-import { MongoDbConnection } from '@/core/server/infra/database/connection/mongodb-connection';
-import { VoteRepositoryMongodb } from '@/core/server/infra/database/repositories/vote-repository-mongodb';
+import { coreServer } from '@/core/main-server';
 import { SerializedArtist } from '@/core/shared/domain/entities/artist';
 import { WinnerView } from '@/modules/2023/features/winner/views/WinnerView';
 import { Switcher } from '@/modules/shared/components/Switcher';
@@ -30,19 +28,10 @@ const WinnerPage: NextPage<Props> = ({ artists }) => {
 export default WinnerPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { SM_MONGODB_URI, SM_MONGODB_DB_NAME, SM_REVALIDATE_RESULT } =
-    process.env;
-  if (!SM_MONGODB_URI || !SM_MONGODB_DB_NAME) {
-    return { notFound: true };
-  }
+  const { SM_REVALIDATE_RESULT } = process.env;
+  const result = await coreServer.vote.getResult();
 
-  const connection = new MongoDbConnection({ connectionUrl: SM_MONGODB_URI || '', dbName: SM_MONGODB_DB_NAME || '' }); //prettier-ignore
-  const voteRepository = new VoteRepositoryMongodb({ connection });
-  const getResultUsecase = new GetResultUsecase({ voteRepository });
-  const getResult = await getResultUsecase.execute();
-
-  if (getResult.isFailure()) {
-    console.error('GET_RESULT_ERROR', getResult.value.error);
+  if (result.isFailure()) {
     return {
       notFound: true
     };
@@ -50,7 +39,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      artists: getResult.value
+      artists: result.value
     },
     revalidate: 60 * Number(SM_REVALIDATE_RESULT || 10)
   };
