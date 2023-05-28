@@ -53,14 +53,8 @@ export const VoteArtist = ({ artist }: Props) => {
   useEffect(() => {
     if (addVoteMutation.error) {
       const error = addVoteMutation.error as any;
-      const message = error.response?.data?.message;
-      toast(
-        `Não foi possível registrar o seu voto${message ? `: ${message}` : ''}`,
-        {
-          type: 'warning',
-          autoClose: 7000
-        }
-      );
+      const message = error.response?.data?.error?.message;
+      toast(`Não foi possível registrar o seu voto${message ? `: ${message}` : ''}`, { type: 'warning', autoClose: 7000 }); //prettier-ignore
       addVoteMutation.reset();
     }
   }, [addVoteMutation, addVoteMutation.error]);

@@ -11,7 +11,7 @@ export class Ip {
       return fail(new IpValidationError('Ip não informado'));
     }
 
-    if (typeof ip === 'string') {
+    if (typeof ip === 'string' && process.env.NODE_ENV === 'production') {
       if (!this.regex.test(ip)) {
         return fail(new IpValidationError('Ip com formato inválido'));
       }
