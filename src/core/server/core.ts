@@ -7,7 +7,7 @@ type Props = {
 export class Core {
   public readonly vote: VoteControllerInterface;
 
-  constructor(private readonly props: Props) {
-    this.vote = this.props.voteController;
+  constructor(props: Props) {
+    this.vote = props.voteController;
   }
 }

@@ -5,7 +5,7 @@ import { GetResultUsecase } from './server/application/usecases/get-result/get-r
 import { MongoDbConnection } from './server/infra/database/connection/mongodb-connection';
 import { VoteRepositoryMongodb } from './server/infra/database/repositories/vote-repository-mongodb';
 import { ExternalGateway } from './server/infra/gateways/external.gateway';
-import { VerifyRecaptchaService } from './server/infra/service/verify-recaptcha.service';
+import { VerifyRecaptchaService } from './server/application/service/verify-recaptcha.service';
 import { AxiosHttpClient } from './shared/drivers/http/axios-http-client';
 
 const { SM_MONGODB_URI, SM_MONGODB_DB_NAME } = process.env;

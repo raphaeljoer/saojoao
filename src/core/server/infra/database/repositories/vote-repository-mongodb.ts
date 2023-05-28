@@ -19,8 +19,8 @@ export class VoteRepositoryMongodb implements VoteRepositoryInterface {
   private readonly connection: MongoDbConnectionInterface;
   private readonly collectionName: string;
 
-  constructor(private readonly props: Props) {
-    this.connection = this.props.connection;
+  constructor(props: Props) {
+    this.connection = props.connection;
     this.collectionName = 'votes';
   }
 

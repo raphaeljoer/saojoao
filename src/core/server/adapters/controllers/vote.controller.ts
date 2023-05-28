@@ -1,8 +1,8 @@
 import { fail, success } from '../../../../../src/core/shared/errors/either';
 import { ParamValidation } from '../../../../../src/core/shared/validations/param.validation';
+import { VerifyRecaptchaServiceInterface } from '../../application/service/verify-recaptcha.service.interface';
 import { AddVoteUsecaseInterface } from '../../application/usecases/add-vote/add-vote-usecase.interface';
 import { GetResultUsecaseInterface } from '../../application/usecases/get-result/get-result-usecase.interface';
-import { VerifyRecaptchaServiceInterface } from '../../infra/service/verify-recaptcha.service.interface';
 import {
   AddVoteControllerInput,
   AddVoteControllerOutPut,
@@ -20,10 +20,10 @@ export class VoteController implements VoteControllerInterface {
   private readonly getResultUsecase: GetResultUsecaseInterface;
   private readonly verifyRecaptchaService: VerifyRecaptchaServiceInterface;
 
-  constructor(private readonly props: Props) {
-    this.addVoteUsecase = this.props.addVoteUseCase;
-    this.getResultUsecase = this.props.getResultUsecase;
-    this.verifyRecaptchaService = this.props.verifyRecaptchaService;
+  constructor(props: Props) {
+    this.addVoteUsecase = props.addVoteUseCase;
+    this.getResultUsecase = props.getResultUsecase;
+    this.verifyRecaptchaService = props.verifyRecaptchaService;
   }
 
   //prettier-ignore
