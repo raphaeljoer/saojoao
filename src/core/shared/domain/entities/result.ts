@@ -58,10 +58,6 @@ export class Result extends Entity<SerializedArtist[]> {
     });
   }
 
-  generateResult(): SerializedArtist[] {
-    return this.toJSON();
-  }
-
   toJSON(): SerializedArtist[] {
     return this.artists.map((artist) => artist.toJSON());
   }

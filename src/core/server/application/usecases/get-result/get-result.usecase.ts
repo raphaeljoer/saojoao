@@ -2,7 +2,6 @@ import { artistProps } from '../../../../../core/shared/data/artists';
 import { Artist } from '../../../../../core/shared/domain/entities/artist';
 import { Result } from '../../../../../core/shared/domain/entities/result';
 import { fail, success } from '../../../../../core/shared/errors/either';
-import { UnexpectedError } from '../../errors/unexpected-error';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
 import {
   GetResultUsecaseInterface,
@@ -22,10 +21,11 @@ export class GetResultUsecase implements GetResultUsecaseInterface {
 
   async execute(): Promise<GetResultUsecaseOutput> {
     const artists = artistProps.map((props) => new Artist(props));
+
     const totalVotesCount = await this.voteRepository.countVotesTotal();
 
-    if (!totalVotesCount) {
-      return fail(new UnexpectedError());
+    if (totalVotesCount.isFailure()) {
+      return fail(totalVotesCount.value);
     }
 
     for (const artist of artists) {
@@ -33,11 +33,19 @@ export class GetResultUsecase implements GetResultUsecaseInterface {
         key: 'artistId',
         value: artist.artistId
       });
-      artist.setVotesCount(countByIdResult);
+
+      if (countByIdResult.isFailure()) {
+        return fail(countByIdResult.value);
+      }
+
+      artist.setVotesCount(countByIdResult.value);
     }
 
-    const result = new Result({ artists, totalVotesCount });
+    const result = new Result({
+      artists,
+      totalVotesCount: totalVotesCount.value
+    });
 
-    return success(result.generateResult());
+    return success(result.toJSON());
   }
 }
