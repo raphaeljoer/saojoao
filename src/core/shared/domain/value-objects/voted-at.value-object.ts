@@ -4,7 +4,7 @@ import { VotedAtExpiredError } from '../errors/voted-at-expired.error';
 import { VotedAtInvalidDateError } from '../errors/voted-at-invalid-date.error';
 import { VotedAtOutsidePeriodError } from '../errors/voted-at-outside-period.error';
 
-const { NEXT_PUBLIC_VOTING_DATE_START, NEXT_PUBLIC_VOTING_DATE_END } = process.env; //prettier-ignore
+const { NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE } = process.env; //prettier-ignore
 
 type Props = {
   votedAt: Date;
@@ -56,16 +56,18 @@ export class VotedAt {
       return fail(new VotedAtExpiredError());
     }
 
-    if (
-      input.votedAt.getTime() < input.votingStartDate.getTime() ||
-      input.votedAt.getTime() > input.votingEndDate.getTime()
-    ) {
-      return fail(
-        new VotedAtOutsidePeriodError({
-          votingStartDate: input.votingStartDate,
-          votingEndDate: input.votingEndDate
-        })
-      );
+    if (NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE === 'true') {
+      if (
+        input.votedAt.getTime() < input.votingStartDate.getTime() ||
+        input.votedAt.getTime() > input.votingEndDate.getTime()
+      ) {
+        return fail(
+          new VotedAtOutsidePeriodError({
+            votingStartDate: input.votingStartDate,
+            votingEndDate: input.votingEndDate
+          })
+        );
+      }
     }
 
     return success(true);
