@@ -1,5 +1,5 @@
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { CountTotalVotesRepositoryError } from '@/core/server/infra/database/repositories/errors/CountTotalVotesRepositoryError';
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
 import { Either } from '@/core/shared/errors/either';
 import { UseCaseInterface } from '../usecase.interface';
 import { CountVotesRepositoryError } from './../../../infra/database/repositories/errors/CountVotesRepositoryError';

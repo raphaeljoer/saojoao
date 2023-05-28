@@ -1,5 +1,5 @@
-import { Either, fail, success } from '../../errors/either';
-import { ParamValidation } from '../../validations/param.validation';
+import { Either, fail, success } from '../../../shared/errors/either';
+import { ParamValidation } from '../../../shared/validations/param.validation';
 import { VotedAtExpiredError } from '../errors/voted-at-expired.error';
 import { VotedAtInvalidDateError } from '../errors/voted-at-invalid-date.error';
 import { VotedAtOutsidePeriodError } from '../errors/voted-at-outside-period.error';
@@ -27,6 +27,7 @@ export class VotedAt {
   static value: Date;
 
   static create(input: Props): VotedAtCreateOutput {
+    console.log('input', input);
     const validationResult = ParamValidation.validateObject(input);
 
     if (validationResult.isFailure()) {

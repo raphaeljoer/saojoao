@@ -4,14 +4,16 @@ import { VoteController } from '../../src/core/server/adapters/controllers/vote.
 import { VerifyRecaptchaService } from '../../src/core/server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
-import { Vote } from '../../src/core/shared/domain/value-objects/vote.value-object';
+import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
 import { FakeVoteRepository } from '../fakes/fake-vote-repository';
 
 config({ path: '.env.test' });
 
+const { NEXT_PUBLIC_VOTING_DATE_START, NEXT_PUBLIC_VOTING_DATE_END } = process.env; //prettier-ignore
+
 describe('[controller] VoteController', () => {
-  test('Should add a vote', async () => {
+  test.only('Should add a vote', async () => {
     const recaptchaProps = {
       action: 'add_vote',
       hostname: 'localhost',
@@ -22,14 +24,12 @@ describe('[controller] VoteController', () => {
     const voteRepository = new FakeVoteRepository();
     const getResultUsecase = new GetResultUsecase({ voteRepository });
     const addVoteUseCase = new AddVoteUsecase({ voteRepository });
-    const authRecaptchaService = new VerifyRecaptchaService({
-      externalGateway
-    });
+    const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway }); //prettier-ignore
 
     const voteController = new VoteController({
       addVoteUseCase,
       getResultUsecase,
-      verifyRecaptchaService: authRecaptchaService
+      verifyRecaptchaService
     });
 
     const vote = await voteController.addVote({
@@ -37,6 +37,12 @@ describe('[controller] VoteController', () => {
       recaptchaTokenV2: 'validTokenV2',
       recaptchaTokenV3: 'validTokenV3'
     });
+
+    console.log(
+      'NEXT_PUBLIC_VOTING_DATE_START ==> ',
+      NEXT_PUBLIC_VOTING_DATE_START
+    );
+    console.log(vote.value);
 
     expect(vote.isSuccess()).toBe(true);
     expect(vote.isFailure()).toBe(false);

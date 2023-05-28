@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { useGetArtistQuery } from '@/modules/2023/shared/api/queries/useGetArtistQuery';
 import { MetaTags } from '@/modules/2023/shared/components/Head';
 import { LayoutGrid } from '@/modules/2023/shared/modules/LayoutGrid';

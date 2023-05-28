@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { Artist } from '@/modules/2023/shared/components/Artist';
 import { Typography } from '@mui/material';
 import { useMemo } from 'react';

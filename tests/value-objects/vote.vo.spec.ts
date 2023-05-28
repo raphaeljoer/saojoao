@@ -1,5 +1,8 @@
+import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
-import { Vote } from '../../src/core/shared/domain/value-objects/vote.value-object';
+import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
+
+config({ path: '.env.test' });
 
 describe('[value-object] Vote', () => {
   test('Should create a valid vote', async () => {

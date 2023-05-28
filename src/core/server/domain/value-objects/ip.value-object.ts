@@ -1,4 +1,4 @@
-import { Either, fail, success } from '../../errors/either';
+import { Either, fail, success } from '../../../shared/errors/either';
 import { IpValidationError } from '../errors/ip-validation.error';
 
 type IpCreateOutput = Either<IpValidationError, string>;
@@ -13,7 +13,7 @@ export class Ip {
 
     if (typeof ip === 'string' && process.env.NODE_ENV === 'production') {
       if (!this.regex.test(ip)) {
-        return fail(new IpValidationError('Ip com formato inválido'));
+        return fail(new IpValidationError());
       }
 
       return success(ip);
@@ -25,7 +25,7 @@ export class Ip {
       });
 
       if (invalidIps.length > 0) {
-        return fail(new IpValidationError('Ip com formato inválido'));
+        return fail(new IpValidationError());
       }
 
       return success(String(ip));

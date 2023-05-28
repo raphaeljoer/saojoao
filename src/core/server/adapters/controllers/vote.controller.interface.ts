@@ -1,5 +1,5 @@
-import { VoteDto } from '@/core/shared/domain/dto/vote.dto.type';
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { VoteDto } from '@/core/server/domain/dto/vote.dto.type';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { Either } from '@/core/shared/errors/either';
 import { MissingParamsError } from '@/core/shared/errors/missing-params.error';
 import { CountTotalVotesRepositoryError } from '../../infra/database/repositories/errors/CountTotalVotesRepositoryError';

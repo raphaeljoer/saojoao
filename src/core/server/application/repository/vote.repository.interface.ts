@@ -1,5 +1,5 @@
 import { Either } from '@/core/shared/errors/either';
-import { VoteDto } from '../../../shared/domain/dto/vote.dto.type';
+import { VoteDto } from '../../domain/dto/vote.dto.type';
 import { AddVoteRepositoryError } from '../../infra/database/repositories/errors/AddVoteRepositoryError';
 import { CountTotalVotesRepositoryError } from '../../infra/database/repositories/errors/CountTotalVotesRepositoryError';
 import { CountVotesRepositoryError } from '../../infra/database/repositories/errors/CountVotesRepositoryError';

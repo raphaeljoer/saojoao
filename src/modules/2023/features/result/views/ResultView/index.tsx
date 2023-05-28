@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { MetaTags } from '@/modules/2023/shared/components/Head';

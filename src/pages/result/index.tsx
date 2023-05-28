@@ -1,5 +1,5 @@
 import { coreServer } from '@/core/main-server';
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { ResultView } from '@/modules/2023';
 import { GetStaticProps, NextPage } from 'next';
 

@@ -1,5 +1,5 @@
 import { coreClient } from '@/core/main-client';
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { ShareView } from '@/modules/2023';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next/types';
 

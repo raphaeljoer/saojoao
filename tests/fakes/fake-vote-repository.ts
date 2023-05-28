@@ -8,7 +8,7 @@ import {
 import { AddVoteRepositoryError } from './../../src/core/server/infra/database/repositories/errors/AddVoteRepositoryError';
 import { CountTotalVotesRepositoryError } from './../../src/core/server/infra/database/repositories/errors/CountTotalVotesRepositoryError';
 import { CountVotesRepositoryError } from './../../src/core/server/infra/database/repositories/errors/CountVotesRepositoryError';
-import { VoteDto } from './../../src/core/shared/domain/dto/vote.dto.type';
+import { VoteDto } from '../../src/core/server/domain/dto/vote.dto.type';
 import { fail, success } from './../../src/core/shared/errors/either';
 
 export class FakeVoteRepository implements VoteRepositoryInterface {

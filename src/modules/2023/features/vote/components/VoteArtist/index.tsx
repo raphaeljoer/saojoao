@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { useAddVoteMutation } from '@/modules/2023/shared/api/mutations/useAddVoteMutation';
 import { Artist } from '@/modules/2023/shared/components/Artist';
 import { TremblingButton } from '@/modules/2023/shared/components/TremblingButton';

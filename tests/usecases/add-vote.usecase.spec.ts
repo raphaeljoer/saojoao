@@ -1,10 +1,13 @@
+import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
-import { AddVoteUsecase } from '../../../src/core/server/application/usecases/add-vote/add-vote.usecase';
-import { VoteDto } from '../../../src/core/shared/domain/dto/vote.dto.type';
-import { FakeVoteRepository } from '../../fakes/fake-vote-repository';
+import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
+import { VoteDto } from '../../src/core/server/domain/dto/vote.dto.type';
+import { FakeVoteRepository } from '../fakes/fake-vote-repository';
+
+config({ path: '.env.test' });
 
 describe('AddVoteUseCase', () => {
-  test('Should add a new vote when recaptcha token is valid', async () => {
+  test.only('Should add a new vote when recaptcha token is valid', async () => {
     const voteRepository = new FakeVoteRepository();
     const addVoteUseCase = new AddVoteUsecase({ voteRepository });
 
@@ -15,6 +18,8 @@ describe('AddVoteUseCase', () => {
     };
 
     const result = await addVoteUseCase.execute(vote);
+
+    console.log(result.value);
 
     expect(result.isSuccess()).toBe(true);
     expect(result.value).toEqual(vote);

@@ -1,6 +1,6 @@
 import { artistProps } from '../../../../../core/shared/data/artists';
-import { Artist } from '../../../../../core/shared/domain/entities/artist';
-import { Result } from '../../../../../core/shared/domain/entities/result';
+import { Artist } from '../../../domain/entities/artist';
+import { Result } from '../../../domain/entities/result';
 import { fail, success } from '../../../../../core/shared/errors/either';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
 import {
