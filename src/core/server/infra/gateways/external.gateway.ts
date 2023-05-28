@@ -2,7 +2,7 @@ import { HttpClientInterface } from '@/core/shared/drivers/http/http-client.inte
 import {
   GoogleRecaptchaResponseV2,
   GoogleRecaptchaResponseV3
-} from '../service/verify-recaptcha.service.interface';
+} from '../../application/service/verify-recaptcha.service.interface';
 import { ExternalGatewayInterface } from './external.gateway.interface';
 
 type Props = {
@@ -12,8 +12,8 @@ type Props = {
 export class ExternalGateway implements ExternalGatewayInterface {
   private readonly httpClient: HttpClientInterface;
 
-  constructor(private readonly props: Props) {
-    this.httpClient = this.props.httpClient;
+  constructor(props: Props) {
+    this.httpClient = props.httpClient;
   }
 
   //prettier-ignore

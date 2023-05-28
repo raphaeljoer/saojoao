@@ -1,3 +1,5 @@
+import { Entity } from './entity';
+
 type Props = {
   artistId: string;
   name: string;
@@ -19,7 +21,7 @@ export type SerializedArtist = {
   isWinner: boolean;
 };
 
-export class Artist {
+export class Artist extends Entity<SerializedArtist> {
   public readonly artistId: string;
   public readonly name: string;
   public readonly picture: string;
@@ -30,6 +32,7 @@ export class Artist {
   public votesCount!: number | null;
 
   constructor(props: Props) {
+    super(props.artistId);
     this.artistId = props.artistId;
     this.picture = props.picture;
     this.name = props.name;

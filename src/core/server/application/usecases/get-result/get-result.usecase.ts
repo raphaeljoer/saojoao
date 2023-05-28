@@ -15,8 +15,8 @@ type Props = {
 export class GetResultUsecase implements GetResultUsecaseInterface {
   private readonly voteRepository: VoteRepositoryInterface;
 
-  constructor(private readonly props: Props) {
-    this.voteRepository = this.props.voteRepository;
+  constructor(props: Props) {
+    this.voteRepository = props.voteRepository;
   }
 
   async execute(): Promise<GetResultUsecaseOutput> {

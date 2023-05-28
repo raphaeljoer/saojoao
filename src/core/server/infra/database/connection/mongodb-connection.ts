@@ -23,9 +23,9 @@ export class MongoDbConnection implements ConnectionInterface<Db> {
   private client: MongoClient | null;
   private db: Db | null;
 
-  constructor(private readonly props: Props) {
-    this.connectionUrl = this.props.connectionUrl;
-    this.dbName = this.props.dbName;
+  constructor(props: Props) {
+    this.connectionUrl = props.connectionUrl;
+    this.dbName = props.dbName;
     this.client = null;
     this.db = null;
   }

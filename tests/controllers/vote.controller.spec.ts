@@ -1,14 +1,14 @@
 import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
 import { VoteController } from '../../src/core/server/adapters/controllers/vote.controller';
+import { VerifyRecaptchaService } from '../../src/core/server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
-import { VerifyRecaptchaService } from '../../src/core/server/infra/service/verify-recaptcha.service';
 import { Vote } from '../../src/core/shared/domain/value-objects/vote.value-object';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
 import { FakeVoteRepository } from '../fakes/fake-vote-repository';
 
-config({ path: '.env.local' });
+config({ path: '.env.test' });
 
 describe('[controller] VoteController', () => {
   test('Should add a vote', async () => {

@@ -2,7 +2,7 @@ import { ExternalGatewayInterface } from './../../src/core/server/infra/gateways
 import {
   GoogleRecaptchaResponseV2,
   GoogleRecaptchaResponseV3
-} from '../../src/core/server/infra/service/verify-recaptcha.service.interface';
+} from '../../src/core/server/application/service/verify-recaptcha.service.interface';
 
 type RecaptchaProps = {
   action: string;

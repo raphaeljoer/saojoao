@@ -13,8 +13,8 @@ type Props = {
 export class AddVoteUsecase implements AddVoteUsecaseInterface {
   private readonly voteRepository: VoteRepositoryInterface;
 
-  constructor(private readonly props: Props) {
-    this.voteRepository = this.props.voteRepository;
+  constructor(props: Props) {
+    this.voteRepository = props.voteRepository;
   }
 
   async execute(voteDto: VoteDto): Promise<AddVoteUsecaseOutput> {

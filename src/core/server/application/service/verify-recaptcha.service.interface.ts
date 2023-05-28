@@ -1,8 +1,8 @@
 import { Either } from '@/core/shared/errors/either';
-import { GoogleRecaptchaInvalidActionError } from '../../application/errors/recaptcha-invalid-action.error';
-import { GoogleRecaptchaInvalidHostnameError } from '../../application/errors/recaptcha-invalid-hostname.error';
-import { GoogleRecaptchaInvalidTokenError } from '../../application/errors/recaptcha-invalid-token.error';
-import { GoogleRecaptchaRobotAlertError } from '../../application/errors/recaptcha-robot-alert.error';
+import { GoogleRecaptchaInvalidActionError } from '../errors/recaptcha-invalid-action.error';
+import { GoogleRecaptchaInvalidHostnameError } from '../errors/recaptcha-invalid-hostname.error';
+import { GoogleRecaptchaInvalidTokenError } from '../errors/recaptcha-invalid-token.error';
+import { GoogleRecaptchaRobotAlertError } from '../errors/recaptcha-robot-alert.error';
 
 export type IsHumanInput = {
   tokenV2: string;

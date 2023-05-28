@@ -1,9 +1,9 @@
-import { GoogleRecaptchaInvalidActionError } from '../../application/errors/recaptcha-invalid-action.error';
-import { GoogleRecaptchaInvalidHostnameError } from '../../application/errors/recaptcha-invalid-hostname.error';
-import { GoogleRecaptchaRobotAlertError } from '../../application/errors/recaptcha-robot-alert.error';
-import { ExternalGatewayInterface } from '../gateways/external.gateway.interface';
-import { fail, success } from './../../../shared/errors/either';
-import { GoogleRecaptchaInvalidTokenError } from './../../application/errors/recaptcha-invalid-token.error';
+import { GoogleRecaptchaInvalidActionError } from '../errors/recaptcha-invalid-action.error';
+import { GoogleRecaptchaInvalidHostnameError } from '../errors/recaptcha-invalid-hostname.error';
+import { GoogleRecaptchaRobotAlertError } from '../errors/recaptcha-robot-alert.error';
+import { ExternalGatewayInterface } from '../../infra/gateways/external.gateway.interface';
+import { fail, success } from '../../../shared/errors/either';
+import { GoogleRecaptchaInvalidTokenError } from '../errors/recaptcha-invalid-token.error';
 import {
   IsHumanInput,
   IsHumanOutput,
