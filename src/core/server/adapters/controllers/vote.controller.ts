@@ -29,17 +29,22 @@ export class VoteController implements VoteControllerInterface {
   //prettier-ignore
   async addVote(input: AddVoteControllerInput): Promise<AddVoteControllerOutPut> {
     const validation = ParamValidation.validateObject(input);
+
     if (validation.isFailure()) {
       return fail(validation.value);
     }
+    
     const isHuman = await this.verifyRecaptchaService.isHuman({
       tokenV2: input.recaptchaTokenV2,
       tokenV3: input.recaptchaTokenV3
     });
+
     if (isHuman.isFailure()) {
       return fail(isHuman.value);
     }
-    const response = await this.addVoteUsecase.execute(input.vote);
+
+    const response = await this.addVoteUsecase.execute(input.vote); 
+    
     if (response.isFailure()) {
       return fail(response.value);
     }

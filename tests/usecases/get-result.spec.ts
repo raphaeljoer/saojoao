@@ -1,8 +1,11 @@
-import { Vote } from '@/core/shared/domain/value-objects/vote.value-object';
+import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
-import { GetResultUsecase } from '../../../src/core/server/application/usecases/get-result/get-result.usecase';
-import { artistProps } from '../../../src/core/shared/data/artists';
-import { FakeVoteRepository } from '../../fakes/fake-vote-repository';
+import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
+import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
+import { artistProps } from '../../src/core/shared/data/artists';
+import { FakeVoteRepository } from '../fakes/fake-vote-repository';
+
+config({ path: '.env.test' });
 
 describe('GetResultUseCase', () => {
   test('Should get the results', async () => {

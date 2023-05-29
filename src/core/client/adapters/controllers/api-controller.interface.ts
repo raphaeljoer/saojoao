@@ -1,4 +1,4 @@
-import { SerializedArtist } from '../../../shared/domain/entities/artist';
+import { SerializedArtist } from '../../../server/domain/entities/artist';
 import { VoteInputType } from '../types/api-gateway.type';
 
 export interface ApiControllerInterface {

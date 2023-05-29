@@ -1,19 +1,22 @@
 import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
-import { VotedAtOutsidePeriodError } from '../../src/core/shared/domain/errors/voted-at-outside-period.error';
+import { VotedAtExpiredError } from '../../src/core/server/domain/errors/voted-at-expired.error';
+import { VotedAtInvalidDateError } from '../../src/core/server/domain/errors/voted-at-invalid-date.error';
+import { VotedAtOutsidePeriodError } from '../../src/core/server/domain/errors/voted-at-outside-period.error';
+import { VotedAt } from '../../src/core/server/domain/value-objects/voted-at.value-object';
 import { MissingParamsError } from '../../src/core/shared/errors/missing-params.error';
-import { VotedAtExpiredError } from './../../src/core/shared/domain/errors/voted-at-expired.error';
-import { VotedAtInvalidDateError } from './../../src/core/shared/domain/errors/voted-at-invalid-date.error';
-import { VotedAt } from './../../src/core/shared/domain/value-objects/voted-at.value-object';
 
 config({ path: '.env.test' });
+
+const { NEXT_PUBLIC_VOTING_DATE_START, NEXT_PUBLIC_VOTING_DATE_END } =
+  process.env;
 
 describe('[value-object] VotedAt', () => {
   test('Should create VotedAt instance with valid date', () => {
     const votedAt = new Date();
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -28,12 +31,10 @@ describe('[value-object] VotedAt', () => {
   });
 
   test('Should return failure for invalid date', () => {
-    const dateString = 'Invalid Date';
-
     const votedAt = 'Invalid Date' as any;
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -51,8 +52,8 @@ describe('[value-object] VotedAt', () => {
 
     const votedAt = new Date(expiredDate);
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -72,8 +73,8 @@ describe('[value-object] VotedAt', () => {
 
     const votedAt = dateOutsideVotingPeriodDate;
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -98,8 +99,8 @@ describe('[value-object] VotedAt', () => {
   test('Should return failure for missing params', () => {
     const votedAt = '' as any;
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,

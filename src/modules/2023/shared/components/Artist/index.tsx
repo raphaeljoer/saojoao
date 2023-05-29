@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { Spacer } from '@/modules/shared/components/Spacer';
 import { Grid, Stack, Typography } from '@mui/material';
 import { ReactNode } from 'react';

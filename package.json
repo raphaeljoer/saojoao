@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "test-ui": "vitest --ui"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -35,6 +37,8 @@
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "@types/react-google-recaptcha": "^2.1.5",
+    "@vitest/coverage-c8": "^0.31.1",
+    "@vitest/ui": "^0.31.1",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8"
   }

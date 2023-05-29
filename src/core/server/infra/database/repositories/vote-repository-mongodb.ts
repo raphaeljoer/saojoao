@@ -1,4 +1,4 @@
-import { VoteDto } from '@/core/shared/domain/dto/vote.dto.type';
+import { VoteDto } from '@/core/server/domain/dto/vote.dto.type';
 import { fail, success } from '@/core/shared/errors/either';
 import {
   AddVoteRepositoryOutput,

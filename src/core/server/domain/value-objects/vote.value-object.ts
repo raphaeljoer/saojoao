@@ -1,6 +1,6 @@
-import { Either, fail, success } from '../../errors/either';
-import { MissingParamsError } from '../../errors/missing-params.error';
-import { ParamValidation } from '../../validations/param.validation';
+import { Either, fail, success } from '../../../shared/errors/either';
+import { MissingParamsError } from '../../../shared/errors/missing-params.error';
+import { ParamValidation } from '../../../shared/validations/param.validation';
 import { VoteDto } from '../dto/vote.dto.type';
 import { Ip } from './ip.value-object';
 import { VotedAt } from './voted-at.value-object';
@@ -24,6 +24,8 @@ export class Vote {
       return fail(validade.value);
     }
 
+    console.log('NEXT_PUBLIC_VOTING_DATE_START', NEXT_PUBLIC_VOTING_DATE_START);
+
     const votedAt = VotedAt.create({
       votedAt: new Date(voteDto.votedAt),
       currentDate: new Date(),
@@ -33,7 +35,9 @@ export class Vote {
 
     const ip = Ip.create(voteDto.ip);
 
-    if (ip.isFailure()) return fail(ip.value);
+    if (ip.isFailure()) {
+      return fail(ip.value);
+    }
 
     if (votedAt.isFailure()) {
       return fail(votedAt.value);

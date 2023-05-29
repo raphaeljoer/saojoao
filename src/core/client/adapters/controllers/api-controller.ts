@@ -2,7 +2,7 @@ import { artistProps } from '@/core/shared/data/artists';
 import {
   Artist,
   SerializedArtist
-} from '../../../shared/domain/entities/artist';
+} from '../../../server/domain/entities/artist';
 import { ApiGatewayInterface } from '../gateways/api-gateway.interface';
 import { VoteInputType } from '../types/api-gateway.type';
 import { ApiControllerInterface } from './api-controller.interface';

@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/shared/domain/entities/artist';
+import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { Spacer } from '@/modules/shared/components/Spacer';
 import { Box, Stack, Typography } from '@mui/material';
