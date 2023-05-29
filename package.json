@@ -9,8 +9,9 @@
     "lint": "next lint",
     "prettier": "prettier --write .",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "test-ui": "vitest --ui"
+    "report": "vitest run --coverage",
+    "test-ui": "vitest --ui",
+    "vitest": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",

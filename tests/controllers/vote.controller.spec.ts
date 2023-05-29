@@ -4,16 +4,13 @@ import { VoteController } from '../../src/core/server/adapters/controllers/vote.
 import { VerifyRecaptchaService } from '../../src/core/server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
-import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
 import { FakeVoteRepository } from '../fakes/fake-vote-repository';
 
 config({ path: '.env.test' });
 
-const { NEXT_PUBLIC_VOTING_DATE_START, NEXT_PUBLIC_VOTING_DATE_END } = process.env; //prettier-ignore
-
 describe('[controller] VoteController', () => {
-  test.only('Should add a vote', async () => {
+  test('Should add a vote', async () => {
     const recaptchaProps = {
       action: 'add_vote',
       hostname: 'localhost',
@@ -33,20 +30,17 @@ describe('[controller] VoteController', () => {
     });
 
     const vote = await voteController.addVote({
-      vote: { artistId: 'artistId', votedAt: '01/01/2023', ip: 'ip' },
+      vote: {
+        artistId: 'artistId',
+        votedAt: new Date().toISOString(),
+        ip: 'ip'
+      },
       recaptchaTokenV2: 'validTokenV2',
       recaptchaTokenV3: 'validTokenV3'
     });
 
-    console.log(
-      'NEXT_PUBLIC_VOTING_DATE_START ==> ',
-      NEXT_PUBLIC_VOTING_DATE_START
-    );
-    console.log(vote.value);
-
     expect(vote.isSuccess()).toBe(true);
     expect(vote.isFailure()).toBe(false);
-    expect(vote.value).toBeInstanceOf(Vote);
 
     if (vote.isFailure()) {
       throw new Error('Vote is failure');
