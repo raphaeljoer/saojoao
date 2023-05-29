@@ -7,19 +7,17 @@ import { FakeVoteRepository } from '../fakes/fake-vote-repository';
 config({ path: '.env.test' });
 
 describe('AddVoteUseCase', () => {
-  test.only('Should add a new vote when recaptcha token is valid', async () => {
+  test('Should add a new vote when recaptcha token is valid', async () => {
     const voteRepository = new FakeVoteRepository();
     const addVoteUseCase = new AddVoteUsecase({ voteRepository });
 
     const vote: VoteDto = {
       artistId: 'artistId',
-      votedAt: '01/01/2023',
+      votedAt: new Date().toISOString(),
       ip: 'ip'
     };
 
     const result = await addVoteUseCase.execute(vote);
-
-    console.log(result.value);
 
     expect(result.isSuccess()).toBe(true);
     expect(result.value).toEqual(vote);
@@ -37,7 +35,11 @@ describe('AddVoteUseCase', () => {
       value: vote.artistId
     });
 
-    expect(countVotes).toBe(1);
+    if (countVotes.isFailure()) {
+      throw countVotes.value;
+    }
+
+    expect(countVotes.value).toBe(1);
   });
 
   test('Should return an error when missing some param', async () => {
@@ -56,6 +58,11 @@ describe('AddVoteUseCase', () => {
     expect(result.value).toBeInstanceOf(Error);
 
     const countVotesTotal = await voteRepository.countVotesTotal();
-    expect(countVotesTotal).toBe(0);
+
+    if (countVotesTotal.isFailure()) {
+      throw countVotesTotal.value;
+    }
+
+    expect(countVotesTotal.value).toBe(0);
   });
 });

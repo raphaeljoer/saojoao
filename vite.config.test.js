@@ -1,6 +1,11 @@
-import { config } from 'dotenv';
+import * as path from 'path';
+
 import { defineConfig } from 'vitest/config';
 
-config({ path: '.env.test' });
-
-export default defineConfig({});
+export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  }
+});
