@@ -4,8 +4,6 @@ import { VotedAtExpiredError } from '../errors/voted-at-expired.error';
 import { VotedAtInvalidDateError } from '../errors/voted-at-invalid-date.error';
 import { VotedAtOutsidePeriodError } from '../errors/voted-at-outside-period.error';
 
-const { NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE } = process.env; //prettier-ignore
-
 type Props = {
   votedAt: Date;
   currentDate: Date;
@@ -27,7 +25,6 @@ export class VotedAt {
   static value: Date;
 
   static create(input: Props): VotedAtCreateOutput {
-    console.log('input', input);
     const validationResult = ParamValidation.validateObject(input);
 
     if (validationResult.isFailure()) {
@@ -57,7 +54,7 @@ export class VotedAt {
       return fail(new VotedAtExpiredError());
     }
 
-    if (NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE === 'true') {
+    if (process.env.NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE === 'true') {
       if (
         input.votedAt.getTime() < input.votingStartDate.getTime() ||
         input.votedAt.getTime() > input.votingEndDate.getTime()
