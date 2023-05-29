@@ -92,6 +92,8 @@ describe('[value-object] VotedAt', () => {
       name: 'VotedAtOutsidePeriodError',
       message: `O período de votação começa no dia ${formatDateTime(votingStartDate)} e vai até dia ${formatDateTime(votingEndDate)}.` //prettier-ignore
     });
+
+    process.env.NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE = 'false';
   });
 
   test('Should return failure for missing params', () => {
