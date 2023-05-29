@@ -15,6 +15,7 @@ export default SharePage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const artists = await coreClient.api.getArtists();
+
   const paths = artists.map((artist) => ({
     params: { slug: artist.slug }
   }));

@@ -14,7 +14,6 @@ const ResultPage: NextPage<Props> = ({ artists }) => {
 export default ResultPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { SM_REVALIDATE_RESULT } = process.env;
   const result = await coreServer.vote.getResult();
 
   if (result.isFailure()) {
@@ -27,6 +26,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       artists: result.value
     },
-    revalidate: 60 * Number(SM_REVALIDATE_RESULT || 10)
+    revalidate: 60 * Number(process.env.SM_REVALIDATE_RESULT || 10)
   };
 };

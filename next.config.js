@@ -29,9 +29,10 @@ const metaTags = {
 };
 
 const votingDates = {
-  VOTING_DATE_VERIFY_ACTIVE: process.env.VOTING_DATE_VERIFY_ACTIVE, // prettier-ignore
+  VOTING_DATE_VERIFY_ACTIVE: process.env.VOTING_DATE_VERIFY_ACTIVE,
   VOTING_DATE_START: process.env.VOTING_DATE_START,
-  VOTING_DATE_END: process.env.VOTING_DATE_END
+  VOTING_DATE_END: process.env.VOTING_DATE_END,
+  VOTING_RELEASE_WINNER_DATE: process.env.VOTING_RELEASE_WINNER_DATE
 };
 
 const security = {
@@ -54,7 +55,7 @@ const images = {
   loader: 'default',
   imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-  domains: ['images.suamusica.com.br', 'source.unsplash.com', 'github.com']
+  domains: ['images.suamusica.com.br']
 };
 
 const nextConfig = {
