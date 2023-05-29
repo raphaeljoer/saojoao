@@ -11,8 +11,8 @@ type Props = {
 };
 
 const WinnerPage: NextPage<Props> = ({ artists }) => {
-  const startDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || '');
-  const endDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || '');
+  const startDate = new Date(process.env.VOTING_DATE_START || '');
+  const endDate = new Date(process.env.VOTING_DATE_END || '');
 
   return (
     <Switcher

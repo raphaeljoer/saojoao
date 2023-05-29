@@ -13,8 +13,8 @@ describe('[value-object] VotedAt', () => {
   test('Should create VotedAt instance with valid date', () => {
     const votedAt = new Date();
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(process.env.VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(process.env.VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -31,8 +31,8 @@ describe('[value-object] VotedAt', () => {
   test('Should return failure for invalid date', () => {
     const votedAt = 'Invalid Date' as any;
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(process.env.VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(process.env.VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -50,8 +50,8 @@ describe('[value-object] VotedAt', () => {
 
     const votedAt = new Date(expiredDate);
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(process.env.VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(process.env.VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -65,14 +65,14 @@ describe('[value-object] VotedAt', () => {
   });
 
   test('Should return failure for date outside voting period', () => {
-    process.env.NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE = 'true';
+    process.env.VOTING_DATE_VERIFY_ACTIVE = 'true';
 
     const dateOutsideVotingPeriodDate = new Date('2024-05-01T00:00:00');
 
     const votedAt = dateOutsideVotingPeriodDate;
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(process.env.VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(process.env.VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,
@@ -93,14 +93,14 @@ describe('[value-object] VotedAt', () => {
       message: `O período de votação começa no dia ${formatDateTime(votingStartDate)} e vai até dia ${formatDateTime(votingEndDate)}.` //prettier-ignore
     });
 
-    process.env.NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE = 'false';
+    process.env.VOTING_DATE_VERIFY_ACTIVE = 'false';
   });
 
   test('Should return failure for missing params', () => {
     const votedAt = '' as any;
     const currentDate = new Date();
-    const votingStartDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''); //prettier-ignore
-    const votingEndDate = new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || ''); //prettier-ignore
+    const votingStartDate = new Date(process.env.VOTING_DATE_START || ''); //prettier-ignore
+    const votingEndDate = new Date(process.env.VOTING_DATE_END || ''); //prettier-ignore
 
     const result = VotedAt.create({
       votedAt,

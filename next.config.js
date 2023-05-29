@@ -29,9 +29,9 @@ const metaTags = {
 };
 
 const votingDates = {
-  NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE: process.env.NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE, // prettier-ignore
-  NEXT_PUBLIC_VOTING_DATE_START: process.env.NEXT_PUBLIC_VOTING_DATE_START,
-  NEXT_PUBLIC_VOTING_DATE_END: process.env.NEXT_PUBLIC_VOTING_DATE_END
+  VOTING_DATE_VERIFY_ACTIVE: process.env.VOTING_DATE_VERIFY_ACTIVE, // prettier-ignore
+  VOTING_DATE_START: process.env.VOTING_DATE_START,
+  VOTING_DATE_END: process.env.VOTING_DATE_END
 };
 
 const security = {

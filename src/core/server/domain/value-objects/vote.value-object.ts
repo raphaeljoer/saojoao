@@ -26,8 +26,8 @@ export class Vote {
     const votedAt = VotedAt.create({
       votedAt: new Date(voteDto.votedAt),
       currentDate: new Date(),
-      votingStartDate: new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || ''), //prettier-ignore
-      votingEndDate: new Date(process.env.NEXT_PUBLIC_VOTING_DATE_END || '')
+      votingStartDate: new Date(process.env.VOTING_DATE_START || ''),
+      votingEndDate: new Date(process.env.VOTING_DATE_END || '')
     });
 
     const ip = Ip.create(voteDto.ip);

@@ -45,9 +45,7 @@ export const PerksView = () => {
         <Typography variant="h5" textAlign="center">
           <Countdown
             prefix="Em:"
-            targetTime={
-              new Date(process.env.NEXT_PUBLIC_VOTING_DATE_START || '')
-            }
+            targetTime={new Date(process.env.VOTING_DATE_START || '')}
             suffix="começa a votação"
           />
         </Typography>

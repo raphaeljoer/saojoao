@@ -86,8 +86,8 @@ export const RulesView = () => {
               {
                 'Todos os 5 (cinco) finalistas selecionados (Kwai e Instagram) integrarão a terceira etapa do concurso com votação aberta popular. Através do link '
               }
-              <a href="https://talentosaojoao.suamusica.com.br/">
-                {'talentosaojoao.suamusica.com.br'}
+              <a href="https://suamusica.com.br/talento">
+                {'https://suamusica.com.br/talento'}
               </a>
               .
               {
@@ -200,8 +200,8 @@ export const RulesView = () => {
                 {
                   '6.2 O interessado, no ato da participação deste concurso, estará automaticamente autorizando a Sua Música e Kwai, cedendo, para tanto, os direitos autorais de voz/som e imagem, de modo gratuito, definitivo e irrevogável, liberando também a utilização de seu nome e imagens/fotos publicadas nas redes sociais da Sua Música e Kwai, bem como no site de divulgação de votação popular, sob o domínio: '
                 }
-                <a href="https://talentosaojoao.suamusica.com.br/">
-                  {'talentosaojoao.suamusica.com.br'}
+                <a href="https://suamusica.com.br/talento">
+                  {'https://suamusica.com.br/talento'}
                 </a>
               </Typography>
               <Typography variant="body1" component="p" gutterBottom>

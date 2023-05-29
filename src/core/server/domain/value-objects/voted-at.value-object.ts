@@ -54,7 +54,7 @@ export class VotedAt {
       return fail(new VotedAtExpiredError());
     }
 
-    if (process.env.NEXT_PUBLIC_VOTING_DATE_VERIFY_ACTIVE === 'true') {
+    if (process.env.VOTING_DATE_VERIFY_ACTIVE === 'true') {
       if (
         input.votedAt.getTime() < input.votingStartDate.getTime() ||
         input.votedAt.getTime() > input.votingEndDate.getTime()
