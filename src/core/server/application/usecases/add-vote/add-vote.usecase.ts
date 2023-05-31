@@ -18,6 +18,7 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
   }
 
   async execute(voteDto: VoteDto): Promise<AddVoteUsecaseOutput> {
+    console.time('[AddVoteUsecase].execute');
     const vote = Vote.create(voteDto);
 
     if (vote.isFailure()) {
@@ -30,6 +31,7 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
       return fail(result.value);
     }
 
+    console.timeEnd('[AddVoteUsecase].execute');
     return success(voteDto);
   }
 }

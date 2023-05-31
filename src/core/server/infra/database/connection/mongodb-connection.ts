@@ -32,25 +32,39 @@ export class MongoDbConnection implements ConnectionInterface<Db> {
 
   async insertOne(input: InsertOneInput): Promise<InsertOneResult<Document>> {
     const db = await this.connect();
+    console.time('[MongoDbConnection].insertOne');
     const collection = db.collection(input.collectionName);
-    return await collection.insertOne(input.document);
+    const result = await collection.insertOne(input.document);
+    console.timeEnd('[MongoDbConnection].insertOne');
+    return result;
   }
 
   async countDocuments(input: CountDocumentInput): Promise<number> {
     const db = await this.connect();
+    console.time('[MongoDbConnection].countDocuments');
     const collection = db.collection(input.collectionName);
-    return collection.countDocuments({ [input.key]: input.value });
+    const count = await collection.countDocuments({ [input.key]: input.value });
+    console.timeEnd('[MongoDbConnection].countDocuments');
+    return count;
   }
 
   async estimatedDocumentCount(collectionName: string): Promise<number> {
     const db = await this.connect();
+    console.time('[MongoDbConnection].estimatedDocumentCount');
     const collection = db.collection(collectionName);
-    return collection.estimatedDocumentCount();
+    const estimatedDocumentCount = await collection.estimatedDocumentCount();
+    console.timeEnd('[MongoDbConnection].estimatedDocumentCount');
+    return estimatedDocumentCount;
   }
 
   async connect(): Promise<Db> {
-    if (this.db) return this.db;
+    if (this.db) {
+      console.log('[MongoDbConnection].connect: db already connected');
+      return this.db;
+    }
+    console.time('[MongoDbConnection].connect');
     this.client = await MongoClient.connect(this.connectionUrl);
+    console.timeEnd('[MongoDbConnection].connect');
     this.db = this.client.db(this.dbName);
     return this.db;
   }

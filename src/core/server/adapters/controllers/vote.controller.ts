@@ -28,8 +28,9 @@ export class VoteController implements VoteControllerInterface {
 
   //prettier-ignore
   async addVote(input: AddVoteControllerInput): Promise<AddVoteControllerOutPut> {
+    console.time('[VoteController].addVote');
     const validation = ParamValidation.validateObject(input);
-
+    
     if (validation.isFailure()) {
       return fail(validation.value);
     }
@@ -42,13 +43,14 @@ export class VoteController implements VoteControllerInterface {
     if (isHuman.isFailure()) {
       return fail(isHuman.value);
     }
-
+    
     const response = await this.addVoteUsecase.execute(input.vote); 
     
     if (response.isFailure()) {
       return fail(response.value);
     }
-
+    
+    console.timeEnd('[VoteController].addVote');
     return success(response.value);
   }
 
