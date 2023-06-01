@@ -10,7 +10,10 @@ export const item: SxProps<Theme> = {
   borderRadius: 4,
   boxShadow: '0 0 2rem rgba(0, 0, 0, 0.3)',
   mx: 'auto',
-  p: 2
+  p: 2,
+  backdropFilter: 'blur(4px)',
+  WebkitBackdropFilter: 'blur(4px)',
+  MozBackdropFilter: 'blur(4px)'
 };
 
 export const content: SxProps<Theme> = {
