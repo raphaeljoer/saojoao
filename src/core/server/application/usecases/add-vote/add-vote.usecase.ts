@@ -31,16 +31,16 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
 
     const vote = voteResult.value.toJSON();
 
-    const counterResult = await this.voteRepositoryCounter.add(vote);
-
-    if (counterResult.isFailure()) {
-      return fail(counterResult.value);
-    }
-
     const auditLogResult = await this.voteRepositoryAuditLog.add(vote);
 
     if (auditLogResult.isFailure()) {
       return fail(auditLogResult.value);
+    }
+
+    const counterResult = await this.voteRepositoryCounter.add(vote);
+
+    if (counterResult.isFailure()) {
+      return fail(counterResult.value);
     }
 
     console.timeEnd('[AddVoteUsecase].execute');

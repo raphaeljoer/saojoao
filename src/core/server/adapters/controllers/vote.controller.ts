@@ -39,7 +39,7 @@ export class VoteController implements VoteControllerInterface {
       tokenV2: input.recaptchaTokenV2,
       tokenV3: input.recaptchaTokenV3
     });
-
+    
     if (isHuman.isFailure()) {
       return fail(isHuman.value);
     }
@@ -55,12 +55,14 @@ export class VoteController implements VoteControllerInterface {
   }
 
   async getResult(): Promise<GetResultControllerOutPut> {
+    console.time('[VoteController].getResult');
     const response = await this.getResultUsecase.execute();
 
     if (response.isFailure()) {
       return fail(response.value);
     }
 
+    console.time('[VoteController].getResult');
     return success(response.value);
   }
 }

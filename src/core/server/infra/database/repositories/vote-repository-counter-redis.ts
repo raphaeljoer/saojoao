@@ -24,7 +24,9 @@ export class VoteRepositoryCounterRedis implements VoteRepositoryInterface {
 
   async add(input: VoteDto): Promise<AddRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryCounterRedis].add');
       await this.connection.incr(input.artistId);
+      console.timeEnd('[VoteRepositoryCounterRedis].add');
       return success(input);
     } catch (error) {
       console.error(error);
@@ -34,10 +36,12 @@ export class VoteRepositoryCounterRedis implements VoteRepositoryInterface {
 
   async countTotal(): Promise<CountTotalRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryCounterRedis].countTotal');
       const keys = await this.connection.keys('*');
       if (keys.length === 0) return success(0);
       const count = await this.connection.mget<number>(...keys);
       const total = count.reduce((acc, curr) => acc + (curr || 0), 0);
+      console.timeEnd('[VoteRepositoryCounterRedis].countTotal');
       return success(total);
     } catch (error) {
       console.error(error);
@@ -47,7 +51,9 @@ export class VoteRepositoryCounterRedis implements VoteRepositoryInterface {
 
   async countById(artistId: string): Promise<CountByIdRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryCounterRedis].countById');
       const count = await this.connection.get<number>(artistId);
+      console.timeEnd('[VoteRepositoryCounterRedis].countById');
       return success(count || 0);
     } catch (error) {
       console.error(error);

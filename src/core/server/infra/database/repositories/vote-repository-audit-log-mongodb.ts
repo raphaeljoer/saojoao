@@ -25,10 +25,12 @@ export class VoteRepositoryAuditLogMongodb implements VoteRepositoryInterface {
 
   async add(vote: VoteDto): Promise<AddRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryAuditLogMongodb].add');
       await this.connection.insertOne({
         collectionName: this.collectionName,
         document: vote
       });
+      console.timeEnd('[VoteRepositoryAuditLogMongodb].add');
       return success(vote);
     } catch (error) {
       console.error(error);
@@ -38,7 +40,9 @@ export class VoteRepositoryAuditLogMongodb implements VoteRepositoryInterface {
 
   async countTotal(): Promise<CountTotalRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryAuditLogMongodb].countTotal');
       const totalVotes = await this.connection.estimatedDocumentCount(this.collectionName); //prettier-ignore
+      console.timeEnd('[VoteRepositoryAuditLogMongodb].countTotal');
       return success(totalVotes);
     } catch (error) {
       console.error(error);
@@ -48,11 +52,13 @@ export class VoteRepositoryAuditLogMongodb implements VoteRepositoryInterface {
 
   async countById(artistId: string): Promise<CountByIdRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryAuditLogMongodb].countById');
       const count = await this.connection.countDocuments({
         collectionName: this.collectionName,
         key: 'artistId',
         value: artistId
       });
+      console.timeEnd('[VoteRepositoryAuditLogMongodb].countById');
       return success(count);
     } catch (error) {
       console.error(error);

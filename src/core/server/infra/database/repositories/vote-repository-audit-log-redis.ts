@@ -24,7 +24,9 @@ export class VoteRepositoryAuditLogRedis implements VoteRepositoryInterface {
 
   async add(input: VoteDto): Promise<AddRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryAuditLogRedis].add');
       await this.connection.rpush('audit-log', JSON.stringify(input));
+      console.timeEnd('[VoteRepositoryAuditLogRedis].add');
       return success(input);
     } catch (error) {
       console.error(error);
@@ -34,7 +36,9 @@ export class VoteRepositoryAuditLogRedis implements VoteRepositoryInterface {
 
   async countTotal(): Promise<CountTotalRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryAuditLogRedis].countTotal');
       const total = await this.connection.llen('audit-log');
+      console.timeEnd('[VoteRepositoryAuditLogRedis].countTotal');
       return success(total);
     } catch (error) {
       console.error(error);
@@ -44,11 +48,13 @@ export class VoteRepositoryAuditLogRedis implements VoteRepositoryInterface {
 
   async countById(artistId: string): Promise<CountByIdRepositoryOutput> {
     try {
+      console.time('[VoteRepositoryAuditLogRedis].countById');
       const auditLog = await this.connection.lrange<string>('audit-log', 0, -1);
       const count = auditLog.filter((item) => {
         const vote = JSON.parse(item);
         return vote.artistId === artistId;
       }).length;
+      console.timeEnd('[VoteRepositoryAuditLogRedis].countById');
       return success(count || 0);
     } catch (error) {
       console.error(error);
