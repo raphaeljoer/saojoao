@@ -8,8 +8,13 @@ config({ path: '.env.test' });
 
 describe('AddVoteUseCase', () => {
   test('Should add a new vote when recaptcha token is valid', async () => {
-    const voteRepository = new FakeVoteRepository();
-    const addVoteUseCase = new AddVoteUsecase({ voteRepository });
+    const voteRepositoryAuditLog = new FakeVoteRepository();
+    const voteRepositoryCounter = new FakeVoteRepository();
+
+    const addVoteUseCase = new AddVoteUsecase({
+      voteRepositoryAuditLog,
+      voteRepositoryCounter
+    });
 
     const vote: VoteDto = {
       artistId: 'artistId',
@@ -30,10 +35,7 @@ describe('AddVoteUseCase', () => {
     expect(result.value.votedAt).toBe(vote.votedAt);
     expect(result.value.ip).toBe(vote.ip);
 
-    const countVotes = await voteRepository.countVotes({
-      key: 'artistId',
-      value: vote.artistId
-    });
+    const countVotes = await voteRepositoryCounter.countById(vote.artistId);
 
     if (countVotes.isFailure()) {
       throw countVotes.value;
@@ -49,15 +51,20 @@ describe('AddVoteUseCase', () => {
       ip: 'ip'
     };
 
-    const voteRepository = new FakeVoteRepository();
-    const addVoteUseCase = new AddVoteUsecase({ voteRepository });
+    const voteRepositoryAuditLog = new FakeVoteRepository();
+    const voteRepositoryCounter = new FakeVoteRepository();
+
+    const addVoteUseCase = new AddVoteUsecase({
+      voteRepositoryAuditLog,
+      voteRepositoryCounter
+    });
 
     const result = await addVoteUseCase.execute(vote);
 
     expect(result.isFailure()).toBe(true);
     expect(result.value).toBeInstanceOf(Error);
 
-    const countVotesTotal = await voteRepository.countVotesTotal();
+    const countVotesTotal = await voteRepositoryCounter.countTotal();
 
     if (countVotesTotal.isFailure()) {
       throw countVotesTotal.value;

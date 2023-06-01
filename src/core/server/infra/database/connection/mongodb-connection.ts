@@ -1,7 +1,6 @@
 import { Db, Document, InsertOneResult, MongoClient } from 'mongodb';
-import { ConnectionInterface } from './connection.interface';
 
-type Props = {
+export type MongoDbConnectionProps = {
   connectionUrl: string;
   dbName: string;
 };
@@ -17,13 +16,13 @@ type CountDocumentInput = {
   value: string;
 };
 
-export class MongoDbConnection implements ConnectionInterface<Db> {
+export class MongoDbConnection {
   private connectionUrl: string;
   private dbName: string;
   private client: MongoClient | null;
   private db: Db | null;
 
-  constructor(props: Props) {
+  constructor(props: MongoDbConnectionProps) {
     this.connectionUrl = props.connectionUrl;
     this.dbName = props.dbName;
     this.client = null;

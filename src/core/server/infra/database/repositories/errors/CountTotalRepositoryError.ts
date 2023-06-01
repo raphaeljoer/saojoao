@@ -1,10 +1,10 @@
 import { ResponseErrorInterface } from '@/core/shared/errors/response.error.interface';
 
 //prettier-ignore
-export class AddVoteRepositoryError extends Error implements ResponseErrorInterface {
+export class CountTotalRepositoryError extends Error implements ResponseErrorInterface {
   constructor() {
-    super('Não foi possível adicionar o voto.');
-    this.name = 'AddVoteRepositoryError';
+    super('Não foi possível contar o total.');
+    this.name = 'CountTotalVotesRepositoryError';
   }
 
   get error() {
