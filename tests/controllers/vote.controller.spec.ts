@@ -5,6 +5,7 @@ import { VerifyRecaptchaService } from '../../src/core/server/application/servic
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
+import { FakeVoteQueue } from '../fakes/fake-vote-queue';
 import { FakeVoteRepository } from '../fakes/fake-vote-repository';
 
 config({ path: '.env.test' });
@@ -22,6 +23,7 @@ describe(
       const externalGateway = new FakeExternalGateway({ recaptchaProps });
       const voteRepositoryCounter = new FakeVoteRepository();
       const voteRepositoryAuditLog = new FakeVoteRepository();
+      const voteQueue = new FakeVoteQueue();
 
       const getResultUsecase = new GetResultUsecase({
         voteRepositoryCounter
@@ -29,7 +31,8 @@ describe(
 
       const addVoteUseCase = new AddVoteUsecase({
         voteRepositoryCounter,
-        voteRepositoryAuditLog
+        voteRepositoryAuditLog,
+        voteQueue
       });
 
       const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway }); //prettier-ignore
@@ -75,9 +78,12 @@ describe(
         voteRepositoryCounter
       });
 
+      const voteQueue = new FakeVoteQueue();
+
       const addVoteUseCase = new AddVoteUsecase({
         voteRepositoryCounter,
-        voteRepositoryAuditLog
+        voteRepositoryAuditLog,
+        voteQueue
       });
 
       const externalGateway = new FakeExternalGateway({ recaptchaProps });

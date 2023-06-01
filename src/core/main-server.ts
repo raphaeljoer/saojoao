@@ -3,29 +3,38 @@ import { VoteController } from './server/adapters/controllers/vote.controller';
 import { VerifyRecaptchaService } from './server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from './server/application/usecases/add-vote/add-vote.usecase';
 import { GetResultUsecase } from './server/application/usecases/get-result/get-result.usecase';
-import {
-  redisConnectionAuditLogProps,
-  redisConnectionCounterProps
-} from './server/infra/config/redis.connection.props';
+import { kafkaConnectionProps } from './server/infra/config/kafka.connection.props';
+import { mongodbConnectionProps } from './server/infra/config/mongodb.connection.props';
+import { redisConnectionCounterProps } from './server/infra/config/redis.connection.props';
+import { MongoDbConnection } from './server/infra/database/connection/mongodb-connection';
 import { RedisConnection } from './server/infra/database/connection/redis-connection';
-import { VoteRepositoryAuditLogRedis } from './server/infra/database/repositories/vote-repository-audit-log-redis';
+import { VoteRepositoryAuditLogMongodb } from './server/infra/database/repositories/vote-repository-audit-log-mongodb';
 import { VoteRepositoryCounterRedis } from './server/infra/database/repositories/vote-repository-counter-redis';
 import { ExternalGateway } from './server/infra/gateways/external.gateway';
+import { KafkaConnection } from './server/infra/queue/kafka.connection.queue';
+import { VoteQueue } from './server/infra/queue/vote.queue';
 import { AxiosHttpClient } from './shared/drivers/http/axios-http-client';
 
 const httpClient = new AxiosHttpClient();
 const externalGateway = new ExternalGateway({ httpClient });
 const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway });
 
-const redisCounterConnection = new RedisConnection(redisConnectionCounterProps);
+const redisCounterConnection = RedisConnection.getInstance(redisConnectionCounterProps); //prettier-ignore
 const voteRepositoryCounter = new VoteRepositoryCounterRedis({ connection: redisCounterConnection }); //prettier-ignore
 
-const redisAuditLogConnection = new RedisConnection(redisConnectionAuditLogProps); //prettier-ignore
-const voteRepositoryAuditLog = new VoteRepositoryAuditLogRedis({ connection: redisAuditLogConnection }); //prettier-ignore
+// const redisAuditLogConnection = RedisConnection.getInstance(redisConnectionAuditLogProps); //prettier-ignore
+// const voteRepositoryAuditLog = new VoteRepositoryAuditLogRedis({ connection: redisAuditLogConnection }); //prettier-ignore
+
+const mongoDBConnection = new MongoDbConnection(mongodbConnectionProps);
+const voteRepositoryAuditLog = new VoteRepositoryAuditLogMongodb({ connection: mongoDBConnection }); //prettier-ignore
+
+const kafkaConnection = new KafkaConnection(kafkaConnectionProps);
+const voteQueue = new VoteQueue({ connection: kafkaConnection });
 
 const addVoteUseCase = new AddVoteUsecase({
   voteRepositoryCounter,
-  voteRepositoryAuditLog
+  voteRepositoryAuditLog,
+  voteQueue
 });
 
 const getResultUsecase = new GetResultUsecase({

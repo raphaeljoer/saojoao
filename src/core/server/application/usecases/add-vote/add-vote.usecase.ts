@@ -2,6 +2,7 @@ import { VoteDto } from '../../../../../core/server/domain/dto/vote.dto.type';
 import { fail, success } from '../../../../../core/shared/errors/either';
 import { Vote } from '../../../domain/value-objects/vote.value-object';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
+import { VoteQueueInterface } from './../../../infra/queue/vote.queue';
 import {
   AddVoteUsecaseInterface,
   AddVoteUsecaseOutput
@@ -10,14 +11,17 @@ import {
 type Props = {
   voteRepositoryCounter: VoteRepositoryInterface;
   voteRepositoryAuditLog: VoteRepositoryInterface;
+  voteQueue: VoteQueueInterface;
 };
 export class AddVoteUsecase implements AddVoteUsecaseInterface {
   private readonly voteRepositoryAuditLog: VoteRepositoryInterface;
   private readonly voteRepositoryCounter: VoteRepositoryInterface;
+  private readonly voteQueue: VoteQueueInterface;
 
   constructor(props: Props) {
     this.voteRepositoryCounter = props.voteRepositoryCounter;
     this.voteRepositoryAuditLog = props.voteRepositoryAuditLog;
+    this.voteQueue = props.voteQueue;
   }
 
   async execute(voteDto: VoteDto): Promise<AddVoteUsecaseOutput> {
@@ -43,8 +47,15 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
       return fail(auditLogResult.value);
     }
 
-    console.timeEnd('[AddVoteUsecase].execute');
+    const queueResult = await this.voteQueue.pub({
+      message: JSON.stringify(vote)
+    });
 
+    if (queueResult.isFailure()) {
+      return fail(queueResult.value);
+    }
+
+    console.timeEnd('[AddVoteUsecase].execute');
     return success(voteDto);
   }
 }

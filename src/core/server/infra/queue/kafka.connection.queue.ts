@@ -1,7 +1,6 @@
 import { Either, fail, success } from '@/core/shared/errors/either';
 import { Kafka, Producer, RecordMetadata } from 'kafkajs';
 import { CouldNotConnectError } from '../errors/could-not-connect.error';
-import { ConnectionInterface } from './connection.interface';
 
 type SaslType = {
   mechanism: 'scram-sha-256';
@@ -27,7 +26,7 @@ export interface QueueConnectionInterface {
   sendMessage(input: SendMessageInput): Promise<SendMessageOutput>;
 }
 
-export class KafkaConnection implements ConnectionInterface<ConnectOutput> {
+export class KafkaConnection {
   private brokers: string[];
   private readonly sasl: SaslType;
   private readonly ssl: boolean;
@@ -38,6 +37,7 @@ export class KafkaConnection implements ConnectionInterface<ConnectOutput> {
     this.sasl = props.sasl;
     this.ssl = props.ssl;
     this.producerPool = [];
+    console.log('[KafkaConnection] Creating instance');
   }
 
   async sendMessage(input: SendMessageInput): Promise<SendMessageOutput> {

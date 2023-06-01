@@ -27,6 +27,7 @@ export class MongoDbConnection {
     this.dbName = props.dbName;
     this.client = null;
     this.db = null;
+    console.log('[MongoDbConnection] Creating instance');
   }
 
   async insertOne(input: InsertOneInput): Promise<InsertOneResult<Document>> {

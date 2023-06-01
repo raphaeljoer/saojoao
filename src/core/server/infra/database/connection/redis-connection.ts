@@ -6,37 +6,46 @@ export type RedisConnectionProps = {
 };
 
 export class RedisConnection {
-  private readonly instance: Redis;
+  private static instance: RedisConnection;
+  private readonly redisInstance: Redis;
 
-  constructor(props: RedisConnectionProps) {
-    this.instance = new Redis({ url: props.host, token: props.token });
+  private constructor(props: RedisConnectionProps) {
+    console.log('[RedisConnection] Creating instance');
+    this.redisInstance = new Redis({ url: props.host, token: props.token });
+  }
+
+  public static getInstance(props: RedisConnectionProps): RedisConnection {
+    if (!RedisConnection.instance) {
+      RedisConnection.instance = new RedisConnection(props);
+    }
+    return RedisConnection.instance;
   }
 
   async incr(key: string): Promise<number> {
-    return await this.instance.incr(key);
+    return await this.redisInstance.incr(key);
   }
 
   async get<T>(key: string): Promise<T | null> {
-    return await this.instance.get<T>(key);
+    return await this.redisInstance.get<T>(key);
   }
 
   async rpush(key: string, value: string): Promise<number> {
-    return await this.instance.rpush(key, value);
+    return await this.redisInstance.rpush(key, value);
   }
 
   async lrange<T>(key: string, start: number, stop: number): Promise<T[]> {
-    return await this.instance.lrange<T>(key, start, stop);
+    return await this.redisInstance.lrange<T>(key, start, stop);
   }
 
   async llen(key: string): Promise<number> {
-    return await this.instance.llen(key);
+    return await this.redisInstance.llen(key);
   }
 
   async keys(pattern: string): Promise<string[]> {
-    return await this.instance.keys(pattern);
+    return await this.redisInstance.keys(pattern);
   }
 
   async mget<T>(...keys: string[]): Promise<T[]> {
-    return await this.instance.mget<T[]>(...keys);
+    return await this.redisInstance.mget<T[]>(...keys);
   }
 }

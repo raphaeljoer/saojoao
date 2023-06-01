@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { VoteDto } from '../../src/core/server/domain/dto/vote.dto.type';
+import { FakeVoteQueue } from '../fakes/fake-vote-queue';
 import { FakeVoteRepository } from '../fakes/fake-vote-repository';
 
 config({ path: '.env.test' });
@@ -10,10 +11,12 @@ describe('AddVoteUseCase', () => {
   test('Should add a new vote when recaptcha token is valid', async () => {
     const voteRepositoryAuditLog = new FakeVoteRepository();
     const voteRepositoryCounter = new FakeVoteRepository();
+    const voteQueue = new FakeVoteQueue();
 
     const addVoteUseCase = new AddVoteUsecase({
       voteRepositoryAuditLog,
-      voteRepositoryCounter
+      voteRepositoryCounter,
+      voteQueue
     });
 
     const vote: VoteDto = {
@@ -53,10 +56,12 @@ describe('AddVoteUseCase', () => {
 
     const voteRepositoryAuditLog = new FakeVoteRepository();
     const voteRepositoryCounter = new FakeVoteRepository();
+    const voteQueue = new FakeVoteQueue();
 
     const addVoteUseCase = new AddVoteUsecase({
       voteRepositoryAuditLog,
-      voteRepositoryCounter
+      voteRepositoryCounter,
+      voteQueue
     });
 
     const result = await addVoteUseCase.execute(vote);
