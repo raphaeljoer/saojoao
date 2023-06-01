@@ -1,7 +1,7 @@
 import { artistProps } from '../../../../../core/shared/data/artists';
+import { fail, success } from '../../../../../core/shared/errors/either';
 import { Artist } from '../../../domain/entities/artist';
 import { Result } from '../../../domain/entities/result';
-import { fail, success } from '../../../../../core/shared/errors/either';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
 import {
   GetResultUsecaseInterface,
@@ -9,30 +9,28 @@ import {
 } from './get-result-usecase.interface';
 
 type Props = {
-  voteRepository: VoteRepositoryInterface;
+  voteRepositoryCounter: VoteRepositoryInterface;
 };
 
 export class GetResultUsecase implements GetResultUsecaseInterface {
-  private readonly voteRepository: VoteRepositoryInterface;
+  private readonly voteRepositoryCounter: VoteRepositoryInterface;
 
   constructor(props: Props) {
-    this.voteRepository = props.voteRepository;
+    this.voteRepositoryCounter = props.voteRepositoryCounter;
   }
 
   async execute(): Promise<GetResultUsecaseOutput> {
+    console.time('[GetResultUsecase].execute');
     const artists = artistProps.map((props) => new Artist(props));
 
-    const totalVotesCount = await this.voteRepository.countVotesTotal();
+    const totalVotesCount = await this.voteRepositoryCounter.countTotal();
 
     if (totalVotesCount.isFailure()) {
       return fail(totalVotesCount.value);
     }
 
     for (const artist of artists) {
-      const countByIdResult = await this.voteRepository.countVotes({
-        key: 'artistId',
-        value: artist.artistId
-      });
+      const countByIdResult = await this.voteRepositoryCounter.countById(artist.artistId); //prettier-ignore
 
       if (countByIdResult.isFailure()) {
         return fail(countByIdResult.value);
@@ -46,6 +44,7 @@ export class GetResultUsecase implements GetResultUsecaseInterface {
       totalVotesCount: totalVotesCount.value
     });
 
+    console.timeEnd('[GetResultUsecase].execute');
     return success(result.toJSON());
   }
 }

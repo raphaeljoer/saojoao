@@ -21,8 +21,8 @@ describe('GetResultUseCase', () => {
       throw new Error('Vote01 is failure');
     }
 
-    voteRepository.addVote(vote01.value);
-    voteRepository.addVote(vote01.value);
+    voteRepository.add(vote01.value);
+    voteRepository.add(vote01.value);
 
     const vote02 = Vote.create({
       artistId: artistProps[1].artistId,
@@ -34,7 +34,7 @@ describe('GetResultUseCase', () => {
       throw new Error('Vote02 is failure');
     }
 
-    voteRepository.addVote(vote02.value);
+    voteRepository.add(vote02.value);
 
     const vote03 = Vote.create({
       artistId: artistProps[1].artistId,
@@ -46,9 +46,11 @@ describe('GetResultUseCase', () => {
       throw new Error('Vote02 is failure');
     }
 
-    voteRepository.addVote(vote03.value);
+    voteRepository.add(vote03.value);
 
-    const getResultUseCase = new GetResultUsecase({ voteRepository });
+    const getResultUseCase = new GetResultUsecase({
+      voteRepositoryCounter: voteRepository
+    });
     const result = await getResultUseCase.execute();
 
     expect(result.isSuccess()).toBe(true);

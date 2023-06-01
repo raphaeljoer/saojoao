@@ -2,8 +2,8 @@ import { VoteDto } from '@/core/server/domain/dto/vote.dto.type';
 import { SerializedArtist } from '@/core/server/domain/entities/artist';
 import { Either } from '@/core/shared/errors/either';
 import { MissingParamsError } from '@/core/shared/errors/missing-params.error';
-import { CountTotalVotesRepositoryError } from '../../infra/database/repositories/errors/CountTotalVotesRepositoryError';
-import { CountVotesRepositoryError } from '../../infra/database/repositories/errors/CountVotesRepositoryError';
+import { CountByIdRepositoryError } from '../../infra/database/repositories/errors/CountByIdRepositoryError';
+import { CountTotalRepositoryError } from '../../infra/database/repositories/errors/CountTotalRepositoryError';
 
 export type AddVoteControllerInput = {
   vote: VoteDto;
@@ -13,7 +13,7 @@ export type AddVoteControllerInput = {
 
 export type AddVoteControllerOutPut = Either<MissingParamsError, VoteDto>;
 export type GetResultControllerOutPut = Either<
-  CountVotesRepositoryError | CountTotalVotesRepositoryError,
+  CountByIdRepositoryError | CountTotalRepositoryError,
   SerializedArtist[]
 >;
 export interface VoteControllerInterface {

@@ -1,4 +1,4 @@
-import { VoteDto } from '@/core/server/domain/dto/vote.dto.type';
+import { VoteDto } from '../../../../../core/server/domain/dto/vote.dto.type';
 import { fail, success } from '../../../../../core/shared/errors/either';
 import { Vote } from '../../../domain/value-objects/vote.value-object';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
@@ -8,27 +8,39 @@ import {
 } from './add-vote-usecase.interface';
 
 type Props = {
-  voteRepository: VoteRepositoryInterface;
+  voteRepositoryCounter: VoteRepositoryInterface;
+  voteRepositoryAuditLog: VoteRepositoryInterface;
 };
 export class AddVoteUsecase implements AddVoteUsecaseInterface {
-  private readonly voteRepository: VoteRepositoryInterface;
+  private readonly voteRepositoryAuditLog: VoteRepositoryInterface;
+  private readonly voteRepositoryCounter: VoteRepositoryInterface;
 
   constructor(props: Props) {
-    this.voteRepository = props.voteRepository;
+    this.voteRepositoryCounter = props.voteRepositoryCounter;
+    this.voteRepositoryAuditLog = props.voteRepositoryAuditLog;
   }
 
   async execute(voteDto: VoteDto): Promise<AddVoteUsecaseOutput> {
     console.time('[AddVoteUsecase].execute');
-    const vote = Vote.create(voteDto);
 
-    if (vote.isFailure()) {
-      return fail(vote.value);
+    const voteResult = Vote.create(voteDto);
+
+    if (voteResult.isFailure()) {
+      return fail(voteResult.value);
     }
 
-    const result = await this.voteRepository.addVote(vote.value.toJSON());
+    const vote = voteResult.value.toJSON();
 
-    if (result.isFailure()) {
-      return fail(result.value);
+    const counterResult = await this.voteRepositoryCounter.add(vote);
+
+    if (counterResult.isFailure()) {
+      return fail(counterResult.value);
+    }
+
+    const auditLogResult = await this.voteRepositoryAuditLog.add(vote);
+
+    if (auditLogResult.isFailure()) {
+      return fail(auditLogResult.value);
     }
 
     console.timeEnd('[AddVoteUsecase].execute');

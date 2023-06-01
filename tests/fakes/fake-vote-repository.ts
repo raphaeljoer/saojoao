@@ -1,45 +1,42 @@
 import {
-  AddVoteRepositoryOutput,
-  CountByIdRepositoryInput,
-  CountTotalVotesRepositoryOutput,
-  CountVotesRepositoryOutput,
+  AddRepositoryOutput,
+  CountByIdRepositoryOutput,
+  CountTotalRepositoryOutput,
   VoteRepositoryInterface
-} from './../../src/core/server/application/repository/vote.repository.interface';
-import { AddVoteRepositoryError } from './../../src/core/server/infra/database/repositories/errors/AddVoteRepositoryError';
-import { CountTotalVotesRepositoryError } from './../../src/core/server/infra/database/repositories/errors/CountTotalVotesRepositoryError';
-import { CountVotesRepositoryError } from './../../src/core/server/infra/database/repositories/errors/CountVotesRepositoryError';
+} from '../../src/core/server/application/repository/vote.repository.interface';
 import { VoteDto } from '../../src/core/server/domain/dto/vote.dto.type';
+import { AddRepositoryError } from '../../src/core/server/infra/database/repositories/errors/AddRepositoryError';
+import { CountByIdRepositoryError } from '../../src/core/server/infra/database/repositories/errors/CountByIdRepositoryError';
+import { CountTotalRepositoryError } from '../../src/core/server/infra/database/repositories/errors/CountTotalRepositoryError';
 import { fail, success } from './../../src/core/shared/errors/either';
 
 export class FakeVoteRepository implements VoteRepositoryInterface {
   private votes: VoteDto[] = [];
 
-  async addVote(vote: VoteDto): Promise<AddVoteRepositoryOutput> {
+  async add(vote: VoteDto): Promise<AddRepositoryOutput> {
     try {
       this.votes.push(vote);
       return success(vote);
     } catch (e) {
-      return fail(new AddVoteRepositoryError());
+      return fail(new AddRepositoryError('FakeVoteRepository'));
     }
   }
 
-  async countVotesTotal(): Promise<CountTotalVotesRepositoryOutput> {
+  async countTotal(): Promise<CountTotalRepositoryOutput> {
     try {
       const totalVotes = this.votes.length;
       return success(totalVotes);
     } catch (e) {
-      return fail(new CountTotalVotesRepositoryError());
+      return fail(new CountTotalRepositoryError());
     }
   }
 
-  async countVotes(
-    input: CountByIdRepositoryInput
-  ): Promise<CountVotesRepositoryOutput> {
+  async countById(artistId: string): Promise<CountByIdRepositoryOutput> {
     try {
-      const count = this.votes.filter((vote) => vote[input.key] === input.value).length; //prettier-ignore
+      const count = this.votes.filter((vote) => vote.artistId === artistId).length; //prettier-ignore
       return success(count);
     } catch (e) {
-      return fail(new CountVotesRepositoryError());
+      return fail(new CountByIdRepositoryError());
     }
   }
 }
