@@ -11,12 +11,10 @@ describe('AddVoteUseCase', () => {
   test('Should add a new vote when recaptcha token is valid', async () => {
     const voteRepositoryAuditLog = new FakeVoteRepository();
     const voteRepositoryCounter = new FakeVoteRepository();
-    const voteQueue = new FakeVoteQueue();
 
     const addVoteUseCase = new AddVoteUsecase({
       voteRepositoryAuditLog,
-      voteRepositoryCounter,
-      voteQueue
+      voteRepositoryCounter
     });
 
     const vote: VoteDto = {
@@ -60,8 +58,7 @@ describe('AddVoteUseCase', () => {
 
     const addVoteUseCase = new AddVoteUsecase({
       voteRepositoryAuditLog,
-      voteRepositoryCounter,
-      voteQueue
+      voteRepositoryCounter
     });
 
     const result = await addVoteUseCase.execute(vote);

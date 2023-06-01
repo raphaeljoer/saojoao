@@ -31,8 +31,7 @@ describe(
 
       const addVoteUseCase = new AddVoteUsecase({
         voteRepositoryCounter,
-        voteRepositoryAuditLog,
-        voteQueue
+        voteRepositoryAuditLog
       });
 
       const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway }); //prettier-ignore
@@ -82,8 +81,7 @@ describe(
 
       const addVoteUseCase = new AddVoteUsecase({
         voteRepositoryCounter,
-        voteRepositoryAuditLog,
-        voteQueue
+        voteRepositoryAuditLog
       });
 
       const externalGateway = new FakeExternalGateway({ recaptchaProps });
