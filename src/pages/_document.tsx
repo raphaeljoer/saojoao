@@ -13,8 +13,16 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"
           />
-          {/* <link rel="apple-touch-icon" href="/assets/apple-icon.svg" /> */}
-          <link rel="apple-touch-icon" href="/assets/apple-icon.png" />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/apple-icon-180x180.svg"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="1024x1024"
+            href="/assets/apple-icon-1024x1024.svg"
+          />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-requires-fullscreen" content="yes" />
           <meta name="apple-mobile-web-app-title" content="Talento 2023" />
