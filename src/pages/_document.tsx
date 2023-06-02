@@ -13,7 +13,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"
           />
-          <link rel="apple-touch-icon" href="/assets/apple-icon.svg" />
+          {/* <link rel="apple-touch-icon" href="/assets/apple-icon.svg" /> */}
           <link rel="apple-touch-icon" href="/assets/apple-icon.png" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-requires-fullscreen" content="yes" />
