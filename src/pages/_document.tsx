@@ -16,12 +16,22 @@ export default class MyDocument extends Document {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
+            href="/assets/apple-icon-180x180.png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
             href="/assets/apple-icon-180x180.svg"
           />
           <link
             rel="apple-touch-icon"
             sizes="1024x1024"
             href="/assets/apple-icon-1024x1024.svg"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="1024x1024"
+            href="/assets/apple-icon-1024x1024.png"
           />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-requires-fullscreen" content="yes" />
