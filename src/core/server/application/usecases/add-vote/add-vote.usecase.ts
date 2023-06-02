@@ -9,15 +9,18 @@ import {
 
 type Props = {
   voteRepositoryCounter: VoteRepositoryInterface;
-  voteRepositoryAuditLog: VoteRepositoryInterface;
+  voteRepositoryAuditLog01: VoteRepositoryInterface;
+  voteRepositoryAuditLog02: VoteRepositoryInterface;
 };
 export class AddVoteUsecase implements AddVoteUsecaseInterface {
-  private readonly voteRepositoryAuditLog: VoteRepositoryInterface;
   private readonly voteRepositoryCounter: VoteRepositoryInterface;
+  private readonly voteRepositoryAuditLog01: VoteRepositoryInterface;
+  private readonly voteRepositoryAuditLog02: VoteRepositoryInterface;
 
   constructor(props: Props) {
     this.voteRepositoryCounter = props.voteRepositoryCounter;
-    this.voteRepositoryAuditLog = props.voteRepositoryAuditLog;
+    this.voteRepositoryAuditLog01 = props.voteRepositoryAuditLog01;
+    this.voteRepositoryAuditLog02 = props.voteRepositoryAuditLog02;
   }
 
   async execute(voteDto: VoteDto): Promise<AddVoteUsecaseOutput> {
@@ -31,10 +34,16 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
 
     const vote = voteResult.value.toJSON();
 
-    const auditLogResult = await this.voteRepositoryAuditLog.add(vote);
+    const auditLogResult01 = await this.voteRepositoryAuditLog01.add(vote);
 
-    if (auditLogResult.isFailure()) {
-      return fail(auditLogResult.value);
+    if (auditLogResult01.isFailure()) {
+      return fail(auditLogResult01.value);
+    }
+
+    const auditLogResult02 = await this.voteRepositoryAuditLog02.add(vote);
+
+    if (auditLogResult02.isFailure()) {
+      return fail(auditLogResult02.value);
     }
 
     const counterResult = await this.voteRepositoryCounter.add(vote);

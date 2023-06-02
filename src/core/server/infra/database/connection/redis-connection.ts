@@ -6,7 +6,7 @@ export type RedisConnectionProps = {
 };
 
 export class RedisConnection {
-  private static instance: RedisConnection;
+  private static instancePool: Map<string, RedisConnection> = new Map();
   private readonly redisInstance: Redis;
 
   private constructor(props: RedisConnectionProps) {
@@ -15,10 +15,15 @@ export class RedisConnection {
   }
 
   public static getInstance(props: RedisConnectionProps): RedisConnection {
-    if (!RedisConnection.instance) {
-      RedisConnection.instance = new RedisConnection(props);
+    console.time('[RedisConnection].getInstance');
+    const key = `${props.host}:${props.token}`;
+    let instance = RedisConnection.instancePool.get(key);
+    if (!instance) {
+      instance = new RedisConnection(props);
+      RedisConnection.instancePool.set(key, instance);
     }
-    return RedisConnection.instance;
+    console.timeEnd('[RedisConnection].getInstance');
+    return instance;
   }
 
   async incr(key: string): Promise<number> {
