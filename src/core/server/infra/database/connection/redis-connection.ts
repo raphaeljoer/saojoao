@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis';
+import { Pipeline } from '@upstash/redis/types/pkg/pipeline';
 
 export type RedisConnectionProps = {
   host: string;
@@ -52,5 +53,13 @@ export class RedisConnection {
 
   async mget<T>(...keys: string[]): Promise<T[]> {
     return await this.redisInstance.mget<T[]>(...keys);
+  }
+
+  async eval(script: string, keys: string[], args: string[]): Promise<any> {
+    return await this.redisInstance.eval(script, keys, args);
+  }
+
+  multi(): Pipeline<[]> {
+    return this.redisInstance.multi();
   }
 }

@@ -3,13 +3,13 @@ import { describe, expect, test } from 'vitest';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
 import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
 import { artistProps } from '../../src/core/shared/data/artists';
-import { FakeVoteRepository } from '../fakes/fake-vote-repository';
+import { FakeVoteRepositoryAuditLog } from '../fakes/fake-vote-repository-audit-log';
 
 config({ path: '.env.test' });
 
 describe('GetResultUseCase', () => {
   test('Should get the results', async () => {
-    const voteRepository = new FakeVoteRepository();
+    const voteRepositoryAuditLog = new FakeVoteRepositoryAuditLog();
 
     const vote01 = Vote.create({
       artistId: artistProps[0].artistId,
@@ -21,8 +21,8 @@ describe('GetResultUseCase', () => {
       throw new Error('Vote01 is failure');
     }
 
-    voteRepository.add(vote01.value);
-    voteRepository.add(vote01.value);
+    voteRepositoryAuditLog.add(vote01.value);
+    voteRepositoryAuditLog.add(vote01.value);
 
     const vote02 = Vote.create({
       artistId: artistProps[1].artistId,
@@ -34,7 +34,7 @@ describe('GetResultUseCase', () => {
       throw new Error('Vote02 is failure');
     }
 
-    voteRepository.add(vote02.value);
+    voteRepositoryAuditLog.add(vote02.value);
 
     const vote03 = Vote.create({
       artistId: artistProps[1].artistId,
@@ -46,10 +46,10 @@ describe('GetResultUseCase', () => {
       throw new Error('Vote02 is failure');
     }
 
-    voteRepository.add(vote03.value);
+    voteRepositoryAuditLog.add(vote03.value);
 
     const getResultUseCase = new GetResultUsecase({
-      voteRepositoryCounter: voteRepository
+      voteRepositoryAuditLog: voteRepositoryAuditLog
     });
     const result = await getResultUseCase.execute();
 

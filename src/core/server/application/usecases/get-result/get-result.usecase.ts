@@ -1,48 +1,41 @@
+import { VoteRepositoryAuditLogInterface } from '@/core/server/infra/database/repositories/vote-repository-audit-log-redis';
 import { artistProps } from '../../../../../core/shared/data/artists';
 import { fail, success } from '../../../../../core/shared/errors/either';
 import { Artist } from '../../../domain/entities/artist';
 import { Result } from '../../../domain/entities/result';
-import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
 import {
   GetResultUsecaseInterface,
   GetResultUsecaseOutput
 } from './get-result-usecase.interface';
 
 type Props = {
-  voteRepositoryCounter: VoteRepositoryInterface;
+  voteRepositoryAuditLog: VoteRepositoryAuditLogInterface;
 };
 
 export class GetResultUsecase implements GetResultUsecaseInterface {
-  private readonly voteRepositoryCounter: VoteRepositoryInterface;
+  private readonly voteRepositoryAuditLog: VoteRepositoryAuditLogInterface;
 
   constructor(props: Props) {
-    this.voteRepositoryCounter = props.voteRepositoryCounter;
+    this.voteRepositoryAuditLog = props.voteRepositoryAuditLog;
   }
 
   async execute(): Promise<GetResultUsecaseOutput> {
     console.time('[GetResultUsecase].execute');
     const artists = artistProps.map((props) => new Artist(props));
+    const partialResult = await this.voteRepositoryAuditLog.partialResult();
 
-    const totalVotesCount = await this.voteRepositoryCounter.countTotal();
-
-    if (totalVotesCount.isFailure()) {
-      return fail(totalVotesCount.value);
+    if (partialResult.isFailure()) {
+      return fail(partialResult.value);
     }
+
+    const { total, ...artistCounts } = partialResult.value;
 
     for (const artist of artists) {
-      const countByIdResult = await this.voteRepositoryCounter.countById(artist.artistId); //prettier-ignore
-
-      if (countByIdResult.isFailure()) {
-        return fail(countByIdResult.value);
-      }
-
-      artist.setVotesCount(countByIdResult.value);
+      const count = artistCounts[artist.artistId] || 0;
+      artist.setVotesCount(count);
     }
 
-    const result = new Result({
-      artists,
-      totalVotesCount: totalVotesCount.value
-    });
+    const result = new Result({ artists, totalVotesCount: total });
 
     console.timeEnd('[GetResultUsecase].execute');
     return success(result.toJSON());
