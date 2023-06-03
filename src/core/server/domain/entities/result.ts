@@ -27,7 +27,7 @@ export class Result extends Entity<SerializedArtist[]> {
         typeof a.votesCount !== 'number' ||
         typeof b.votesCount !== 'number'
       ) {
-        throw new Error('votesCount is not defined');
+        throw new Error('votesCount must to be a number');
       }
       return b.votesCount - a.votesCount;
     });

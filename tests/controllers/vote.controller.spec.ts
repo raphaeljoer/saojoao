@@ -5,8 +5,7 @@ import { VerifyRecaptchaService } from '../../src/core/server/application/servic
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
-import { FakeVoteQueue } from '../fakes/fake-vote-queue';
-import { FakeVoteRepository } from '../fakes/fake-vote-repository';
+import { FakeVoteRepositoryAuditLog } from '../fakes/fake-vote-repository-audit-log';
 
 config({ path: '.env.test' });
 
@@ -21,17 +20,16 @@ describe(
       };
 
       const externalGateway = new FakeExternalGateway({ recaptchaProps });
-      const voteRepositoryCounter = new FakeVoteRepository();
-      const voteRepositoryAuditLog = new FakeVoteRepository();
-      const voteQueue = new FakeVoteQueue();
+      const voteRepositoryAuditLog01 = new FakeVoteRepositoryAuditLog();
+      const voteRepositoryAuditLog02 = new FakeVoteRepositoryAuditLog();
 
       const getResultUsecase = new GetResultUsecase({
-        voteRepositoryCounter
+        voteRepositoryAuditLog: voteRepositoryAuditLog01
       });
 
       const addVoteUseCase = new AddVoteUsecase({
-        voteRepositoryCounter,
-        voteRepositoryAuditLog
+        voteRepositoryAuditLog01,
+        voteRepositoryAuditLog02
       });
 
       const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway }); //prettier-ignore
@@ -70,18 +68,16 @@ describe(
         score: 0.9
       };
 
-      const voteRepositoryCounter = new FakeVoteRepository();
-      const voteRepositoryAuditLog = new FakeVoteRepository();
+      const voteRepositoryAuditLog01 = new FakeVoteRepositoryAuditLog();
+      const voteRepositoryAuditLog02 = new FakeVoteRepositoryAuditLog();
 
       const getResultUsecase = new GetResultUsecase({
-        voteRepositoryCounter
+        voteRepositoryAuditLog: voteRepositoryAuditLog01
       });
 
-      const voteQueue = new FakeVoteQueue();
-
       const addVoteUseCase = new AddVoteUsecase({
-        voteRepositoryCounter,
-        voteRepositoryAuditLog
+        voteRepositoryAuditLog01,
+        voteRepositoryAuditLog02
       });
 
       const externalGateway = new FakeExternalGateway({ recaptchaProps });
