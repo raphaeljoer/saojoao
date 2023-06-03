@@ -1,4 +1,4 @@
 export const redisConnectionAuditLogProps = {
-  host: process.env.SM_REDIS_AUDIT_LOG_HOST || '',
-  token: process.env.SM_REDIS_AUDIT_LOG_TOKEN || ''
+  host: process.env.UPSTASH_REDIS_REST_URL || '',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || ''
 };
