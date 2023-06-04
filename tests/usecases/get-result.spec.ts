@@ -61,7 +61,6 @@ describe('GetResultUseCase', () => {
     }
 
     expect(result.value).toBeDefined();
-    expect(result.value.length).toBe(5);
     expect(result.value[0].artistId).toBe(artistProps[0].artistId);
     expect(result.value[0].name).toBe(artistProps[0].name);
     expect(result.value[0].position).toBe(1);

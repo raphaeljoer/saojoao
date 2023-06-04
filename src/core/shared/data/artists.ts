@@ -6,28 +6,23 @@ export type ArtistProps = {
 
 export const artistProps: ArtistProps[] = [
   {
-    artistId: 'joao_gomes',
-    name: 'João Gomes',
-    picture: '/assets/artists/joao-gomes.jpg'
+    artistId: 'chay_oliveira',
+    name: 'Chay Oliveira',
+    picture: '/assets/artists/chay-oliveira.jpg'
   },
   {
-    artistId: 'cleane_sampaio',
-    name: 'Cleane Sampaio',
-    picture: '/assets/artists/cleane-sampaio.jpg'
+    artistId: 'vivi_perigosa',
+    name: 'Vivi Perigosa',
+    picture: '/assets/artists/vivi-perigosa.jpg'
   },
   {
-    artistId: 'mari_fernandez',
-    name: 'Mari Fernandez',
-    picture: '/assets/artists/mari-fernandez.jpg'
+    artistId: 'thalita_e_thaina',
+    name: 'Thalita e Thainá',
+    picture: '/assets/artists/thalita-e-thaina.jpg'
   },
   {
-    artistId: 'biu_do_piseiro',
-    name: 'Biu do Piseiro',
-    picture: '/assets/artists/biu-do-piseiro.jpg'
-  },
-  {
-    artistId: 'iguinho_e_lulinha',
-    name: 'Iguinho & Lulinha',
-    picture: '/assets/artists/iguinho-e-lulinha.jpg'
+    artistId: 'wesley_bruno',
+    name: 'Wesley Bruno',
+    picture: '/assets/artists/wesley-bruno.jpg'
   }
 ];
