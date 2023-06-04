@@ -28,7 +28,6 @@ export class VerifyRecaptchaService implements VerifyRecaptchaServiceInterface {
   async verifyTokenV2(token: string): Promise<VerifyTokenV2Output> {
     console.time('[VerifyRecaptchaService].verifyTokenV2');
     const result = await this.externalGateway.googleRecaptchaVerifyV2(token);
-    console.timeEnd('[VerifyRecaptchaService].verifyTokenV2');
     if (!result.success) {
       return fail(new GoogleRecaptchaInvalidTokenError());
     }
@@ -36,13 +35,13 @@ export class VerifyRecaptchaService implements VerifyRecaptchaServiceInterface {
       return fail(new GoogleRecaptchaInvalidHostnameError());
     }
 
+    console.timeEnd('[VerifyRecaptchaService].verifyTokenV2');
     return success(result);
   }
 
   async verifyTokenV3(token: string): Promise<VerifyTokenV3Output> {
     console.time('[VerifyRecaptchaService].verifyTokenV3');
     const result = await this.externalGateway.googleRecaptchaVerifyV3(token);
-    console.timeEnd('[VerifyRecaptchaService].verifyTokenV3');
     if (!result.success) {
       return fail(new GoogleRecaptchaInvalidTokenError());
     }
@@ -57,6 +56,7 @@ export class VerifyRecaptchaService implements VerifyRecaptchaServiceInterface {
       return fail(new GoogleRecaptchaRobotAlertError());
     }
 
+    console.timeEnd('[VerifyRecaptchaService].verifyTokenV3');
     return success(result);
   }
 
@@ -66,7 +66,6 @@ export class VerifyRecaptchaService implements VerifyRecaptchaServiceInterface {
       this.verifyTokenV2(tokenV2),
       this.verifyTokenV3(tokenV3)
     ]);
-    console.timeEnd('[VerifyRecaptchaService].isHuman');
 
     if (resultV2.isFailure()) {
       return fail(resultV2.value);
@@ -76,6 +75,7 @@ export class VerifyRecaptchaService implements VerifyRecaptchaServiceInterface {
       return fail(resultV3.value);
     }
 
+    console.timeEnd('[VerifyRecaptchaService].isHuman');
     return success(resultV3.value);
   }
 }

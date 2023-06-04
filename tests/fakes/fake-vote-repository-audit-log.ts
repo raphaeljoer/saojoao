@@ -4,7 +4,7 @@ import {
   CountTotalRepositoryOutput,
   GetAllRepositoryOutput
 } from '../../src/core/server/application/repository/vote.repository.interface';
-import { VoteDto } from '../../src/core/server/domain/dto/vote.dto.type';
+import { SerializedVote } from '../../src/core/server/domain/entities/vote';
 import { AddRepositoryError } from '../../src/core/server/infra/database/repositories/errors/AddRepositoryError';
 import { GetAllRepositoryError } from '../../src/core/server/infra/database/repositories/errors/AuditVotesRepositoryError';
 import { CountByIdRepositoryError } from '../../src/core/server/infra/database/repositories/errors/CountByIdRepositoryError';
@@ -18,9 +18,9 @@ import { fail, success } from '../../src/core/shared/errors/either';
 
 //prettier-ignore
 export class FakeVoteRepositoryAuditLog implements VoteRepositoryAuditLogInterface {
-  private votes: VoteDto[] = [];
+  private votes: SerializedVote[] = [];
 
-  async add(vote: VoteDto): Promise<AddRepositoryOutput> {
+  async add(vote: SerializedVote): Promise<AddRepositoryOutput> {
     try {
       this.votes.push(vote);
       return success(vote);

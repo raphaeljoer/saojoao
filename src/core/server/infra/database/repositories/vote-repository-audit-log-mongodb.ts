@@ -2,7 +2,7 @@ import {
   GetAllRepositoryOutput,
   VoteRepositoryInterface
 } from '@/core/server/application/repository/vote.repository.interface';
-import { VoteDto } from '@/core/server/domain/dto/vote.dto.type';
+import { SerializedVote } from '@/core/server/domain/entities/vote';
 import { fail, success } from '@/core/shared/errors/either';
 import {
   AddRepositoryOutput,
@@ -27,7 +27,7 @@ export class VoteRepositoryAuditLogMongodb implements VoteRepositoryInterface {
     this.collectionName = 'votes';
   }
 
-  async add(vote: VoteDto): Promise<AddRepositoryOutput> {
+  async add(vote: SerializedVote): Promise<AddRepositoryOutput> {
     try {
       console.time('[VoteRepositoryAuditLogMongodb].add');
       await this.connection.insertOne({

@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
-import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
+import { Vote } from '../../src/core/server/domain/entities/vote';
 import { MissingParamsError } from '../../src/core/shared/errors/missing-params.error';
 
 config({ path: '.env.test' });

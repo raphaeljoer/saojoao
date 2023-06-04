@@ -1,4 +1,3 @@
-import { VoteDto } from '../../../../../core/server/domain/dto/vote.dto.type';
 import {
   Either,
   fail,
@@ -12,6 +11,7 @@ import {
   VoteRepositoryInterface
 } from '../../../application/repository/vote.repository.interface';
 import { RedisConnection } from '../connection/redis-connection';
+import { SerializedVote } from './../../../domain/entities/vote';
 import { AddRepositoryError } from './errors/AddRepositoryError';
 import { GetAllRepositoryError } from './errors/AuditVotesRepositoryError';
 import { CountByIdRepositoryError } from './errors/CountByIdRepositoryError';
@@ -41,7 +41,7 @@ export class VoteRepositoryAuditLogRedis implements VoteRepositoryAuditLogInterf
     this.connection = props.connection;
   }
 
-  async add(input: VoteDto): Promise<AddRepositoryOutput> {
+  async add(input: SerializedVote): Promise<AddRepositoryOutput> {
     try {
       console.time('[VoteRepositoryAuditLogRedis].add');
       const transaction = this.connection.multi();
@@ -88,7 +88,7 @@ export class VoteRepositoryAuditLogRedis implements VoteRepositoryAuditLogInterf
   async getAll(): Promise<GetAllRepositoryOutput> {
     try {
       console.time('[VoteRepositoryAuditLogRedis].getAll');
-      const votes = await this.connection.lrange<VoteDto>('@audit-log', 0, -1);
+      const votes = await this.connection.lrange<SerializedVote>('@audit-log', 0, -1);
       console.timeEnd('[VoteRepositoryAuditLogRedis].auditVotes');
       return success(votes);
     } catch (error) {
