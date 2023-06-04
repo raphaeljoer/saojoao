@@ -31,7 +31,7 @@ const WinnerPage: NextPage<Props> = ({ result }) => {
 export default WinnerPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const result = await coreServer.vote.getResult();
+  const result = await coreServer.vote.auditVotes();
 
   if (result.isFailure()) {
     return {

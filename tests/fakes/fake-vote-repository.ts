@@ -2,10 +2,12 @@ import {
   AddRepositoryOutput,
   CountByIdRepositoryOutput,
   CountTotalRepositoryOutput,
+  GetAllRepositoryOutput,
   VoteRepositoryInterface
 } from '../../src/core/server/application/repository/vote.repository.interface';
 import { VoteDto } from '../../src/core/server/domain/dto/vote.dto.type';
 import { AddRepositoryError } from '../../src/core/server/infra/database/repositories/errors/AddRepositoryError';
+import { GetAllRepositoryError } from '../../src/core/server/infra/database/repositories/errors/AuditVotesRepositoryError';
 import { CountByIdRepositoryError } from '../../src/core/server/infra/database/repositories/errors/CountByIdRepositoryError';
 import { CountTotalRepositoryError } from '../../src/core/server/infra/database/repositories/errors/CountTotalRepositoryError';
 import { fail, success } from './../../src/core/shared/errors/either';
@@ -37,6 +39,14 @@ export class FakeVoteRepository implements VoteRepositoryInterface {
       return success(count);
     } catch (e) {
       return fail(new CountByIdRepositoryError());
+    }
+  }
+
+  async getAll(): Promise<GetAllRepositoryOutput> {
+    try {
+      return success(this.votes);
+    } catch (e) {
+      return fail(new GetAllRepositoryError());
     }
   }
 }

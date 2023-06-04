@@ -2,6 +2,7 @@ import { Core } from './server';
 import { VoteController } from './server/adapters/controllers/vote.controller';
 import { VerifyRecaptchaService } from './server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from './server/application/usecases/add-vote/add-vote.usecase';
+import { AuditVotesUsecase } from './server/application/usecases/audit-votes/audit-votes.usecase';
 import { GetResultUsecase } from './server/application/usecases/get-result/get-result.usecase';
 import { mongodbConnectionProps } from './server/infra/config/mongodb.connection.props';
 import { redisConnectionAuditLogProps } from './server/infra/config/redis.connection.props';
@@ -36,6 +37,17 @@ const getResultUsecase = new GetResultUsecase({
   voteRepositoryAuditLog: voteRepositoryAuditLog01
 });
 
+const auditVotesUsecase = new AuditVotesUsecase({
+  voteRepositoryAuditLog: voteRepositoryAuditLog02
+});
+
+const voteController = new VoteController({
+  addVoteUseCase,
+  getResultUsecase,
+  auditVotesUsecase,
+  verifyRecaptchaService
+});
+
 export const coreServer = new Core({
-  voteController: new VoteController({ addVoteUseCase, getResultUsecase, verifyRecaptchaService }) //prettier-ignore
+  voteController
 });

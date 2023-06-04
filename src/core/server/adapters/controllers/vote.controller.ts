@@ -2,10 +2,12 @@ import { fail, success } from '../../../../../src/core/shared/errors/either';
 import { ParamValidation } from '../../../../../src/core/shared/validations/param.validation';
 import { VerifyRecaptchaServiceInterface } from '../../application/service/verify-recaptcha.service.interface';
 import { AddVoteUsecaseInterface } from '../../application/usecases/add-vote/add-vote-usecase.interface';
+import { AuditVotesUsecaseInterface } from '../../application/usecases/audit-votes/audit-votes.usecase.interface';
 import { GetResultUsecaseInterface } from '../../application/usecases/get-result/get-result-usecase.interface';
 import {
   AddVoteControllerInput,
   AddVoteControllerOutPut,
+  AuditVotesControllerOutPut,
   GetResultControllerOutPut,
   VoteControllerInterface
 } from './vote.controller.interface';
@@ -13,17 +15,20 @@ import {
 type Props = {
   addVoteUseCase: AddVoteUsecaseInterface;
   getResultUsecase: GetResultUsecaseInterface;
+  auditVotesUsecase: AuditVotesUsecaseInterface;
   verifyRecaptchaService: VerifyRecaptchaServiceInterface;
 };
 export class VoteController implements VoteControllerInterface {
   private readonly addVoteUsecase: AddVoteUsecaseInterface;
   private readonly getResultUsecase: GetResultUsecaseInterface;
   private readonly verifyRecaptchaService: VerifyRecaptchaServiceInterface;
+  private readonly auditVotesUsecase: AuditVotesUsecaseInterface;
 
   constructor(props: Props) {
     this.addVoteUsecase = props.addVoteUseCase;
     this.getResultUsecase = props.getResultUsecase;
     this.verifyRecaptchaService = props.verifyRecaptchaService;
+    this.auditVotesUsecase = props.auditVotesUsecase;
   }
 
   //prettier-ignore
@@ -63,6 +68,18 @@ export class VoteController implements VoteControllerInterface {
     }
 
     console.time('[VoteController].getResult');
+    return success(response.value);
+  }
+
+  async auditVotes(): Promise<AuditVotesControllerOutPut> {
+    console.time('[VoteController].auditVotes');
+    const response = await this.auditVotesUsecase.execute();
+
+    if (response.isFailure()) {
+      return fail(response.value);
+    }
+
+    console.timeEnd('[VoteController].auditVotes');
     return success(response.value);
   }
 }

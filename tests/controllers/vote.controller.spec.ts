@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { VoteController } from '../../src/core/server/adapters/controllers/vote.controller';
 import { VerifyRecaptchaService } from '../../src/core/server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
+import { AuditVotesUsecase } from '../../src/core/server/application/usecases/audit-votes/audit-votes.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
 import { FakeVoteRepositoryAuditLog } from '../fakes/fake-vote-repository-audit-log';
@@ -23,6 +24,10 @@ describe(
       const voteRepositoryAuditLog01 = new FakeVoteRepositoryAuditLog();
       const voteRepositoryAuditLog02 = new FakeVoteRepositoryAuditLog();
 
+      const auditVotesUsecase = new AuditVotesUsecase({
+        voteRepositoryAuditLog: voteRepositoryAuditLog01
+      });
+
       const getResultUsecase = new GetResultUsecase({
         voteRepositoryAuditLog: voteRepositoryAuditLog01
       });
@@ -37,6 +42,7 @@ describe(
       const voteController = new VoteController({
         addVoteUseCase,
         getResultUsecase,
+        auditVotesUsecase,
         verifyRecaptchaService
       });
 
@@ -83,9 +89,14 @@ describe(
       const externalGateway = new FakeExternalGateway({ recaptchaProps });
       const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway }); //prettier-ignore
 
+      const auditVotesUsecase = new AuditVotesUsecase({
+        voteRepositoryAuditLog: voteRepositoryAuditLog01
+      });
+
       const voteController = new VoteController({
         addVoteUseCase,
         getResultUsecase,
+        auditVotesUsecase,
         verifyRecaptchaService
       });
 

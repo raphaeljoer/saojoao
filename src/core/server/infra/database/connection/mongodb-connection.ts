@@ -1,4 +1,13 @@
-import { Db, Document, InsertOneResult, MongoClient } from 'mongodb';
+import {
+  Db,
+  Document,
+  Filter,
+  FindCursor,
+  FindOptions,
+  InsertOneResult,
+  MongoClient,
+  WithId
+} from 'mongodb';
 
 export type MongoDbConnectionProps = {
   connectionUrl: string;
@@ -57,11 +66,20 @@ export class MongoDbConnection {
     return estimatedDocumentCount;
   }
 
+  async find(
+    filter: Filter<Document>,
+    options?: FindOptions<Document> | undefined
+  ): Promise<FindCursor<WithId<Document>>> {
+    console.time('[MongoDbConnection].find');
+    const db = await this.connect();
+    const collection = db.collection('votes');
+    const result = collection.find(filter, options);
+    console.timeEnd('[MongoDbConnection].find');
+    return result;
+  }
+
   async connect(): Promise<Db> {
-    if (this.db) {
-      console.log('[MongoDbConnection].connect: db already connected');
-      return this.db;
-    }
+    if (this.db) return this.db;
     console.time('[MongoDbConnection].connect');
     this.client = await MongoClient.connect(this.connectionUrl);
     console.timeEnd('[MongoDbConnection].connect');
