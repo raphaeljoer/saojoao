@@ -12,11 +12,10 @@ export type AddVoteControllerInput = {
 };
 
 export type AddVoteControllerOutPut = Either<MissingParamsError, VoteDto>;
-export type GetResultControllerOutPut = Either<
-  CountByIdRepositoryError | CountTotalRepositoryError,
-  SerializedArtist[]
->;
+export type GetResultControllerOutPut = Either<CountByIdRepositoryError | CountTotalRepositoryError, SerializedArtist[]>; //prettier-ignore
+export type AuditVotesControllerOutPut = Either<CountByIdRepositoryError | CountTotalRepositoryError, SerializedArtist[]>; //prettier-ignore
 export interface VoteControllerInterface {
   addVote(input: AddVoteControllerInput): Promise<AddVoteControllerOutPut>;
   getResult(): Promise<GetResultControllerOutPut>;
+  auditVotes(): Promise<AuditVotesControllerOutPut>;
 }

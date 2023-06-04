@@ -8,10 +8,12 @@ import {
   AddRepositoryOutput,
   CountByIdRepositoryOutput,
   CountTotalRepositoryOutput,
+  GetAllRepositoryOutput,
   VoteRepositoryInterface
 } from '../../../application/repository/vote.repository.interface';
 import { RedisConnection } from '../connection/redis-connection';
 import { AddRepositoryError } from './errors/AddRepositoryError';
+import { GetAllRepositoryError } from './errors/AuditVotesRepositoryError';
 import { CountByIdRepositoryError } from './errors/CountByIdRepositoryError';
 import { CountTotalRepositoryError } from './errors/CountTotalRepositoryError';
 import { PartialResultError } from './errors/PartialResultError';
@@ -83,6 +85,19 @@ export class VoteRepositoryAuditLogRedis implements VoteRepositoryAuditLogInterf
     }
   }
 
+  async getAll(): Promise<GetAllRepositoryOutput> {
+    try {
+      console.time('[VoteRepositoryAuditLogRedis].getAll');
+      const votes = await this.connection.lrange<VoteDto>('@audit-log', 0, -1);
+      console.timeEnd('[VoteRepositoryAuditLogRedis].auditVotes');
+      return success(votes);
+    } catch (error) {
+      console.error(error);
+      console.timeEnd('[VoteRepositoryAuditLogRedis].getAll');
+      return fail(new GetAllRepositoryError());
+    }
+  }
+  
   async partialResult(): Promise<PartialResultOutput> {
     try {
       console.time('[VoteRepositoryAuditLogRedis].partialResult');

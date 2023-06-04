@@ -1,4 +1,7 @@
-import { VoteRepositoryInterface } from '@/core/server/application/repository/vote.repository.interface';
+import {
+  GetAllRepositoryOutput,
+  VoteRepositoryInterface
+} from '@/core/server/application/repository/vote.repository.interface';
 import { VoteDto } from '@/core/server/domain/dto/vote.dto.type';
 import { fail, success } from '@/core/shared/errors/either';
 import {
@@ -8,6 +11,7 @@ import {
 } from '../../../application/repository/vote.repository.interface';
 import { MongoDbConnection } from '../connection/mongodb-connection';
 import { AddRepositoryError } from './errors/AddRepositoryError';
+import { GetAllRepositoryError } from './errors/AuditVotesRepositoryError';
 import { CountByIdRepositoryError } from './errors/CountByIdRepositoryError';
 import { CountTotalRepositoryError } from './errors/CountTotalRepositoryError';
 
@@ -63,6 +67,29 @@ export class VoteRepositoryAuditLogMongodb implements VoteRepositoryInterface {
     } catch (error) {
       console.error(error);
       return fail(new CountByIdRepositoryError());
+    }
+  }
+
+  async getAll(): Promise<GetAllRepositoryOutput> {
+    try {
+      console.time('[VoteRepositoryAuditLogMongodb].getAll');
+      const documents = await this.connection.find(
+        {},
+        {
+          projection: {
+            artistId: 1,
+            votedAt: 1,
+            ip: 1
+          }
+        }
+      );
+      const votes: any = await documents.toArray();
+      console.timeEnd('[VoteRepositoryAuditLogMongodb].getAll');
+      return success(votes);
+    } catch (error) {
+      console.error(error);
+      console.timeEnd('[VoteRepositoryAuditLogMongodb].getAll');
+      return fail(new GetAllRepositoryError());
     }
   }
 }
