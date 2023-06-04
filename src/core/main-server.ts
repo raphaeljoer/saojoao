@@ -22,11 +22,11 @@ const httpClient = new AxiosHttpClient();
 const externalGateway = new ExternalGateway({ httpClient });
 const verifyRecaptchaService = new VerifyRecaptchaService({ externalGateway });
 
-const redisAuditLogConnection = RedisConnection.getInstance(redisConnectionAuditLogProps); //prettier-ignore
-const voteRepositoryAuditLog01 = new VoteRepositoryAuditLogRedis({ connection: redisAuditLogConnection }); //prettier-ignore
-
 const mongoDBConnection = new MongoDbConnection(mongodbConnectionProps);
-const voteRepositoryAuditLog02 = new VoteRepositoryAuditLogMongodb({ connection: mongoDBConnection }); //prettier-ignore
+const voteRepositoryAuditLog01 = new VoteRepositoryAuditLogMongodb({ connection: mongoDBConnection }); //prettier-ignore
+
+const redisAuditLogConnection = RedisConnection.getInstance(redisConnectionAuditLogProps); //prettier-ignore
+const voteRepositoryAuditLog02 = new VoteRepositoryAuditLogRedis({ connection: redisAuditLogConnection }); //prettier-ignore
 
 const addVoteUseCase = new AddVoteUsecase({
   voteRepositoryAuditLog01,
@@ -34,7 +34,7 @@ const addVoteUseCase = new AddVoteUsecase({
 });
 
 const getResultUsecase = new GetResultUsecase({
-  voteRepositoryAuditLog: voteRepositoryAuditLog01
+  voteRepositoryAuditLog: voteRepositoryAuditLog02
 });
 
 const auditVotesUsecase = new AuditVotesUsecase({
