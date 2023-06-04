@@ -4,6 +4,7 @@ import { VerifyRecaptchaServiceInterface } from '../../application/service/verif
 import { AddVoteUsecaseInterface } from '../../application/usecases/add-vote/add-vote-usecase.interface';
 import { AuditVotesUsecaseInterface } from '../../application/usecases/audit-votes/audit-votes.usecase.interface';
 import { GetResultUsecaseInterface } from '../../application/usecases/get-result/get-result-usecase.interface';
+import { VoteDto } from '../../domain/dto/vote.dto.type';
 import {
   AddVoteControllerInput,
   AddVoteControllerOutPut,
@@ -31,30 +32,33 @@ export class VoteController implements VoteControllerInterface {
     this.auditVotesUsecase = props.auditVotesUsecase;
   }
 
-  //prettier-ignore
-  async addVote(input: AddVoteControllerInput): Promise<AddVoteControllerOutPut> {
+  async addVote(
+    input: AddVoteControllerInput
+  ): Promise<AddVoteControllerOutPut> {
     console.time('[VoteController].addVote');
     const validation = ParamValidation.validateObject(input);
-    
+
     if (validation.isFailure()) {
       return fail(validation.value);
     }
-    
+
     const isHuman = await this.verifyRecaptchaService.isHuman({
       tokenV2: input.recaptchaTokenV2,
       tokenV3: input.recaptchaTokenV3
     });
-    
+
     if (isHuman.isFailure()) {
       return fail(isHuman.value);
     }
-    
-    const response = await this.addVoteUsecase.execute(input.vote); 
-    
+
+    const voteDto: VoteDto = { ...input.vote, score: isHuman.value.score };
+
+    const response = await this.addVoteUsecase.execute(voteDto);
+
     if (response.isFailure()) {
       return fail(response.value);
     }
-    
+
     console.timeEnd('[VoteController].addVote');
     return success(response.value);
   }

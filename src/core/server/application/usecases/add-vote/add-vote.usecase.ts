@@ -1,6 +1,6 @@
 import { VoteDto } from '../../../../../core/server/domain/dto/vote.dto.type';
 import { fail, success } from '../../../../../core/shared/errors/either';
-import { Vote } from '../../../domain/value-objects/vote.value-object';
+import { Vote } from '../../../domain/entities/vote';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
 import {
   AddVoteUsecaseInterface,
@@ -31,13 +31,13 @@ export class AddVoteUsecase implements AddVoteUsecaseInterface {
 
     const vote = voteResult.value.toJSON();
 
-    const auditLogResult01 = await this.voteRepositoryAuditLog01.add(vote); // VoteRepositoryAuditLogRedis
+    const auditLogResult01 = await this.voteRepositoryAuditLog01.add(vote);
 
     if (auditLogResult01.isFailure()) {
       return fail(auditLogResult01.value);
     }
 
-    const auditLogResult02 = await this.voteRepositoryAuditLog02.add(vote); // VoteRepositoryAuditLogMongodb
+    const auditLogResult02 = await this.voteRepositoryAuditLog02.add(vote);
 
     if (auditLogResult02.isFailure()) {
       return fail(auditLogResult02.value);

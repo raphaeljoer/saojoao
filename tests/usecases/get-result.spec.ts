@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
-import { Vote } from '../../src/core/server/domain/value-objects/vote.value-object';
+import { Vote } from '../../src/core/server/domain/entities/vote';
 import { artistProps } from '../../src/core/shared/data/artists';
 import { FakeVoteRepositoryAuditLog } from '../fakes/fake-vote-repository-audit-log';
 
