@@ -11,9 +11,9 @@ export const artistProps: ArtistProps[] = [
     picture: '/assets/artists/chay-oliveira.jpg'
   },
   {
-    artistId: 'vivi_perigosa',
-    name: 'Vivi Perigosa',
-    picture: '/assets/artists/vivi-perigosa.jpg'
+    artistId: 'thalita_e_thaina',
+    name: 'Thalita e Thainá',
+    picture: '/assets/artists/thalita-e-thaina.jpg'
   },
   {
     artistId: 'viny_cantor',
@@ -21,9 +21,9 @@ export const artistProps: ArtistProps[] = [
     picture: '/assets/artists/viny-cantor.jpg'
   },
   {
-    artistId: 'thalita_e_thaina',
-    name: 'Thalita e Thainá',
-    picture: '/assets/artists/thalita-e-thaina.jpg'
+    artistId: 'vivi_perigosa',
+    name: 'Vivi Perigosa',
+    picture: '/assets/artists/vivi-perigosa.jpg'
   },
   {
     artistId: 'wesley_bruno',
