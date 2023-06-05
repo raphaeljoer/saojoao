@@ -18,6 +18,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
     "@upstash/redis": "^1.21.0",
+    "@vercel/analytics": "^1.0.1",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "eslint": "8.40.0",
