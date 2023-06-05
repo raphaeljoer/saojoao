@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { Balloons } from '@/modules/2023/shared/components/Balloons';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { MetaTags } from '@/modules/2023/shared/components/Head';
@@ -9,7 +9,7 @@ import { ResultArtist } from '../../components/ResultArtist';
 import * as styles from './styles';
 
 type Props = {
-  result: SerializedArtist[];
+  result: PublicViewArtist[];
 };
 
 export const ResultView = ({ result }: Props) => {

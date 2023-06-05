@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { CustomButton } from '@/modules/2023/shared/components/CustomButton';
 import { Spacer } from '@/modules/shared/components/Spacer';
 import { Box, Stack, Typography } from '@mui/material';
@@ -8,7 +8,7 @@ import { Cover } from '../Cover';
 import * as styles from './styles';
 
 type Props = {
-  artist: SerializedArtist;
+  artist: PublicViewArtist;
 };
 
 export const ShareArtist = ({ artist }: Props) => {

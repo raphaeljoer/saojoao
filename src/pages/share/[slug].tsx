@@ -1,10 +1,10 @@
 import { coreClient } from '@/core/main-client';
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { ShareView } from '@/modules/2023';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next/types';
 
 type Props = {
-  artist: SerializedArtist;
+  artist: PublicViewArtist;
 };
 
 const SharePage: NextPage<Props> = ({ artist }) => {

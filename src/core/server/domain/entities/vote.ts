@@ -23,7 +23,7 @@ export type VoteCreateOutput = Either<
   Vote
 >;
 
-export class Vote extends Entity<SerializedVote> {
+export class Vote extends Entity {
   public readonly artistId: string;
   public readonly votedAt: string;
   public readonly score: number;

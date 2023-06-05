@@ -1,7 +1,7 @@
 import { coreServer } from '@/core/main-server';
 import { NextApiHandler } from 'next/types';
 
-export const result: NextApiHandler = async (_, res) => {
+export const partial: NextApiHandler = async (_, res) => {
   const result = await coreServer.vote.getResult();
 
   if (result.isFailure()) {
@@ -11,4 +11,4 @@ export const result: NextApiHandler = async (_, res) => {
   return res.status(200).json(result.value);
 };
 
-export default result;
+export default partial;

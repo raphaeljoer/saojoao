@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { Spacer } from '@/modules/shared/components/Spacer';
 import { Grid, Stack, Typography } from '@mui/material';
 import { ReactNode } from 'react';
@@ -6,7 +6,7 @@ import { Cover } from '../Cover';
 import * as styles from './styles';
 
 type Props = {
-  artist: SerializedArtist;
+  artist: PublicViewArtist;
   children: ReactNode;
 };
 

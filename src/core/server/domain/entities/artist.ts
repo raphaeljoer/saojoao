@@ -6,7 +6,7 @@ type Props = {
   picture: string;
 };
 
-export type SerializedArtist = {
+export type PublicViewArtist = {
   artistId: string;
   name: string;
   picture: string;
@@ -21,15 +21,31 @@ export type SerializedArtist = {
   isWinner: boolean;
 };
 
-export class Artist extends Entity<SerializedArtist> {
+export type AuditViewArtist = {
+  artistId: string;
+  name: string;
+  picture: string;
+  votesCount: number | null;
+  percentage: number | null;
+  position: number | null;
+  progress: number | null;
+  slug: string;
+  share: {
+    feed: string;
+    stories: string;
+  };
+  isWinner: boolean;
+};
+
+export class Artist extends Entity {
   public readonly artistId: string;
   public readonly name: string;
   public readonly picture: string;
 
-  public percentage!: number | null;
-  public position!: number | null;
-  public progress!: number | null;
-  public votesCount!: number | null;
+  public percentage: number = 0;
+  public position: number = 0;
+  public progress: number = 0;
+  public votesCount: number = 0;
 
   constructor(props: Props) {
     super(props.artistId);
@@ -68,19 +84,5 @@ export class Artist extends Entity<SerializedArtist> {
 
   setPosition(position: number) {
     this.position = position;
-  }
-
-  toJSON(): SerializedArtist {
-    return {
-      artistId: this.artistId,
-      name: this.name,
-      picture: this.picture,
-      percentage: this.percentage ?? null,
-      position: this.position ?? null,
-      progress: this.progress ?? null,
-      slug: this.slug,
-      share: this.share,
-      isWinner: this.isWinner
-    };
   }
 }

@@ -1,4 +1,4 @@
-import { Artist, SerializedArtist } from './artist';
+import { Artist } from './artist';
 import { Entity } from './entity';
 
 type Props = {
@@ -7,13 +7,13 @@ type Props = {
   totalVotesCount: number;
 };
 
-export class Result extends Entity<SerializedArtist[]> {
-  private readonly artists: Artist[];
+export class Result extends Entity {
+  private readonly _artists: Artist[];
   private readonly totalVotesCount: number;
 
   constructor(props: Props) {
     super(props.id);
-    this.artists = props.artists;
+    this._artists = props.artists;
     this.totalVotesCount = props.totalVotesCount;
     this.sort();
     this.setPositions();
@@ -21,8 +21,12 @@ export class Result extends Entity<SerializedArtist[]> {
     this.setProgress();
   }
 
-  sort(): void {
-    this.artists.sort((a, b) => {
+  get artists(): Artist[] {
+    return this._artists;
+  }
+
+  private sort(): void {
+    this._artists.sort((a, b) => {
       if (
         typeof a.votesCount !== 'number' ||
         typeof b.votesCount !== 'number'
@@ -33,14 +37,14 @@ export class Result extends Entity<SerializedArtist[]> {
     });
   }
 
-  setPositions(): void {
-    this.artists.forEach((artist, index) => {
+  private setPositions(): void {
+    this._artists.forEach((artist, index) => {
       artist.setPosition(index + 1);
     });
   }
 
-  setPercentages(): void {
-    this.artists.forEach((artist) => {
+  private setPercentages(): void {
+    this._artists.forEach((artist) => {
       if (typeof artist.votesCount !== 'number') {
         throw new Error('Votes count is not defined');
       }
@@ -48,17 +52,13 @@ export class Result extends Entity<SerializedArtist[]> {
     });
   }
 
-  setProgress(): void {
-    this.artists.forEach((artist) => {
+  private setProgress(): void {
+    this._artists.forEach((artist) => {
       if (typeof artist.votesCount !== 'number') {
         throw new Error('Votes count is not defined');
       }
-      const winnerVotesCount = this.artists[0]?.votesCount ?? 0;
+      const winnerVotesCount = this._artists[0]?.votesCount ?? 0;
       artist.setProgress((artist.votesCount * 100) / winnerVotesCount);
     });
-  }
-
-  toJSON(): SerializedArtist[] {
-    return this.artists.map((artist) => artist.toJSON());
   }
 }

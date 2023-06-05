@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { Box, Stack, Typography } from '@mui/material';
 import { Cover } from '../Cover';
 import { Position } from '../Position';
@@ -6,7 +6,7 @@ import { ProgressBar } from '../ProgressBar';
 import * as styles from './styles';
 
 type Props = {
-  artist: SerializedArtist;
+  artist: PublicViewArtist;
 };
 
 export const ResultArtist = ({ artist }: Props) => {

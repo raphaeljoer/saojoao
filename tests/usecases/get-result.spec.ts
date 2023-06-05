@@ -1,3 +1,4 @@
+import { GetPublicResultPresenter } from '@/core/server/adapters/presenter/result/get-public-result.presenter';
 import { config } from 'dotenv';
 import { describe, expect, test } from 'vitest';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
@@ -51,7 +52,9 @@ describe('GetResultUseCase', () => {
     const getResultUseCase = new GetResultUsecase({
       voteRepositoryAuditLog: voteRepositoryAuditLog
     });
-    const result = await getResultUseCase.execute();
+
+    const presenter = new GetPublicResultPresenter();
+    const result = await getResultUseCase.execute({ presenter });
 
     expect(result.isSuccess()).toBe(true);
     expect(result.isFailure()).toBe(false);

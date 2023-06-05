@@ -1,10 +1,10 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { Artist } from '@/modules/2023/shared/components/Artist';
 import { Typography } from '@mui/material';
 import { useMemo } from 'react';
 
 type Props = {
-  artist: SerializedArtist;
+  artist: PublicViewArtist;
 };
 
 export const WinnerArtist = ({ artist }: Props) => {

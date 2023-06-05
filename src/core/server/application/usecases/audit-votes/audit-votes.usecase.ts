@@ -4,6 +4,7 @@ import { Artist } from '../../../domain/entities/artist';
 import { Result } from '../../../domain/entities/result';
 import { VoteRepositoryInterface } from '../../repository/vote.repository.interface';
 import {
+  AuditVotesUsecaseInput,
   AuditVotesUsecaseInterface,
   AuditVotesUsecaseOutput
 } from './audit-votes.usecase.interface';
@@ -12,6 +13,8 @@ type Props = {
   voteRepositoryAuditLog: VoteRepositoryInterface;
 };
 
+type Input = AuditVotesUsecaseInput;
+type Output = AuditVotesUsecaseOutput;
 export class AuditVotesUsecase implements AuditVotesUsecaseInterface {
   private readonly voteRepositoryAuditLog: VoteRepositoryInterface;
 
@@ -19,10 +22,10 @@ export class AuditVotesUsecase implements AuditVotesUsecaseInterface {
     this.voteRepositoryAuditLog = props.voteRepositoryAuditLog;
   }
 
-  async execute(): Promise<AuditVotesUsecaseOutput> {
+  async execute({ presenter }: Input): Promise<Output> {
     console.time('[AuditVotesUsecase].execute');
-    const artists = artistProps.map((props) => new Artist(props));
 
+    const artists = artistProps.map((props) => new Artist(props));
     const totalVotesCount = await this.voteRepositoryAuditLog.countTotal();
 
     if (totalVotesCount.isFailure()) {
@@ -45,6 +48,6 @@ export class AuditVotesUsecase implements AuditVotesUsecaseInterface {
     });
 
     console.timeEnd('[AuditVotesUsecase].execute');
-    return success(result.toJSON());
+    return success(presenter.present(result));
   }
 }

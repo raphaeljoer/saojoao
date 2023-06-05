@@ -1,5 +1,5 @@
 import { coreServer } from '@/core/main-server';
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { WinnerView } from '@/modules/2023/features/winner/views/WinnerView';
 import { Switcher } from '@/modules/shared/components/Switcher';
 import { GetStaticProps, NextPage } from 'next';
@@ -7,7 +7,7 @@ import PerksPage from '../perks';
 import VotePage from '../vote';
 
 type Props = {
-  result: SerializedArtist[];
+  result: PublicViewArtist[];
 };
 
 const WinnerPage: NextPage<Props> = ({ result }) => {

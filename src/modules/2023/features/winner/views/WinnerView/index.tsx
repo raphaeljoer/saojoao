@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { MetaTags } from '@/modules/2023/shared/components/Head';
 import { LayoutGrid } from '@/modules/2023/shared/modules/LayoutGrid';
 import { Confetti } from '@/modules/shared/components/Confetti';
@@ -7,7 +7,7 @@ import { WinnerArtist } from '../../components/WinnerArtist';
 import * as styles from './styles';
 
 type Props = {
-  artists: SerializedArtist[];
+  artists: PublicViewArtist[];
 };
 
 export const WinnerView = ({ artists }: Props) => {
