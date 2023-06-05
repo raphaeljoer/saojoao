@@ -71,7 +71,7 @@ export class VoteController implements VoteControllerInterface {
       return fail(response.value);
     }
 
-    console.time('[VoteController].getResult');
+    console.timeEnd('[VoteController].getResult');
     return success(response.value);
   }
 
