@@ -16,6 +16,11 @@ export const artistProps: ArtistProps[] = [
     picture: '/assets/artists/vivi-perigosa.jpg'
   },
   {
+    artistId: 'viny_cantor',
+    name: 'Viny Cantor',
+    picture: '/assets/artists/viny-cantor.jpg'
+  },
+  {
     artistId: 'thalita_e_thaina',
     name: 'Thalita e Thainá',
     picture: '/assets/artists/thalita-e-thaina.jpg'
