@@ -32,13 +32,16 @@ export class VoteController implements VoteControllerInterface {
     this.auditVotesUsecase = props.auditVotesUsecase;
   }
 
-  async addVote(
-    input: AddVoteControllerInput
-  ): Promise<AddVoteControllerOutPut> {
+  //prettier-ignore
+  async addVote(input: AddVoteControllerInput): Promise<AddVoteControllerOutPut> {
     console.time('[VoteController].addVote');
+    console.log('[VoteDTO].artistId', input.vote.artistId);
+    console.log('[VoteDTO].ip', input.vote.ip);
     const validation = ParamValidation.validateObject(input);
 
     if (validation.isFailure()) {
+      console.error(validation.value);
+      console.timeEnd('[VoteController].addVote');
       return fail(validation.value);
     }
 
@@ -48,6 +51,8 @@ export class VoteController implements VoteControllerInterface {
     });
 
     if (isHuman.isFailure()) {
+      console.error(isHuman.value);
+      console.timeEnd('[VoteController].addVote');
       return fail(isHuman.value);
     }
 
@@ -56,9 +61,11 @@ export class VoteController implements VoteControllerInterface {
     const response = await this.addVoteUsecase.execute(voteDto);
 
     if (response.isFailure()) {
+      console.error(response.value);
+      console.timeEnd('[VoteController].addVote');
       return fail(response.value);
     }
-
+    
     console.timeEnd('[VoteController].addVote');
     return success(response.value);
   }
@@ -68,6 +75,8 @@ export class VoteController implements VoteControllerInterface {
     const response = await this.getResultUsecase.execute();
 
     if (response.isFailure()) {
+      console.error(response.value);
+      console.timeEnd('[VoteController].getResult');
       return fail(response.value);
     }
 
@@ -80,6 +89,8 @@ export class VoteController implements VoteControllerInterface {
     const response = await this.auditVotesUsecase.execute();
 
     if (response.isFailure()) {
+      console.error(response.value);
+      console.timeEnd('[VoteController].auditVotes');
       return fail(response.value);
     }
 

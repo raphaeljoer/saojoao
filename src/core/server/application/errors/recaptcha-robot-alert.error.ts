@@ -6,7 +6,7 @@ export class GoogleRecaptchaRobotAlertError
 {
   constructor() {
     super(
-      'Google reCAPTCHA detectou comportamento suspeito, tente novamente em algums instantes'
+      'Google reCAPTCHA detectou comportamento suspeito, tente novamente em alguns instantes'
     );
     this.name = 'GoogleRecaptchaRobotAlertError';
   }
