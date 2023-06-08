@@ -1,4 +1,4 @@
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { useAddVoteMutation } from '@/modules/2023/shared/api/mutations/useAddVoteMutation';
 import { Artist } from '@/modules/2023/shared/components/Artist';
 import { TremblingButton } from '@/modules/2023/shared/components/TremblingButton';
@@ -9,7 +9,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
 
 type Props = {
-  artist: SerializedArtist;
+  artist: PublicViewArtist;
 };
 
 export const VoteArtist = ({ artist }: Props) => {

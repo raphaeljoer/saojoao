@@ -4,6 +4,7 @@ import { VoteController } from '../../src/core/server/adapters/controllers/vote.
 import { VerifyRecaptchaService } from '../../src/core/server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from '../../src/core/server/application/usecases/add-vote/add-vote.usecase';
 import { AuditVotesUsecase } from '../../src/core/server/application/usecases/audit-votes/audit-votes.usecase';
+import { GetAuditResultUsecase } from '../../src/core/server/application/usecases/get-audit-result/get-audit-result.usecase';
 import { GetResultUsecase } from '../../src/core/server/application/usecases/get-result/get-result.usecase';
 import { FakeExternalGateway } from '../fakes/fake-external-gateway';
 import { FakeVoteRepositoryAuditLog } from '../fakes/fake-vote-repository-audit-log';
@@ -32,6 +33,10 @@ describe(
         voteRepositoryAuditLog: voteRepositoryAuditLog01
       });
 
+      const getAuditResultUsecase = new GetAuditResultUsecase({
+        voteRepositoryAuditLog: voteRepositoryAuditLog01
+      });
+
       const addVoteUseCase = new AddVoteUsecase({
         voteRepositoryAuditLog01,
         voteRepositoryAuditLog02
@@ -42,6 +47,7 @@ describe(
       const voteController = new VoteController({
         addVoteUseCase,
         getResultUsecase,
+        getAuditResultUsecase,
         auditVotesUsecase,
         verifyRecaptchaService
       });
@@ -81,6 +87,10 @@ describe(
         voteRepositoryAuditLog: voteRepositoryAuditLog01
       });
 
+      const getAuditResultUsecase = new GetAuditResultUsecase({
+        voteRepositoryAuditLog: voteRepositoryAuditLog01
+      });
+
       const addVoteUseCase = new AddVoteUsecase({
         voteRepositoryAuditLog01,
         voteRepositoryAuditLog02
@@ -96,6 +106,7 @@ describe(
       const voteController = new VoteController({
         addVoteUseCase,
         getResultUsecase,
+        getAuditResultUsecase,
         auditVotesUsecase,
         verifyRecaptchaService
       });

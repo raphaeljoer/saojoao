@@ -1,9 +1,13 @@
-import { SerializedArtist } from '../../../server/domain/entities/artist';
+import {
+  AuditViewArtist,
+  PublicViewArtist
+} from '../../../server/domain/entities/artist';
 import { VoteInputType } from '../types/api-gateway.type';
 
 export interface ApiControllerInterface {
   addVote(input: VoteInputType): Promise<void>;
-  getArtists(): Promise<SerializedArtist[]>;
-  getArtist(artistId: string): Promise<SerializedArtist>;
-  getResult(): Promise<SerializedArtist[]>;
+  getArtists(): Promise<PublicViewArtist[]>;
+  getArtist(artistId: string): Promise<PublicViewArtist>;
+  getResult(): Promise<PublicViewArtist[]>;
+  getAuditResult(): Promise<AuditViewArtist[]>;
 }

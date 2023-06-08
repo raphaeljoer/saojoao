@@ -4,6 +4,7 @@ import { fail, success } from '../../../../../core/shared/errors/either';
 import { Artist } from '../../../domain/entities/artist';
 import { Result } from '../../../domain/entities/result';
 import {
+  GetResultUsecaseInput,
   GetResultUsecaseInterface,
   GetResultUsecaseOutput
 } from './get-result-usecase.interface';
@@ -12,6 +13,9 @@ type Props = {
   voteRepositoryAuditLog: VoteRepositoryAuditLogInterface;
 };
 
+type Input = GetResultUsecaseInput;
+type Output = GetResultUsecaseOutput;
+
 export class GetResultUsecase implements GetResultUsecaseInterface {
   private readonly voteRepositoryAuditLog: VoteRepositoryAuditLogInterface;
 
@@ -19,7 +23,7 @@ export class GetResultUsecase implements GetResultUsecaseInterface {
     this.voteRepositoryAuditLog = props.voteRepositoryAuditLog;
   }
 
-  async execute(): Promise<GetResultUsecaseOutput> {
+  async execute({ presenter }: Input): Promise<Output> {
     console.time('[GetResultUsecase].execute');
     const artists = artistProps.map((props) => new Artist(props));
     const partialResult = await this.voteRepositoryAuditLog.partialResult();
@@ -38,6 +42,6 @@ export class GetResultUsecase implements GetResultUsecaseInterface {
     const result = new Result({ artists, totalVotesCount: total });
 
     console.timeEnd('[GetResultUsecase].execute');
-    return success(result.toJSON());
+    return success(presenter.present(result));
   }
 }

@@ -1,10 +1,10 @@
 import { coreServer } from '@/core/main-server';
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { ResultView } from '@/modules/2023';
 import { GetStaticProps, NextPage } from 'next';
 
 type Props = {
-  artists: SerializedArtist[];
+  artists: PublicViewArtist[];
 };
 
 const ResultPage: NextPage<Props> = ({ artists }) => {

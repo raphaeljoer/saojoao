@@ -3,6 +3,7 @@ import { VoteController } from './server/adapters/controllers/vote.controller';
 import { VerifyRecaptchaService } from './server/application/service/verify-recaptcha.service';
 import { AddVoteUsecase } from './server/application/usecases/add-vote/add-vote.usecase';
 import { AuditVotesUsecase } from './server/application/usecases/audit-votes/audit-votes.usecase';
+import { GetAuditResultUsecase } from './server/application/usecases/get-audit-result/get-audit-result.usecase';
 import { GetResultUsecase } from './server/application/usecases/get-result/get-result.usecase';
 import { mongodbConnectionProps } from './server/infra/config/mongodb.connection.props';
 import { redisConnectionAuditLogProps } from './server/infra/config/redis.connection.props';
@@ -15,6 +16,7 @@ import { AxiosHttpClient } from './shared/drivers/http/axios-http-client';
 
 // const kafkaConnection = KafkaConnection.getInstance(kafkaConnectionProps);
 // const voteQueue = new VoteQueue({ connection: kafkaConnection });
+
 // const redisCounterConnection = RedisConnection.getInstance(redisConnectionCounterProps); //prettier-ignore
 // const voteRepositoryCounter = new VoteRepositoryCounterRedis({ connection: redisCounterConnection }); //prettier-ignore
 
@@ -33,6 +35,10 @@ const addVoteUseCase = new AddVoteUsecase({
   voteRepositoryAuditLog02
 });
 
+const getAuditResultUsecase = new GetAuditResultUsecase({
+  voteRepositoryAuditLog: voteRepositoryAuditLog02
+});
+
 const getResultUsecase = new GetResultUsecase({
   voteRepositoryAuditLog: voteRepositoryAuditLog02
 });
@@ -44,6 +50,7 @@ const auditVotesUsecase = new AuditVotesUsecase({
 const voteController = new VoteController({
   addVoteUseCase,
   getResultUsecase,
+  getAuditResultUsecase,
   auditVotesUsecase,
   verifyRecaptchaService
 });

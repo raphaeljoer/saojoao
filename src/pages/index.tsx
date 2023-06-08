@@ -1,5 +1,5 @@
 import { coreServer } from '@/core/main-server';
-import { SerializedArtist } from '@/core/server/domain/entities/artist';
+import { PublicViewArtist } from '@/core/server/domain/entities/artist';
 import { Switcher } from '@/modules/shared/components/Switcher';
 import { GetStaticProps, NextPage } from 'next';
 import PerksPage from './perks';
@@ -7,7 +7,7 @@ import VotePage from './vote';
 import WinnerPage from './winner';
 
 type Props = {
-  result: SerializedArtist[];
+  result: PublicViewArtist[];
 };
 
 const HomePage: NextPage<Props> = ({ result }) => {

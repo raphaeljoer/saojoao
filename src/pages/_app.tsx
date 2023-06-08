@@ -7,6 +7,7 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { Analytics } from '@vercel/analytics/react';
+import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -28,7 +29,10 @@ export const queryClient = new QueryClient({
   }
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps }
+}: AppProps) {
   nProgress.configure({
     minimum: 0.2,
     showSpinner: false,
@@ -53,8 +57,10 @@ export default function App({ Component, pageProps }: AppProps) {
             theme="light"
             progressClassName="toast-progress"
           />
-          <Component {...pageProps} />
-          <Analytics />
+          <SessionProvider session={session}>
+            <Component {...pageProps} />
+            <Analytics />
+          </SessionProvider>
           <GoogleTagManager
             id={process.env.NEXT_PUBLIC_SM_GOOGLE_TAG_MANAGER_ID || ''}
           />
