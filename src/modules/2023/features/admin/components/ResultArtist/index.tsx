@@ -28,14 +28,25 @@ export const ResultArtist = ({ artist }: Props) => {
           <Stack
             direction="row"
             spacing={1}
-            sx={{ alignItems: 'center', justifyContent: 'center' }}
+            sx={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: 'rgba(152, 1, 69, 0.3)',
+              border: '1px solid rgba(152, 1, 69, 0.1)',
+              pr: 2,
+              borderRadius: 4
+            }}
           >
             <Chip
               label="Votos"
               size="small"
-              sx={{ bgcolor: 'primary.main', color: 'secondary.dark' }}
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'secondary.dark',
+                fontWeight: 500
+              }}
             />
-            <Typography variant="body2" color="secondary.dark">
+            <Typography variant="body2" color="white" fontWeight={500}>
               {artist.votesCount?.toLocaleString('pt-BR') || 0}
             </Typography>
           </Stack>

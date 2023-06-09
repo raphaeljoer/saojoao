@@ -6,13 +6,22 @@ import { Loading } from '@/modules/shared/components/Loading';
 import { Spacer } from '@/modules/shared/components/Spacer';
 import { Avatar, Button, Chip, Stack, Typography } from '@mui/material';
 import { signOut, useSession } from 'next-auth/react';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { ResultArtist } from '../../components/ResultArtist';
 import * as styles from './styles';
 
 export const AdminView = () => {
   const { data: session } = useSession();
   const { data: result } = useGetAuditResultQuery();
+
+  const totalVotes = useMemo((): string => {
+    if (!result) return '0';
+    const total = result.reduce((acc, artist) => {
+      return acc + Number(artist?.votesCount || 0);
+    }, 0);
+
+    return total.toLocaleString('pt-BR');
+  }, [result]);
 
   const handleSignOut = useCallback(async () => {
     await signOut({
@@ -58,9 +67,44 @@ export const AdminView = () => {
           </Button>
           <Spacer />
         </Stack>
-        <Typography variant="h1" align="center" fontSize={56} fontWeight={400}>
-          {'Resultado'}
-        </Typography>
+        <Stack>
+          <Typography
+            variant="h1"
+            align="center"
+            fontSize={56}
+            fontWeight={400}
+          >
+            {'Resultado'}
+          </Typography>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: 'rgba(152, 1, 69, 0.3)',
+              border: '1px solid rgba(152, 1, 69, 0.1)',
+              pr: 2,
+              mx: 'auto',
+              borderRadius: 4
+            }}
+          >
+            <Chip
+              label="Total de votos"
+              size="small"
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'secondary.dark',
+                fontWeight: 500
+              }}
+            />
+            {hasResult && (
+              <Typography variant="body2" color="white" fontWeight={500}>
+                {totalVotes}
+              </Typography>
+            )}
+          </Stack>
+        </Stack>
         <Stack spacing={2} sx={{ width: '100%' }}>
           {!hasResult && <Loading />}
           {hasResult &&
