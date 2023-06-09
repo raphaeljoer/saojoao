@@ -34,7 +34,7 @@ export const Loading = ({
   return (
     <Box sx={stylesContainer}>
       <CircularProgress
-        color="secondary"
+        color="primary"
         size={size}
         thickness={4}
         {...circularProgressProps}
