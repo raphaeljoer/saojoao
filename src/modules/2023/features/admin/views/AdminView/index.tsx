@@ -4,7 +4,18 @@ import { MetaTags } from '@/modules/2023/shared/components/Head';
 import { LayoutGrid } from '@/modules/2023/shared/modules/LayoutGrid';
 import { Loading } from '@/modules/shared/components/Loading';
 import { Spacer } from '@/modules/shared/components/Spacer';
-import { Avatar, Button, Chip, Stack, Typography } from '@mui/material';
+import { useCallbackDebounce } from '@/modules/shared/hooks/useCallbackDebounce';
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material';
+import { ArrowCounterClockwise } from '@phosphor-icons/react';
 import { signOut, useSession } from 'next-auth/react';
 import { useCallback, useMemo } from 'react';
 import { ResultArtist } from '../../components/ResultArtist';
@@ -12,7 +23,7 @@ import * as styles from './styles';
 
 export const AdminView = () => {
   const { data: session } = useSession();
-  const { data: result } = useGetAuditResultQuery();
+  const { data: result, refetch, isRefetching } = useGetAuditResultQuery();
 
   const totalVotes = useMemo((): string => {
     if (!result) return '0';
@@ -29,6 +40,8 @@ export const AdminView = () => {
       redirect: true
     });
   }, []);
+
+  const debounceRefetch = useCallbackDebounce(refetch, 250);
 
   const hasResult = result && result.length > 0;
 
@@ -67,7 +80,7 @@ export const AdminView = () => {
           </Button>
           <Spacer />
         </Stack>
-        <Stack>
+        <Stack spacing={1}>
           <Typography
             variant="h1"
             align="center"
@@ -79,30 +92,54 @@ export const AdminView = () => {
           <Stack
             direction="row"
             spacing={1}
-            sx={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              bgcolor: 'rgba(152, 1, 69, 0.3)',
-              border: '1px solid rgba(152, 1, 69, 0.1)',
-              pr: 2,
-              mx: 'auto',
-              borderRadius: 4
-            }}
+            sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
           >
-            <Chip
-              label="Total de votos"
-              size="small"
+            <Spacer />
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                bgcolor: 'primary.main',
-                color: 'secondary.dark',
-                fontWeight: 500
+                alignItems: 'center',
+                justifyContent: 'center',
+                bgcolor: 'rgba(152, 1, 69, 0.3)',
+                border: '1px solid rgba(152, 1, 69, 0.1)',
+                pr: 2,
+                borderRadius: 4
               }}
-            />
-            {hasResult && (
-              <Typography variant="body2" color="white" fontWeight={500}>
-                {totalVotes}
-              </Typography>
-            )}
+            >
+              <Chip
+                label="Total de votos"
+                size="small"
+                sx={{
+                  bgcolor: 'primary.main',
+                  color: 'secondary.dark',
+                  fontWeight: 500
+                }}
+              />
+              {hasResult && (
+                <Typography variant="body2" color="white" fontWeight={500}>
+                  {totalVotes}
+                </Typography>
+              )}
+            </Stack>
+            <Tooltip title="Atualizar">
+              <span>
+                <IconButton
+                  size="small"
+                  onClick={debounceRefetch}
+                  disabled={isRefetching}
+                >
+                  {isRefetching ? (
+                    <Box sx={{ width: 20, height: 20 }}>
+                      <Loading size={14} />
+                    </Box>
+                  ) : (
+                    <ArrowCounterClockwise color="#FFC014" size={20} />
+                  )}
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Spacer />
           </Stack>
         </Stack>
         <Stack spacing={2} sx={{ width: '100%' }}>
