@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
 import { SxProps } from '@mui/system';
 
-export const title: SxProps<Theme> = {
-  fontSize: { xs: 32, md: 40, lg: 54 },
-  fontWeight: 500,
-  textAlign: 'center'
+export const tag: SxProps<Theme> = {
+  bgcolor: 'primary.main',
+  color: 'secondary.dark',
+  fontWeight: 500
 };
 
 export const container: SxProps<Theme> = {
@@ -23,12 +23,4 @@ export const content: SxProps<Theme> = {
   boxShadow: '0px 0px 16px 0px rgba(0,0,0,0.3)',
   border: '2px solid',
   borderColor: 'background.paper'
-};
-
-export const noResult: SxProps<Theme> = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%'
 };
