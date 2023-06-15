@@ -1,48 +1,55 @@
-import { coreServer } from '@/core/main-server';
-import { PublicViewArtist } from '@/core/server/domain/entities/artist';
-import { Switcher } from '@/modules/shared/components/Switcher';
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import PerksPage from './perks';
-import VotePage from './vote';
-import WinnerPage from './winner';
 
-type Props = {
-  result: PublicViewArtist[];
+const HomePage: NextPage = () => {
+  return <PerksPage />;
 };
 
-const HomePage: NextPage<Props> = ({ result }) => {
-  const votingStartDate = new Date(process.env.VOTING_DATE_START || '');
-  const votingEndDate = new Date(process.env.VOTING_DATE_END || '');
-  const releaseWinnerDate = new Date(process.env.VOTING_RELEASE_WINNER_DATE || ''); //prettier-ignore
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const now = new Date().getTime();
+  const votingStartDate = new Date(process.env.VOTING_DATE_START || '').getTime(); //prettier-ignore
+  const votingEndDate = new Date(process.env.VOTING_DATE_END || '').getTime(); //prettier-ignore
+  const releaseWinnerDate = new Date(process.env.VOTING_RELEASE_WINNER_DATE || '').getTime(); //prettier-ignore
 
-  return (
-    <Switcher
-      votingStartDate={votingStartDate}
-      votingEndDate={votingEndDate}
-      releaseWinnerDate={releaseWinnerDate}
-      onIdle={<PerksPage />}
-      onVotingStart={<VotePage />}
-      onVotingEnd={<PerksPage />}
-      onReleaseWinner={<WinnerPage result={result} />}
-    />
-  );
-};
-
-export default HomePage;
-
-export const getStaticProps: GetStaticProps = async () => {
-  const result = await coreServer.vote.getResult();
-
-  if (result.isFailure()) {
+  if (now < votingStartDate) {
     return {
-      notFound: true
+      redirect: {
+        destination: '/perks',
+        permanent: false
+      }
+    };
+  }
+
+  if (now > votingStartDate && now < votingEndDate) {
+    return {
+      redirect: {
+        destination: '/vote',
+        permanent: false
+      }
+    };
+  }
+
+  if (now > votingEndDate && now < releaseWinnerDate) {
+    return {
+      redirect: {
+        destination: '/closed',
+        permanent: false
+      }
+    };
+  }
+
+  if (now > releaseWinnerDate) {
+    return {
+      redirect: {
+        destination: '/winner',
+        permanent: false
+      }
     };
   }
 
   return {
-    props: {
-      result: result.value
-    },
-    revalidate: 60 * Number(process.env.SM_REVALIDATE_RESULT || 10)
+    props: {}
   };
 };
+
+export default HomePage;
