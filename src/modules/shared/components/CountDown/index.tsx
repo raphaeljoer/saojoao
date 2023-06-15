@@ -8,9 +8,10 @@ type Props = {
   prefix?: string;
   suffix?: string;
   targetTime: Date;
+  onOver?: () => void;
 };
 
-export const Countdown = ({ prefix, suffix, targetTime }: Props) => {
+export const Countdown = ({ prefix, suffix, targetTime, onOver }: Props) => {
   const [countdown, setCountdown] = useState('');
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export const Countdown = ({ prefix, suffix, targetTime }: Props) => {
       const distance = targetTime.getTime() - currentTime.getTime();
 
       if (distance <= 0) {
-        setCountdown('Voting has ended.');
+        onOver?.();
         return;
       }
 
@@ -28,18 +29,16 @@ export const Countdown = ({ prefix, suffix, targetTime }: Props) => {
       const minutes = formatNumber(Math.floor((distance / (1000 * 60)) % 60));
       const seconds = formatNumber(Math.floor((distance / 1000) % 60));
 
-      setCountdown(
-        `${prefix || ''} ${days} dias ${hours}h ${minutes}m ${seconds}s ${
-          suffix || ''
-        }`
-      );
+      const isPlural = Number(days) > 1;
+
+      setCountdown(`${prefix || ''} ${days} dia${isPlural ? 's' : ''} ${hours}h ${minutes}m ${seconds}s ${suffix || ''}`); //prettier-ignore
     };
 
     calculateCountdown();
 
     const intervalId = setInterval(calculateCountdown, 1000);
     return () => clearInterval(intervalId);
-  }, [prefix, suffix, targetTime]);
+  }, [onOver, prefix, suffix, targetTime]);
 
   return <>{countdown}</>;
 };
