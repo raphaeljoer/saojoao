@@ -1,5 +1,4 @@
 import { ResponseErrorInterface } from '../../../../core/shared/errors/response.error.interface';
-import { formatDateTime } from '../../../../core/shared/utils/formatDateTime';
 
 type Props = {
   votingStartDate: Date;
@@ -8,8 +7,15 @@ type Props = {
 
 //prettier-ignore
 export class VotedAtOutsidePeriodError extends Error implements ResponseErrorInterface {
+
+  
   constructor({ votingStartDate, votingEndDate }: Props) {
-    super(`O período de votação começa no dia ${formatDateTime(votingStartDate)} e vai até dia ${formatDateTime(votingEndDate)}.`);
+    const startDate = votingStartDate.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+    const startTime = votingStartDate.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+    const endDate = votingEndDate.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+    const endTime = votingEndDate.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+
+    super(`O período de votação começa no dia ${startDate} às ${startTime} e vai até dia ${endDate} às ${endTime}.`);
     this.name = 'VotedAtOutsidePeriodError';
   }
 
